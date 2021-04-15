@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import seguridad.vista.GenerarPermisos;
+import seguridad.vista.Login;
 
 /**
  *
@@ -25,9 +27,41 @@ public class Mantenimiento_Servicios extends javax.swing.JInternalFrame {
      */
     public Mantenimiento_Servicios() {
         initComponents();
+        habilitarAcciones();
         aux_tipo.setVisible(false);
         aux_estado.setVisible(false);
         actualizartabla();
+    }
+    void habilitarAcciones() {
+
+        var codigoAplicacion = 10;
+        var usuario = Login.usuarioSesion;
+
+        btn_guardar.setEnabled(false);
+        btn_modificar.setEnabled(false);
+        btn_cancelar.setEnabled(false);
+        btn_buscar.setEnabled(false);
+
+        GenerarPermisos permisos = new GenerarPermisos();
+
+        String[] permisosApp = new String[5];
+
+        for (int i = 0; i < 5; i++) {
+            permisosApp[i] = permisos.getAccionesAplicacion(codigoAplicacion, usuario)[i];
+        }
+
+        if (permisosApp[0].equals("1")) {
+            btn_guardar.setEnabled(true);
+        }
+        if (permisosApp[1].equals("1")) {
+            btn_buscar.setEnabled(true);
+        }
+        if (permisosApp[2].equals("1")) {
+            btn_modificar.setEnabled(true);
+        }
+        if (permisosApp[3].equals("1")) {
+            btn_cancelar.setEnabled(true);
+        }
     }
     private static boolean isNumeric(String cadena){
         try {
@@ -257,11 +291,12 @@ public class Mantenimiento_Servicios extends javax.swing.JInternalFrame {
                             .addComponent(txt_adicional)))
                     .addComponent(aux_tipo))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txt_activo)
-                    .addComponent(txt_inactivo)
-                    .addComponent(aux_estado))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(aux_estado, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(txt_activo)
+                        .addComponent(txt_inactivo)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cancelar)
