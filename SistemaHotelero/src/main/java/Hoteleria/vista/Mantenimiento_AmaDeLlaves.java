@@ -29,6 +29,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import seguridad.vista.GenerarPermisos;
 import seguridad.vista.Login;
 import Hoteleria.datos.GuardarBitacoraDAO;
+
 /**
  *
  * @author Jeff
@@ -211,6 +212,24 @@ public class Mantenimiento_AmaDeLlaves extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Mantenimiento Aplicaciones Hoteleria");
         setVisible(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameDeactivated(evt);
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado Ama de Llaves"));
 
@@ -226,6 +245,12 @@ public class Mantenimiento_AmaDeLlaves extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel2.setText("Buscar:");
+
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyTyped(evt);
+            }
+        });
 
         btnBuscar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         btnBuscar.setText("Buscar");
@@ -627,18 +652,22 @@ public class Mantenimiento_AmaDeLlaves extends javax.swing.JInternalFrame {
         AmaDeLlaves ama_De_Llaves_Eliminar = new AmaDeLlaves();
         AmaDeLlavesDAO ama_De_Llaves_DAO = new AmaDeLlavesDAO();
 
-        ama_De_Llaves_Eliminar.setId_Ama_De_Llaves(Integer.parseInt(txtBuscar.getText()));
-        int confirmar = JOptionPane.showConfirmDialog(this, "¿Desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION);
+        if (txtBuscar.getText().length() != 0) {
+            ama_De_Llaves_Eliminar.setId_Ama_De_Llaves(Integer.parseInt(txtBuscar.getText()));
+            int confirmar = JOptionPane.showConfirmDialog(this, "¿Desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION);
 
-        if (confirmar == 0) {
-            ama_De_Llaves_DAO.delete(ama_De_Llaves_Eliminar);
-            JOptionPane.showMessageDialog(null, "Registro Eliminado.");
-            btnRadioVacio.setSelected(true);
-            tabla();
-            limpiar();
-            jdateInicio.setEnabled(true);
-            GuardarBitacoraDAO guardarBitacora = new GuardarBitacoraDAO();
-            guardarBitacora.GuardarEnBitacora("Eliminacion", Integer.toString(codigoAplicacion), Login.usuarioHoteleria);
+            if (confirmar == 0) {
+                ama_De_Llaves_DAO.delete(ama_De_Llaves_Eliminar);
+                JOptionPane.showMessageDialog(null, "Registro Eliminado.");
+                btnRadioVacio.setSelected(true);
+                tabla();
+                limpiar();
+                jdateInicio.setEnabled(true);
+                GuardarBitacoraDAO guardarBitacora = new GuardarBitacoraDAO();
+                guardarBitacora.GuardarEnBitacora("Eliminacion", Integer.toString(codigoAplicacion), Login.usuarioHoteleria);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha ingresado ID a eliminar");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -646,35 +675,45 @@ public class Mantenimiento_AmaDeLlaves extends javax.swing.JInternalFrame {
 
         AmaDeLlaves ama_De_Llaves_Buscar = new AmaDeLlaves();
         AmaDeLlavesDAO ama_De_Llaves_DAO = new AmaDeLlavesDAO();
-        ama_De_Llaves_Buscar.setId_Ama_De_Llaves(Integer.parseInt(txtBuscar.getText()));
 
-        ama_De_Llaves_Buscar = ama_De_Llaves_DAO.query(ama_De_Llaves_Buscar);
+        if (txtBuscar.getText().length() != 0) {
 
-        txtId.setText(String.valueOf(ama_De_Llaves_Buscar.getId_Ama_De_Llaves()));
-        txtNombre.setText(String.valueOf(ama_De_Llaves_Buscar.getNombre_Ama_De_Llaves()));
-        txtApellido.setText(String.valueOf(ama_De_Llaves_Buscar.getApellido_Ama_De_Llaves()));
-        cbxPiso.setSelectedItem(ama_De_Llaves_Buscar.getPiso_Ama_De_Llaves());
-        cbxEntrada.setSelectedItem(String.valueOf(ama_De_Llaves_Buscar.getEntrada_Ama_De_Llaves()));
-        cbxSalida.setSelectedItem(String.valueOf(ama_De_Llaves_Buscar.getSalida_Ama_De_Llaves()));
-        String fecha = String.valueOf(ama_De_Llaves_Buscar.getInicio_Ama_De_Llaves());
-        SimpleDateFormat fecha1 = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            Date d1 = fecha1.parse(fecha);
-            jdateInicio.setDate(d1);
-        } catch (ParseException e) {
-            e.printStackTrace(System.out);
+            ama_De_Llaves_Buscar.setId_Ama_De_Llaves(Integer.parseInt(txtBuscar.getText()));
+            ama_De_Llaves_Buscar = ama_De_Llaves_DAO.query(ama_De_Llaves_Buscar);
+
+            if (String.valueOf(ama_De_Llaves_Buscar.getNombre_Ama_De_Llaves()).equals("null")) {
+                JOptionPane.showMessageDialog(null, "El ID no se encuentra registrado");
+            } else {
+                txtId.setText(String.valueOf(ama_De_Llaves_Buscar.getId_Ama_De_Llaves()));
+                txtNombre.setText(String.valueOf(ama_De_Llaves_Buscar.getNombre_Ama_De_Llaves()));
+                txtApellido.setText(String.valueOf(ama_De_Llaves_Buscar.getApellido_Ama_De_Llaves()));
+                cbxPiso.setSelectedItem(ama_De_Llaves_Buscar.getPiso_Ama_De_Llaves());
+                cbxEntrada.setSelectedItem(String.valueOf(ama_De_Llaves_Buscar.getEntrada_Ama_De_Llaves()));
+                cbxSalida.setSelectedItem(String.valueOf(ama_De_Llaves_Buscar.getSalida_Ama_De_Llaves()));
+                String fecha = String.valueOf(ama_De_Llaves_Buscar.getInicio_Ama_De_Llaves());
+                SimpleDateFormat fecha1 = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    Date d1 = fecha1.parse(fecha);
+                    jdateInicio.setDate(d1);
+                } catch (ParseException e) {
+                    e.printStackTrace(System.out);
+                }
+                txtaDescripcion.setText(String.valueOf(ama_De_Llaves_Buscar.getDescripcion_Ama_De_Llaves()));
+                if (ama_De_Llaves_Buscar.getEstado_Ama_De_Llaves() == 0) {
+                    btnRadioInactivo.setSelected(true);
+                }
+                if (ama_De_Llaves_Buscar.getEstado_Ama_De_Llaves() == 1) {
+                    btnRadioActivo.setSelected(true);
+                }
+                if (ama_De_Llaves_Buscar.getEstado_Ama_De_Llaves() == 2) {
+                    btnRadioVacaciones.setSelected(true);
+                }
+                jdateInicio.setEnabled(false);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha ingresado ID a buscar");
         }
-        txtaDescripcion.setText(String.valueOf(ama_De_Llaves_Buscar.getDescripcion_Ama_De_Llaves()));
-        if (ama_De_Llaves_Buscar.getEstado_Ama_De_Llaves() == 0) {
-            btnRadioInactivo.setSelected(true);
-        }
-        if (ama_De_Llaves_Buscar.getEstado_Ama_De_Llaves() == 1) {
-            btnRadioActivo.setSelected(true);
-        }
-        if (ama_De_Llaves_Buscar.getEstado_Ama_De_Llaves() == 2) {
-            btnRadioVacaciones.setSelected(true);
-        }
-        jdateInicio.setEnabled(false);
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -755,6 +794,23 @@ public class Mantenimiento_AmaDeLlaves extends javax.swing.JInternalFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnReporteActionPerformed
+
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        char validar = evt.getKeyChar();
+        if (Character.isLetter(validar)) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingrese solo números.");
+        }
+    }//GEN-LAST:event_txtBuscarKeyTyped
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+        MDIHoteleria.logo.setVisible(true);
+    }//GEN-LAST:event_formInternalFrameClosed
+
+    private void formInternalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameDeactivated
+        MDIHoteleria.logo.setVisible(true);
+    }//GEN-LAST:event_formInternalFrameDeactivated
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

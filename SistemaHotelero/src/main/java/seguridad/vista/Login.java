@@ -191,10 +191,10 @@ public class Login extends javax.swing.JFrame {
                 Insertar.setId_Usuario("Login");
                 Insertar.setAccion("Insertar");
                 Insertar.setCodigoAplicacion("000");
-<<<<<<< HEAD
+
                 Insertar.setModulo("Login");
-=======
->>>>>>> 45eb3a42a90bc7eba642a529847a68a117a001d3
+
+
                 Insertar.setModulo("0000");
                 
                 try {

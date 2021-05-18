@@ -5,16 +5,29 @@
  */
 package Finanzas.vista;
 
+import Finanzas.datos.Conexion;
 import Finanzas.dominio.PeriodoFiscal;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import Finanzas.datos.PeriodoFiscalDAO;
 import java.io.File;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.sql.*;
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
+import seguridad.datos.BitacoraDao;
+import seguridad.dominio.Bitacora;
 import seguridad.vista.GenerarPermisos;
 import seguridad.vista.Login;
 
@@ -29,7 +42,7 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
 
     void habilitarAcciones() {
 
-        var codigoAplicacion = 1000;
+        var codigoAplicacion = 1001;
         var usuario = Login.usuarioFianzas;
 
         BtnIng.setEnabled(false);
@@ -128,6 +141,7 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
         RBPrueba = new javax.swing.JRadioButton();
         BtnMod = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        Reporte = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -159,9 +173,9 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtID)
-                    .addComponent(InicioDC, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                    .addComponent(InicioDC, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                     .addComponent(FinDC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,7 +250,7 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(RBPF1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                         .addComponent(RBPrueba, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22))))
         );
@@ -267,19 +281,26 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
             }
         });
 
+        Reporte.setText("Reporte");
+        Reporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReporteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(BtnIng, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnElim, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -287,9 +308,11 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
                         .addComponent(BtnMod, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnBus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(Reporte, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jButton1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,7 +327,8 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
                     .addComponent(BtnElim)
                     .addComponent(BtnBus)
                     .addComponent(BtnMod)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Reporte))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -317,6 +341,18 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
 
 
     private void BtnIngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngActionPerformed
+        BitacoraDao BitacoraDAO = new BitacoraDao();
+        Bitacora AInsertar = new Bitacora();
+        
+        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setAccion("Ingresar");
+        AInsertar.setCodigoAplicacion("1001");
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Mantenimiento_PeriodoFiscal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         PeriodoFiscal PFInsertar = new PeriodoFiscal();
         PeriodoFiscalDAO PFDAO = new PeriodoFiscalDAO();
         if (txtID.getText().length() != 0 && RBPF1.isSelected() || RBPF0.isSelected()) {
@@ -347,6 +383,19 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BtnIngActionPerformed
 
     private void BtnModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnModActionPerformed
+        BitacoraDao BitacoraDAO = new BitacoraDao();
+        Bitacora AInsertar = new Bitacora();
+        
+        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setAccion("Modificar");
+        AInsertar.setCodigoAplicacion("1001");
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Mantenimiento_PeriodoFiscal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         PeriodoFiscal PFMod = new PeriodoFiscal();
         PeriodoFiscalDAO PFDAO = new PeriodoFiscalDAO();
         String Inicio = new SimpleDateFormat("dd/MM/yyyy").format(InicioDC.getDate());
@@ -369,6 +418,19 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BtnModActionPerformed
 
     private void BtnElimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnElimActionPerformed
+        BitacoraDao BitacoraDAO = new BitacoraDao();
+        Bitacora AInsertar = new Bitacora();
+        
+        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setAccion("Eliminar");
+        AInsertar.setCodigoAplicacion("1001");
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Mantenimiento_PeriodoFiscal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         PeriodoFiscal PFDel = new PeriodoFiscal();
         PeriodoFiscalDAO PFDAO = new PeriodoFiscalDAO();
 
@@ -388,6 +450,19 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BtnElimActionPerformed
 
     private void BtnBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBusActionPerformed
+        BitacoraDao BitacoraDAO = new BitacoraDao();
+        Bitacora AInsertar = new Bitacora();
+        
+        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setAccion("Buscar");
+        AInsertar.setCodigoAplicacion("1001");
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Mantenimiento_PeriodoFiscal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         PeriodoFiscal PFBuscar = new PeriodoFiscal();
         PeriodoFiscalDAO PFDAO = new PeriodoFiscalDAO();
         PFBuscar.setIDPerFis(Integer.parseInt(txtID.getText()));
@@ -425,7 +500,18 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BtnBusActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        BitacoraDao BitacoraDAO = new BitacoraDao();
+        Bitacora AInsertar = new Bitacora();
+        
+        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setAccion("Ayuda");
+        AInsertar.setCodigoAplicacion("1001");
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Mantenimiento_PeriodoFiscal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             if ((new File("src\\main\\java\\Finanzas\\ayudas\\AyudaMantenimientoPeriodoFiscal.chm")).exists()) {
                 Process p = Runtime
@@ -440,6 +526,38 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+     private Connection connection = null;
+    private void ReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteActionPerformed
+        
+        Map p = new HashMap();
+        JasperReport report;
+        JasperPrint print;
+
+        try {
+            connection = Conexion.getConnection();
+            report = JasperCompileManager.compileReport(new File("").getAbsolutePath()
+                    + "/src/main/java/Finanzas/reportes/ReportePeriodoFiscal.jrxml");
+            print = JasperFillManager.fillReport(report, p, connection);
+            JasperViewer view = new JasperViewer(print, false);
+            view.setTitle("Reporte de Periodo Fiscal");
+            view.setVisible(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BitacoraDao BitacoraDAO = new BitacoraDao();
+        Bitacora AInsertar = new Bitacora();
+        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setAccion("Reporte");
+        AInsertar.setCodigoAplicacion("1001");
+        AInsertar.setModulo("1000");
+        try{
+            BitacoraDAO.insert(AInsertar);
+            
+        } catch (UnknownHostException ex) {
+              Logger.getLogger(Mantenimiento_PeriodoFiscal.class.getName()).log(Level.SEVERE, null, ex);
+          }
+    }//GEN-LAST:event_ReporteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -452,6 +570,7 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton RBPF0;
     private javax.swing.JRadioButton RBPF1;
     private javax.swing.JRadioButton RBPrueba;
+    private javax.swing.JButton Reporte;
     private javax.swing.JTable Tabla;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;

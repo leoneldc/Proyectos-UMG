@@ -36,11 +36,11 @@ public class Mantenimiento_Pisos extends javax.swing.JInternalFrame {
     ButtonGroup grupoDeRadios;
     DefaultTableModel modelo1;
     DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
-    int codigoAplicacion = 2002;
+    int codigoAplicacion = 2005;
 
     void habilitarAcciones() {
 
-        codigoAplicacion = 2002;
+        codigoAplicacion = 2005;
         var usuario = Login.usuarioHoteleria;
 
         btnAgregar.setEnabled(false);
@@ -171,6 +171,24 @@ public class Mantenimiento_Pisos extends javax.swing.JInternalFrame {
         setTitle("Mantenimiento Pisos");
         setToolTipText("");
         setVisible(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameDeactivated(evt);
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de Pisos"));
 
@@ -186,6 +204,12 @@ public class Mantenimiento_Pisos extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel2.setText("Buscar:");
+
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyTyped(evt);
+            }
+        });
 
         btnBuscar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         btnBuscar.setText("Buscar");
@@ -481,22 +505,31 @@ public class Mantenimiento_Pisos extends javax.swing.JInternalFrame {
 
         Pisos pisosBuscar = new Pisos();
         PisosDAO pisosDAO = new PisosDAO();
-        pisosBuscar.setId_Numero_De_Piso(Integer.parseInt(txtBuscar.getText()));
 
-        pisosBuscar = pisosDAO.query(pisosBuscar);
+        if (txtBuscar.getText().length() != 0) {
+            pisosBuscar.setId_Numero_De_Piso(Integer.parseInt(txtBuscar.getText()));
+            pisosBuscar = pisosDAO.query(pisosBuscar);
 
-        txtNumeroDePiso.setText(String.valueOf(pisosBuscar.getId_Numero_De_Piso()));
-        txtCantidadHabitaciones.setText(String.valueOf(pisosBuscar.getCantidad_De_Habitaciones()));
-        txtaDescripcion.setText(String.valueOf(pisosBuscar.getDescripcion_De_Piso()));
-        if (pisosBuscar.getEstado_De_Piso() == 0) {
-            btnRadioInactivo.setSelected(true);
-        }
-        if (pisosBuscar.getEstado_De_Piso() == 1) {
-            btnRadioActivo.setSelected(true);
-        }
+            if (String.valueOf(pisosBuscar.getDescripcion_De_Piso()).equals("null")) {
+                JOptionPane.showMessageDialog(null, "El ID no se encuentra registrado");
+            } else {
+                txtNumeroDePiso.setText(String.valueOf(pisosBuscar.getId_Numero_De_Piso()));
+                txtCantidadHabitaciones.setText(String.valueOf(pisosBuscar.getCantidad_De_Habitaciones()));
+                txtaDescripcion.setText(String.valueOf(pisosBuscar.getDescripcion_De_Piso()));
+                if (pisosBuscar.getEstado_De_Piso() == 0) {
+                    btnRadioInactivo.setSelected(true);
+                }
+                if (pisosBuscar.getEstado_De_Piso() == 1) {
+                    btnRadioActivo.setSelected(true);
+                }
 //        if (pisosBuscar.getEstado_De_Piso() == 2) {
 //            btnRadioVacaciones.setSelected(true);
 //        }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha ingresado ID a buscar");
+        }
+
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -553,17 +586,21 @@ public class Mantenimiento_Pisos extends javax.swing.JInternalFrame {
         Pisos pisosEliminar = new Pisos();
         PisosDAO pisosDAO = new PisosDAO();
 
-        pisosEliminar.setId_Numero_De_Piso(Integer.parseInt(txtBuscar.getText()));
-        int confirmar = JOptionPane.showConfirmDialog(this, "¿Desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION);
+        if (txtBuscar.getText().length() != 0) {
+            pisosEliminar.setId_Numero_De_Piso(Integer.parseInt(txtBuscar.getText()));
+            int confirmar = JOptionPane.showConfirmDialog(this, "¿Desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION);
 
-        if (confirmar == 0) {
-            pisosDAO.delete(pisosEliminar);
-            JOptionPane.showMessageDialog(null, "Registro Eliminado.");
-            btnRadioVacio.setSelected(true);
-            tabla();
-            limpiar();
-            GuardarBitacoraDAO guardarBitacora = new GuardarBitacoraDAO();
-            guardarBitacora.GuardarEnBitacora("Eliminacion", Integer.toString(codigoAplicacion), Login.usuarioHoteleria);
+            if (confirmar == 0) {
+                pisosDAO.delete(pisosEliminar);
+                JOptionPane.showMessageDialog(null, "Registro Eliminado.");
+                btnRadioVacio.setSelected(true);
+                tabla();
+                limpiar();
+                GuardarBitacoraDAO guardarBitacora = new GuardarBitacoraDAO();
+                guardarBitacora.GuardarEnBitacora("Eliminacion", Integer.toString(codigoAplicacion), Login.usuarioHoteleria);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha ingresado ID a eliminar");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -588,6 +625,23 @@ public class Mantenimiento_Pisos extends javax.swing.JInternalFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnReporteActionPerformed
+
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        char validar = evt.getKeyChar();
+        if (Character.isLetter(validar)) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingrese solo números.");
+        }
+    }//GEN-LAST:event_txtBuscarKeyTyped
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+        MDIHoteleria.logo.setVisible(true);
+    }//GEN-LAST:event_formInternalFrameClosed
+
+    private void formInternalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameDeactivated
+        MDIHoteleria.logo.setVisible(true);
+    }//GEN-LAST:event_formInternalFrameDeactivated
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

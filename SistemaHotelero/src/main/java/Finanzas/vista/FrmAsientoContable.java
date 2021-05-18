@@ -367,6 +367,11 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
         BtnImprimir.setText("Imprimir");
 
         BtnVerificarPartida.setText("Cuadrar Partida");
+        BtnVerificarPartida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnVerificarPartidaActionPerformed(evt);
+            }
+        });
 
         BtnBuscarEncabezado.setText("...");
         BtnBuscarEncabezado.addActionListener(new java.awt.event.ActionListener() {
@@ -509,6 +514,7 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
 
     private void BtnBuscarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarPartidaActionPerformed
         CodigosPartidaContable codigosPartidaContable = new CodigosPartidaContable();
+        codigosPartidaContable.varOP = 1;
         codigosPartidaContable.setVisible(true);
     }//GEN-LAST:event_BtnBuscarPartidaActionPerformed
 
@@ -537,6 +543,7 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
         BtnAceptarPartida.setEnabled(true);
         BtnBuscarPartida.setEnabled(true);
         BtnBuscarEncabezado.setEnabled(true);
+        BtnNuevaPartida.setEnabled(true);
 
 
     }//GEN-LAST:event_BtnRegistrarActionPerformed
@@ -577,6 +584,11 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
         TxtMonto.setText("");
         BtnRegistrarDetalle.setEnabled(false);
     }//GEN-LAST:event_BtnRegistrarDetalleActionPerformed
+
+    private void BtnVerificarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVerificarPartidaActionPerformed
+        FrmCuadre frmCuadre = new FrmCuadre();
+        frmCuadre.setVisible(true);
+    }//GEN-LAST:event_BtnVerificarPartidaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

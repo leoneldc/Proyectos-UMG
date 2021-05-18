@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 13-05-2021 a las 17:36:17
+-- Tiempo de generación: 18-05-2021 a las 05:32:41
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.3.10
 
@@ -23,12 +23,14 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
+DROP DATABASE finanzas;
+CREATE DATABASE finanzas;
+USE finanzas;
+
 
 --
 -- Estructura de tabla para la tabla `asientocontabledetalle`
 --
-CREATE DATABASE finanzas;
-USE finanzas;
 
 CREATE TABLE `asientocontabledetalle` (
   `Codigo_DetalleAsiento` varchar(100) NOT NULL,
@@ -49,7 +51,11 @@ INSERT INTO `asientocontabledetalle` (`Codigo_DetalleAsiento`, `CuentaContable_A
 ('0000002', 'A002-Bancos', '0000001', '0000001', 'AO1', '0', '800'),
 ('0000003', 'C001-Compras', '0000002', '0000001', 'AO1', '850000', '0'),
 ('0000004', 'A001-IVAPC', '0000002', '0000001', 'AO1', '102000', '0'),
-('0000005', 'A001-Caja', '0000002', '0000001', 'AO1', '0', '952000');
+('0000005', 'A001-Caja', '0000002', '0000001', 'AO1', '0', '952000'),
+('0000006', 'A002-MOBYEQU', '0000003', '0000001', 'AA1', '3500', '0'),
+('0000007', 'A001-IVAPC', '0000003', '0000001', 'AO1', '420', '0'),
+('0000008', 'A001-Caja', '0000003', '0000001', 'AO1', '0', '420'),
+('0000009', 'P001-DOCPC', '0000003', '0000001', 'AO1', '0', '3500');
 
 -- --------------------------------------------------------
 
@@ -64,6 +70,17 @@ CREATE TABLE `banco` (
   `Telefono_Banco` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `banco`
+--
+
+INSERT INTO `banco` (`Codigo_Banco`, `Nombre_Banco`, `Clave_Banco`, `Telefono_Banco`) VALUES
+('AC0221', 'Banrural', '18829191', '22335654'),
+('AC0321', 'Banrural', '14529191', '22335654'),
+('AC0421', 'Banrural', '17629191', '22335654'),
+('CP2343', 'Banco Industrial', '46654444', '34533463'),
+('CP2543', 'Banco Industrial', '47854444', '34533463');
+
 -- --------------------------------------------------------
 
 --
@@ -71,13 +88,24 @@ CREATE TABLE `banco` (
 --
 
 CREATE TABLE `cheque` (
-  `Num_Cheque` varchar(255) NOT NULL,
+  `Numero_Cheque` varchar(255) NOT NULL,
   `Fecha_Cheque` date NOT NULL,
   `FK_Banco` varchar(255) NOT NULL,
   `FK_Cuenta` varchar(255) NOT NULL,
   `FK_Cuentahabiente` varchar(255) NOT NULL,
   `Monto_Cheque` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `cheque`
+--
+
+INSERT INTO `cheque` (`Numero_Cheque`, `Fecha_Cheque`, `FK_Banco`, `FK_Cuenta`, `FK_Cuentahabiente`, `Monto_Cheque`) VALUES
+('00022', '0000-00-00', 'AC0221', '499399', '33949', 455),
+('00023', '0000-00-00', 'AC0221', '499399', '12343', 3433),
+('00024', '0000-00-00', 'AC0221', '499399', '12444', 45444),
+('00025', '0000-00-00', 'AC0221', '499399', '43422', 433),
+('00026', '0000-00-00', 'AC0221', '564544', '43221', 345345);
 
 -- --------------------------------------------------------
 
@@ -115,6 +143,17 @@ CREATE TABLE `cuentabancaria` (
   `CuentaHabiente_Cuenta` varchar(100) NOT NULL,
   `Banco_Cuenta` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `cuentabancaria`
+--
+
+INSERT INTO `cuentabancaria` (`Numero_CuentaBancaria`, `Moneda_Cuenta`, `CuentaHabiente_Cuenta`, `Banco_Cuenta`) VALUES
+('232234', 'GTQ', '43422', 'AC0221'),
+('234232', 'GTQ', '12343', 'AC0221'),
+('446464', 'GTQ', '12444', 'AC0221'),
+('499399', 'GTQ', '33949', 'AC0221'),
+('564544', 'GTQ', '43221', 'AC0221');
 
 -- --------------------------------------------------------
 
@@ -161,6 +200,11 @@ CREATE TABLE `cuentahabiente` (
 --
 
 INSERT INTO `cuentahabiente` (`Codigo_CuentaHabiente`, `Nombre_CuentaHabiente`, `ApellidoP_CuentaHabiente`, `ApellidoM_CuentaHabiente`, `TipoPersona_CuentaHabiente`) VALUES
+('12343', 'MARCO', 'LOPEZ', 'LOPEZ', 'PN1'),
+('12444', 'ADRIANA', 'HERNANDEZ', 'MONTERROZA', 'PN1'),
+('33949', 'SANTIAGO', 'MARTINEZ', 'DIAZ', 'PN1'),
+('43221', 'ANGELA', 'VILLA', 'MONROY', 'PN1'),
+('43422', 'ALEXANDER', 'CARVAJAL', 'VARGAS', 'PN1'),
 ('A001CB', 'Juan', 'Pérez', 'López', 'PN1');
 
 -- --------------------------------------------------------
@@ -182,7 +226,10 @@ CREATE TABLE `encabezadoasientocontable` (
 
 INSERT INTO `encabezadoasientocontable` (`Codigo_EncabezadoAsiento`, `Fecha_AsientoContable`, `Moneda_Asiento`, `Descripcion_Asiento`) VALUES
 ('0000001', '09/05/2021', 'GTQ', 'Libro diario del mes de mayo.'),
-('0000002', '01/06/2021', 'GTQ', 'Libro Diario de Junio 2021');
+('0000002', '01/06/2021', 'GTQ', 'Libro Diario de Junio 2021'),
+('0000003', '12/01/2021', 'GTQ', 'Libro Diario de Enero 2021'),
+('0000004', '01/06/2021', 'GTQ', 'Libro Diario de Febrero 2021'),
+('0000005', '22/05/2021', 'GTQ', 'Libro Diario de Abril 2021');
 
 -- --------------------------------------------------------
 
@@ -201,7 +248,11 @@ CREATE TABLE `moneda` (
 --
 
 INSERT INTO `moneda` (`Codigo_Moneda`, `Nombre_Moneda`, `Simbolo_Moneda`) VALUES
-('GTQ', 'Quetzal guatemalteco', 'Q');
+('EUR', 'Euro', '€'),
+('GBP', 'Libra esterlina', '£'),
+('GTQ', 'Quetzal guatemalteco', 'Q'),
+('JPY', 'Yen japonés', '¥'),
+('USD', 'Dólar', '$');
 
 -- --------------------------------------------------------
 
@@ -243,6 +294,9 @@ CREATE TABLE `periodofiscal` (
 --
 
 INSERT INTO `periodofiscal` (`Codigo_PeriodoFiscal`, `Periodo_FiscalAño`, `Estado_PeriodoFiscal`) VALUES
+('PF2018', '2018', 'A'),
+('PF2019', '2019', 'A'),
+('PF2020', '2020', 'A'),
 ('PF2021', '2021', 'A');
 
 -- --------------------------------------------------------
@@ -261,7 +315,8 @@ CREATE TABLE `tipopersona` (
 --
 
 INSERT INTO `tipopersona` (`Codigo_TipoPersona`, `TipoPersona_Nombres`) VALUES
-('PN1', 'Persona Natural');
+('PN1', 'Persona Natural'),
+('PN2', 'Persona Juridica');
 
 -- --------------------------------------------------------
 
@@ -274,6 +329,17 @@ CREATE TABLE `tipotransaccion` (
   `Transaccion_Tipo` varchar(100) NOT NULL,
   `Efecto_TipoTransaccion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `tipotransaccion`
+--
+
+INSERT INTO `tipotransaccion` (`Codigo_TipoTransaccion`, `Transaccion_Tipo`, `Efecto_TipoTransaccion`) VALUES
+('1399929', 'Bancaria', 200),
+('2293339', 'Deposito', 400),
+('2311211', 'Deposito', 600),
+('4220399', 'Bancaria', 300),
+('4320010', 'Deposito', 500);
 
 -- --------------------------------------------------------
 
@@ -292,7 +358,10 @@ CREATE TABLE `tipo_asiento` (
 
 INSERT INTO `tipo_asiento` (`Codigo_TipoAsiento`, `Tipo_AsientoDesc`) VALUES
 ('AA1', 'Asiento de Ajustes'),
-('AO1', 'Asiento Ordinario');
+('AC1', 'Asiento Cierre'),
+('AO1', 'Asiento Ordinario'),
+('AO2', 'Asiento Operativo'),
+('AR1', 'Asiento Regularizacion');
 
 -- --------------------------------------------------------
 
@@ -309,3 +378,154 @@ CREATE TABLE `transaccionbancaria` (
   `Monto_Transaccion` varchar(100) NOT NULL,
   `Concepto_Transaccion` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `transaccionbancaria`
+--
+
+INSERT INTO `transaccionbancaria` (`Codigo_Transaccion`, `Fecha_Transaccion`, `Beneficiario`, `Cuenta_Bancaria`, `Tipo_Transaccion`, `Monto_Transaccion`, `Concepto_Transaccion`) VALUES
+('001', '17/05/2020', 'SANTIAGO MARTINEZ DIAZ', '499399', '2293339', '455', 'PAGO DE DEUDA'),
+('002', '17/05/2020', 'MARCO LOPEZ LOPEZ', '234232', '2293339', '3433', 'PAGO DE DEUDA'),
+('003', '17/05/2020', 'juan HERNANDEZ MONTERROZA', '446464', '2293339', '45444', 'PAGO DE DEUDA'),
+('004', '17/05/2020', 'ANGELA CARVAJAL VARGAS', '232234', '2293339', '433', 'PAGO DE DEUDA'),
+('005', '17/05/2020', 'JOSEFINA VILLA MONROY', '564544', '2293339', '345345', 'PAGO DE DEUDA');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `asientocontabledetalle`
+--
+ALTER TABLE `asientocontabledetalle`
+  ADD PRIMARY KEY (`Codigo_DetalleAsiento`),
+  ADD KEY `fkAsientoContableDetalleCuentaContable1` (`CuentaContable_Asiento`),
+  ADD KEY `fkAsientoContableDetallePartidaContable1` (`Partida_Asiento`),
+  ADD KEY `fkAsientoContableDetalleEncabezadoAsientoContable1` (`Encabezado_Asiento`),
+  ADD KEY `fkAsientoContableDetalleTipo_Asiento1` (`Tipo_Asiento`);
+
+--
+-- Indices de la tabla `banco`
+--
+ALTER TABLE `banco`
+  ADD PRIMARY KEY (`Codigo_Banco`);
+
+--
+-- Indices de la tabla `cheque`
+--
+ALTER TABLE `cheque`
+  ADD PRIMARY KEY (`Numero_Cheque`),
+  ADD KEY `FK_BANCOCHEQUE` (`FK_Banco`);
+
+--
+-- Indices de la tabla `clasificacioncuenta`
+--
+ALTER TABLE `clasificacioncuenta`
+  ADD PRIMARY KEY (`Codigo_clasificacion`);
+
+--
+-- Indices de la tabla `cuentabancaria`
+--
+ALTER TABLE `cuentabancaria`
+  ADD PRIMARY KEY (`Numero_CuentaBancaria`),
+  ADD KEY `fkCuentaBancariaMoneda1` (`Moneda_Cuenta`),
+  ADD KEY `fkCuentaBancariaCuentaHabiente1` (`CuentaHabiente_Cuenta`),
+  ADD KEY `fkCuentaBancariaBanco1` (`Banco_Cuenta`);
+
+--
+-- Indices de la tabla `cuentacontable`
+--
+ALTER TABLE `cuentacontable`
+  ADD PRIMARY KEY (`Codigo_CuentaContable`),
+  ADD KEY `fkCuentaContableClasificacionCuenta1` (`Clasificacion_CuentaContable`);
+
+--
+-- Indices de la tabla `cuentahabiente`
+--
+ALTER TABLE `cuentahabiente`
+  ADD PRIMARY KEY (`Codigo_CuentaHabiente`),
+  ADD KEY `fkCuentaHabienteTipoPersona1` (`TipoPersona_CuentaHabiente`);
+
+--
+-- Indices de la tabla `encabezadoasientocontable`
+--
+ALTER TABLE `encabezadoasientocontable`
+  ADD PRIMARY KEY (`Codigo_EncabezadoAsiento`),
+  ADD KEY `fkEncabezadoAsientoContableMoneda1` (`Moneda_Asiento`);
+
+--
+-- Indices de la tabla `moneda`
+--
+ALTER TABLE `moneda`
+  ADD PRIMARY KEY (`Codigo_Moneda`);
+
+--
+-- Indices de la tabla `partidacontable`
+--
+ALTER TABLE `partidacontable`
+  ADD PRIMARY KEY (`Codigo_PartidaContable`),
+  ADD KEY `fkPartida_ContablePeriodoFiscal1` (`Periodo_FiscalPartida`);
+
+--
+-- Indices de la tabla `periodofiscal`
+--
+ALTER TABLE `periodofiscal`
+  ADD PRIMARY KEY (`Codigo_PeriodoFiscal`);
+
+--
+-- Indices de la tabla `tipopersona`
+--
+ALTER TABLE `tipopersona`
+  ADD PRIMARY KEY (`Codigo_TipoPersona`);
+
+--
+-- Indices de la tabla `tipotransaccion`
+--
+ALTER TABLE `tipotransaccion`
+  ADD PRIMARY KEY (`Codigo_TipoTransaccion`);
+
+--
+-- Indices de la tabla `tipo_asiento`
+--
+ALTER TABLE `tipo_asiento`
+  ADD PRIMARY KEY (`Codigo_TipoAsiento`);
+
+--
+-- Indices de la tabla `transaccionbancaria`
+--
+ALTER TABLE `transaccionbancaria`
+  ADD PRIMARY KEY (`Codigo_Transaccion`),
+  ADD KEY `fkTransaccionBancariaCuentaBancaria1` (`Cuenta_Bancaria`),
+  ADD KEY `fkTransaccionBancariaTipoTransaccion1` (`Tipo_Transaccion`);
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `asientocontabledetalle`
+--
+ALTER TABLE `asientocontabledetalle`
+  ADD CONSTRAINT `fkAsientoContableDetalleCuentaContable1` FOREIGN KEY (`CuentaContable_Asiento`) REFERENCES `cuentacontable` (`Codigo_CuentaContable`),
+  ADD CONSTRAINT `fkAsientoContableDetalleEncabezadoAsientoContable1` FOREIGN KEY (`Encabezado_Asiento`) REFERENCES `encabezadoasientocontable` (`Codigo_EncabezadoAsiento`),
+  ADD CONSTRAINT `fkAsientoContableDetallePartidaContable1` FOREIGN KEY (`Partida_Asiento`) REFERENCES `partidacontable` (`Codigo_PartidaContable`),
+  ADD CONSTRAINT `fkAsientoContableDetalleTipo_Asiento1` FOREIGN KEY (`Tipo_Asiento`) REFERENCES `tipo_asiento` (`Codigo_TipoAsiento`);
+
+--
+-- Filtros para la tabla `cuentabancaria`
+--
+ALTER TABLE `cuentabancaria`
+  ADD CONSTRAINT `fkCuentaBancariaBanco1` FOREIGN KEY (`Banco_Cuenta`) REFERENCES `banco` (`Codigo_Banco`),
+  ADD CONSTRAINT `fkCuentaBancariaCuentaHabiente1` FOREIGN KEY (`CuentaHabiente_Cuenta`) REFERENCES `cuentahabiente` (`Codigo_CuentaHabiente`),
+  ADD CONSTRAINT `fkCuentaBancariaMoneda1` FOREIGN KEY (`Moneda_Cuenta`) REFERENCES `moneda` (`Codigo_Moneda`);
+
+--
+-- Filtros para la tabla `cuentacontable`
+--
+ALTER TABLE `cuentacontable`
+  ADD CONSTRAINT `fkCuentaContableClasificacionCuenta1` FOREIGN KEY (`Clasificacion_CuentaContable`) REFERENCES `clasificacioncuenta` (`Codigo_clasificacion`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1,18 +1,29 @@
 package Hoteleria.vista;
 
+import Hoteleria.datos.ConexionHoteleria;
 import Hoteleria.datos.FacturacionDAO;
 import Hoteleria.datos.ReservacionDAO;
 import Hoteleria.datos.ServiciosDAO;
 import Hoteleria.dominio.Facturacion;
 import Hoteleria.dominio.Reservacion;
 import Hoteleria.dominio.Servicios;
-import java.text.DateFormat;
+import java.io.File;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
+import seguridad.vista.GenerarPermisos;
+import seguridad.vista.Login;
 
 /**
  *
@@ -26,6 +37,30 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
     DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
     FacturacionDAO cargarCbx = new FacturacionDAO();
     int suma = 0, total;
+
+    void habilitarAcciones() {
+
+        var codigoAplicacion = 2203;
+        var usuario = Login.usuarioHoteleria;
+
+        btnConfirmarPago.setEnabled(false);
+        btnVerificar.setEnabled(false);
+
+        GenerarPermisos permisos = new GenerarPermisos();
+
+        String[] permisosApp = new String[2];
+
+        for (int i = 0; i < 2; i++) {
+            permisosApp[i] = permisos.getAccionesAplicacion(codigoAplicacion, usuario)[i];
+        }
+
+        if (permisosApp[0].equals("1")) {
+            btnVerificar.setEnabled(true);
+        }
+        if (permisosApp[1].equals("1")) {
+            btnConfirmarPago.setEnabled(true);
+        }
+    }
 
     public FacturacionDeHabitacion() {
         initComponents();
@@ -148,6 +183,17 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         jTable2.getColumnModel().getColumn(0).setPreferredWidth(50);
         jTable2.getColumnModel().getColumn(1).setPreferredWidth(50);
     }
+    
+    public void limpiarCompra(){
+        for (int i = 0; i < jTable2.getRowCount(); i++) {
+            String Vector[] = new String[2];
+            Vector[0] = jTable2.getValueAt(i, 0).toString();
+            Vector[1] = jTable2.getValueAt(i, 1).toString();
+            modelo2.addRow(Vector);
+            suma = suma - Integer.parseInt(Vector[1]);
+        }
+        LimpiarTabla2();
+    }
 
     public void limpiar() {
         txtFactura.setText("");
@@ -208,16 +254,33 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         jdateCaducidad = new com.toedter.calendar.JDateChooser();
         btnConfirmarPago = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel18 = new javax.swing.JLabel();
-        txtBuscar = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setTitle("Facturación");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameDeactivated(evt);
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Factura"));
 
@@ -305,7 +368,7 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel7.setText("No. Tarjeta:");
+        jLabel7.setText("No. Tarjeta / Cuenta:");
 
         txtNoTarjeta.setEditable(false);
         txtNoTarjeta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -428,6 +491,7 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         jdateCaducidad.setEnabled(false);
 
         btnConfirmarPago.setText("Confirmar Pago");
+        btnConfirmarPago.setEnabled(false);
         btnConfirmarPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfirmarPagoActionPerformed(evt);
@@ -477,7 +541,7 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jdateCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(18, Short.MAX_VALUE))
+                        .addContainerGap(20, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -576,21 +640,10 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                     .addComponent(jLabel16)
                     .addComponent(txtTotalFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConfirmarPago))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro Facturas"));
-
-        jLabel18.setText("Buscar:");
-
-        txtBuscar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -602,6 +655,20 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         ));
         jScrollPane3.setViewportView(jTable);
 
+        jButton1.setText("Reporte");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("?");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -610,23 +677,20 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscar)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3)
                 .addContainerGap())
@@ -680,11 +744,6 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCvvActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
-
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
     private void txtTotalFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalFacturacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTotalFacturacionActionPerformed
@@ -696,28 +755,38 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         ReservacionDAO huespedesdao = new ReservacionDAO();
         Reservacion buscarReserva = new Reservacion();
 
-        ama_De_Llaves_Buscar.setId_Reservacion(Integer.parseInt(txtReserva.getText()));
-        ama_De_Llaves_Buscar = ama_De_Llaves_DAO.query(ama_De_Llaves_Buscar);
+        if (txtFactura.getText().length() != 0 && txtReserva.getText().length() != 0) {
+            ama_De_Llaves_Buscar.setId_Reservacion(Integer.parseInt(txtReserva.getText()));
+            ama_De_Llaves_Buscar = ama_De_Llaves_DAO.query(ama_De_Llaves_Buscar);
 
-        buscarReserva.setId_reservacion(String.valueOf(ama_De_Llaves_Buscar.getId_Reservacion()));
-        buscarReserva = huespedesdao.query(buscarReserva);
+            if (String.valueOf(ama_De_Llaves_Buscar.getNombre_Factura()).equals("null")) {
+                JOptionPane.showMessageDialog(null, "No. de Reserva no registrado.");
+            } else {
+                buscarReserva.setId_reservacion(String.valueOf(ama_De_Llaves_Buscar.getId_Reservacion()));
+                buscarReserva = huespedesdao.query(buscarReserva);
 
-        txtNombre.setText(String.valueOf(ama_De_Llaves_Buscar.getNombre_Factura()));
-        txtEntrada.setText(String.valueOf(buscarReserva.getDesde()));
-        txtSalida.setText(String.valueOf(buscarReserva.getHasta()));
-        txtTotalReservacion.setText(String.valueOf(buscarReserva.getPrecio()));
+                txtNombre.setText(String.valueOf(ama_De_Llaves_Buscar.getNombre_Factura()));
+                txtEntrada.setText(String.valueOf(buscarReserva.getDesde()));
+                txtSalida.setText(String.valueOf(buscarReserva.getHasta()));
+                txtTotalReservacion.setText(String.valueOf(buscarReserva.getPrecio()));
 
-        //txtNombre.setEditable(true);
-        cbxPago.setEnabled(true);
-        //txtNoTarjeta.setEditable(true);
-        //txtCvv.setEditable(true);
-        //jdateCaducidad.setEnabled(true);
-        txtTotalServicios.setText(String.valueOf(0));
-        txtTotalFacturacion.setText(txtTotalReservacion.getText());
-        btnAsignarUno.setEnabled(true);
-        btnAsignarTodos.setEnabled(true);
-        btnQuitarUno.setEnabled(true);
-        btnQuitarTodos.setEnabled(true);
+                //txtNombre.setEditable(true);
+                cbxPago.setEnabled(true);
+                //txtNoTarjeta.setEditable(true);
+                //txtCvv.setEditable(true);
+                //jdateCaducidad.setEnabled(true);
+                txtTotalServicios.setText(String.valueOf(0));
+                txtTotalFacturacion.setText(txtTotalReservacion.getText());
+                btnAsignarUno.setEnabled(true);
+                btnAsignarTodos.setEnabled(true);
+                btnQuitarUno.setEnabled(true);
+                btnQuitarTodos.setEnabled(true);
+                btnConfirmarPago.setEnabled(true);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "El número de factura y de reservación deben estar llenos.");
+        }
+
     }//GEN-LAST:event_btnVerificarActionPerformed
 
     private void btnAsignarUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarUnoActionPerformed
@@ -813,6 +882,7 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                     if (confirmar == 0) {
                         ama_De_Llaves_DAO.insert(ama_De_Llaves_Insertar);
                         limpiar();
+                        limpiarCompra();
                         //GuardarBitacoraDAO guardarBitacora = new GuardarBitacoraDAO();
                         //guardarBitacora.GuardarEnBitacora("Facturacion", Integer.toString(codigoAplicacion), Login.usuarioHoteleria);
                         txtNombre.setEditable(false);
@@ -853,10 +923,81 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                     ama_De_Llaves_Insertar.setTotalFactura_Factura(Integer.parseInt(txtTotalFacturacion.getText()));
                     ama_De_Llaves_Insertar.setEstado_Factura(1);
 
+                    int pago = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la totalidad de su pago"));
+                    int pago2 = Integer.parseInt(txtTotalFacturacion.getText());
+
+                    if (pago < pago2) {
+                        JOptionPane.showConfirmDialog(null, "El monto ingresado no es la totalidad de la factura.");
+                    } else if (pago > pago2) {
+                        int cambio = pago - pago2;
+                        int confirmar = JOptionPane.showConfirmDialog(this, "¿Desea seguir adelante con su pago?", "Pago", JOptionPane.YES_NO_OPTION);
+                        if (confirmar == 0) {
+                            JOptionPane.showMessageDialog(null, "Su cambio es de " + cambio);
+                            ama_De_Llaves_DAO.insert(ama_De_Llaves_Insertar);
+                            limpiar();
+                            limpiarCompra();
+                            txtNombre.setEditable(false);
+                            cbxPago.setEnabled(false);
+                            txtNoTarjeta.setEditable(false);
+                            txtCvv.setEditable(false);
+                            jdateCaducidad.setEnabled(false);
+                            btnAsignarUno.setEnabled(false);
+                            btnAsignarTodos.setEnabled(false);
+                            btnQuitarUno.setEnabled(false);
+                            btnQuitarTodos.setEnabled(false);
+                            btnConfirmarPago.setEnabled(false);
+                        }
+                    } else if (pago == pago2) {
+                        int confirmar = JOptionPane.showConfirmDialog(this, "¿Desea seguir adelante con su pago?", "Pago", JOptionPane.YES_NO_OPTION);
+                        if (confirmar == 0) {
+                            ama_De_Llaves_DAO.insert(ama_De_Llaves_Insertar);
+                            limpiar();
+                            limpiarCompra();
+                            //GuardarBitacoraDAO guardarBitacora = new GuardarBitacoraDAO();
+                            //guardarBitacora.GuardarEnBitacora("Facturacion", Integer.toString(codigoAplicacion), Login.usuarioHoteleria);
+                            txtNombre.setEditable(false);
+                            cbxPago.setEnabled(false);
+                            txtNoTarjeta.setEditable(false);
+                            txtCvv.setEditable(false);
+                            jdateCaducidad.setEnabled(false);
+                            btnAsignarUno.setEnabled(false);
+                            btnAsignarTodos.setEnabled(false);
+                            btnQuitarUno.setEnabled(false);
+                            btnQuitarTodos.setEnabled(false);
+                            btnConfirmarPago.setEnabled(false);
+                        }
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Todos los campos tienen que estar llenos");
+            }
+        } else if (cbx_Pago.equals("Criptomoneda Ethereum") || cbx_Pago.equals("PAYPAL")
+                || cbx_Pago.equals("MovilPay")) {
+            if (txtFactura.getText().length() != 0 && txtReserva.getText().length() != 0
+                    && txtNoTarjeta.getText().length() != 0
+                    && txtTotalReservacion.getText().length() != 0 && txtTotalServicios.getText().length() != 0
+                    && txtTotalFacturacion.getText().length() != 0 && cbx_Pago != "Seleccionar...") {
+                {
+                    ama_De_Llaves_Insertar.setId_Factura(Integer.parseInt(txtFactura.getText()));
+                    ama_De_Llaves_Insertar.setId_Reservacion(Integer.parseInt(txtReserva.getText()));
+                    ama_De_Llaves_Insertar.setNombre_Factura(txtNombre.getText());
+                    ama_De_Llaves_Insertar.setFechaEntrada_Factura(txtEntrada.getText());
+                    ama_De_Llaves_Insertar.setFechaSalida_Factura(txtSalida.getText());
+                    ama_De_Llaves_Insertar.setFechaEntrada_Factura(txtEntrada.getText());
+                    ama_De_Llaves_Insertar.setFormaPago_Factura(cbx_Pago);
+                    ama_De_Llaves_Insertar.setNoTarjeta_Factura(Integer.parseInt(txtNoTarjeta.getText()));
+                    ama_De_Llaves_Insertar.setCvv_Factura(0);
+                    ama_De_Llaves_Insertar.setCaducidad_Factura(null);
+                    ama_De_Llaves_Insertar.setTotalReservacion_Factura(Integer.parseInt(txtTotalReservacion.getText()));
+                    ama_De_Llaves_Insertar.setTotalServicios_Factura(Integer.parseInt(txtTotalServicios.getText()));
+                    ama_De_Llaves_Insertar.setTotalFactura_Factura(Integer.parseInt(txtTotalFacturacion.getText()));
+                    ama_De_Llaves_Insertar.setEstado_Factura(1);
+
                     int confirmar = JOptionPane.showConfirmDialog(this, "¿Desea seguir adelante con su pago?", "Pago", JOptionPane.YES_NO_OPTION);
                     if (confirmar == 0) {
                         ama_De_Llaves_DAO.insert(ama_De_Llaves_Insertar);
                         limpiar();
+                        limpiarCompra();
                         //GuardarBitacoraDAO guardarBitacora = new GuardarBitacoraDAO();
                         //guardarBitacora.GuardarEnBitacora("Facturacion", Integer.toString(codigoAplicacion), Login.usuarioHoteleria);
                         txtNombre.setEditable(false);
@@ -874,6 +1015,7 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "Todos los campos tienen que estar llenos");
             }
+
         }
         tabla();
     }//GEN-LAST:event_btnConfirmarPagoActionPerformed
@@ -937,6 +1079,18 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
             txtNoTarjeta.setEditable(false);
             txtCvv.setEditable(false);
             jdateCaducidad.setEnabled(false);
+        } else if (cbx_Pago.equals("Criptomoneda Ethereum")) {
+            txtNoTarjeta.setEditable(true);
+            txtCvv.setEditable(false);
+            jdateCaducidad.setEnabled(false);
+        } else if (cbx_Pago.equals("PAYPAL")) {
+            txtNoTarjeta.setEditable(true);
+            txtCvv.setEditable(false);
+            jdateCaducidad.setEnabled(false);
+        } else if (cbx_Pago.equals("MovilPay")) {
+            txtNoTarjeta.setEditable(true);
+            txtCvv.setEditable(false);
+            jdateCaducidad.setEnabled(false);
         }
     }//GEN-LAST:event_cbxPagoItemStateChanged
 
@@ -944,16 +1098,61 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+        MDIHoteleria.logo.setVisible(true);
+    }//GEN-LAST:event_formInternalFrameClosed
+
+    private void formInternalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameDeactivated
+        MDIHoteleria.logo.setVisible(true);
+    }//GEN-LAST:event_formInternalFrameDeactivated
+
+    private Connection connection = null;
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Map p = new HashMap();
+        JasperReport report;
+        JasperPrint print;
+
+        try {
+            connection = ConexionHoteleria.getConnection();
+            report = JasperCompileManager.compileReport(new File("").getAbsolutePath()
+                    + "/src/main/java/Hoteleria/reportes/ReporteFacturacion.jrxml");
+            print = JasperFillManager.fillReport(report, p, connection);
+            JasperViewer view = new JasperViewer(print, false);
+            view.setTitle("Reporte de Ama de Llaves");
+            view.setVisible(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            if ((new File("src\\main\\java\\Hoteleria\\ayuda\\AyudaMantenimientoAmaDeLlaves.chm")).exists()) {
+                Process p = Runtime
+                        .getRuntime()
+                        .exec("rundll32 url.dll,FileProtocolHandler src\\main\\java\\Hoteleria\\ayuda\\AyudaFacturacion.chm");
+                p.waitFor();
+            } else {
+                JOptionPane.showMessageDialog(null, "La ayuda no Fue encontrada");
+            }
+            //System.out.println("Correcto");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignarTodos;
     private javax.swing.JButton btnAsignarUno;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnConfirmarPago;
     private javax.swing.JButton btnQuitarTodos;
     private javax.swing.JButton btnQuitarUno;
     private javax.swing.JButton btnVerificar;
     private javax.swing.JComboBox<String> cbxPago;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -962,7 +1161,6 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -980,7 +1178,6 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
     public static javax.swing.JTable jTable1;
     public static javax.swing.JTable jTable2;
     private com.toedter.calendar.JDateChooser jdateCaducidad;
-    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCvv;
     private javax.swing.JTextField txtEntrada;
     private javax.swing.JTextField txtFactura;

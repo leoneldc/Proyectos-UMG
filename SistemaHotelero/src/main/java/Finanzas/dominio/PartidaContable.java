@@ -7,6 +7,76 @@ import javax.swing.JOptionPane;
 public class PartidaContable {
 
     /**
+     * @return the sumaDebe
+     */
+    public double getSumaDebe() {
+        return sumaDebe;
+    }
+
+    /**
+     * @param sumaDebe the sumaDebe to set
+     */
+    public void setSumaDebe(double sumaDebe) {
+        this.sumaDebe = sumaDebe;
+    }
+
+    /**
+     * @return the sumaHaber
+     */
+    public double getSumaHaber() {
+        return sumaHaber;
+    }
+
+    /**
+     * @param sumaHaber the sumaHaber to set
+     */
+    public void setSumaHaber(double sumaHaber) {
+        this.sumaHaber = sumaHaber;
+    }
+
+    /**
+     * @return the diferencia
+     */
+    public double getDiferencia() {
+        return diferencia;
+    }
+
+    /**
+     * @param diferencia the diferencia to set
+     */
+    public void setDiferencia(double diferencia) {
+        this.diferencia = diferencia;
+    }
+
+    /**
+     * @return the cuadre
+     */
+    public double getCuadre() {
+        return cuadre;
+    }
+
+    /**
+     * @param cuadre the cuadre to set
+     */
+    public void setCuadre(double cuadre) {
+        this.cuadre = cuadre;
+    }
+
+    /**
+     * @return the mensaje
+     */
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    /**
+     * @param mensaje the mensaje to set
+     */
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    /**
      * @return the codigoPartidaContable
      */
     public String getCodigoPartidaContable() {
@@ -133,9 +203,24 @@ public class PartidaContable {
         }
         return matrixRegistros;
     }
-    
+
+    public String[][] getTablaPartidas(PartidaContable pc) {
+        String[][] matrixRegistros;
+
+        partidaContableDAO.getDetallePartida(pc);
+
+        matrixRegistros = new String[partidaContableDAO.getDetallePartida(pc).length][3];
+
+        for (int i = 0; i < partidaContableDAO.getDetallePartida(pc).length; i++) {
+            for (int j = 0; j < 3; j++) {
+                matrixRegistros[i][j] = partidaContableDAO.getDetallePartida(pc)[i][j];
+            }
+        }
+        return matrixRegistros;
+    }
+
     public void RegistrarPartida(PartidaContable objPartida) {
-        
+
         if (objPartida.equals(null)) {
 
             JOptionPane.showMessageDialog(null, "¡NO PUEDEN HABER CAMPOS VACÍOS!", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -150,4 +235,12 @@ public class PartidaContable {
             }
         }
     }
+
+    //---------------------------------------------//
+    private double sumaDebe = 0;
+    private double sumaHaber = 0;
+    private double diferencia = 0;
+    private double cuadre = 0;
+    private String mensaje = "";
+
 }

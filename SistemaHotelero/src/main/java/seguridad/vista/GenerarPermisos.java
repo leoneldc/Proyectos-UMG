@@ -68,6 +68,10 @@ public class GenerarPermisos {
                 MDIFinanzas.JMenuPersonaBancaria.setEnabled(false);
                 MDIFinanzas.JMenuBancos.setEnabled(false);
                 MDIFinanzas.JMenuCuentahabiente.setEnabled(false);
+                MDIFinanzas.JMenuItemAsientoContable.setEnabled(false);
+                MDIFinanzas.EncabezadoAsiento.setEnabled(false);
+                MDIFinanzas.JMenuItemTB.setEnabled(false);
+                MDIFinanzas.JMenunEmisionCheque.setEnabled(false);
 
                 ejecutarPermisos.ejecutarBusqueda(usuario);
 
@@ -112,7 +116,20 @@ public class GenerarPermisos {
                     }
                     if (varApp >= 1101 && varApp <= 1200) {
                         MDIFinanzas.JMenuProcesos.setEnabled(true);
-                        //PENDIENTE PARA TRANSACCIONALES
+                        switch (varApp) {
+                            case 1101:
+                                MDIFinanzas.JMenuItemAsientoContable.setEnabled(true);
+                                break;
+                            case 1102:
+                                MDIFinanzas.EncabezadoAsiento.setEnabled(true);
+                                break;
+                            case 1103:
+                                MDIFinanzas.JMenuItemTB.setEnabled(true);
+                                break;
+                            case 1105:
+                                MDIFinanzas.JMenunEmisionCheque.setEnabled(true);
+                                break;
+                        }
                     }
                     if (varApp >= 1201 && varApp <= 1300) {
                         MDIFinanzas.JMenuInformes.setEnabled(false);
@@ -203,7 +220,7 @@ public class GenerarPermisos {
                 MDIComercial.M_inventario.setVisible(false);
                 MDIComercial.P_ventas.setVisible(false);
                 MDIComercial.P_compras.setVisible(false);
-             //   MDIComercial.ProcesoInventario.setVisible(false);
+                //   MDIComercial.ProcesoInventario.setVisible(false);
                 for (int i = 0; i < ejecutarPermisos.getAplicaciones().length; i++) {
                     int varApp = Integer.parseInt(ejecutarPermisos.getAplicaciones()[i]);
                     if (varApp >= 3000 && varApp <= 3360) {
@@ -212,7 +229,7 @@ public class GenerarPermisos {
                         MDIComercial.M_inventario.setVisible(true);
                         MDIComercial.P_ventas.setVisible(true);
                         MDIComercial.P_compras.setVisible(true);
-                    //    MDIComercial.ProcesoInventario.setVisible(true);
+                        //    MDIComercial.ProcesoInventario.setVisible(true);
                         switch (varApp) {
                             case 3001:
                                 MDIComercial.M_cliente.setVisible(true);

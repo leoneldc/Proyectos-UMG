@@ -6,6 +6,7 @@
 package Finanzas.vista;
 
 import Finanzas.dominio.PartidaContable;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,7 +18,6 @@ public class CodigosPartidaContable extends javax.swing.JFrame {
     /**
      * Creates new form CodigosPartidaContable
      */
-    
     private void cargarTabla() {
 
         PartidaContable objPartida = new PartidaContable();
@@ -45,7 +45,8 @@ public class CodigosPartidaContable extends javax.swing.JFrame {
             }
         }
     }
-    
+    public int varOP = 0;
+
     public CodigosPartidaContable() {
         initComponents();
         cargarTabla();
@@ -121,10 +122,17 @@ public class CodigosPartidaContable extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSeleccionarActionPerformed
-        FrmAsientoContable.TxtCodigoPartida.setText((String) TblPartidas.getValueAt(TblPartidas.getSelectedRow(), 0));
-        FrmAsientoContable.TxtFecha.setText((String) TblPartidas.getValueAt(TblPartidas.getSelectedRow(), 1));
-        FrmAsientoContable.CmbPeriodoFiscal.setSelectedItem((String) TblPartidas.getValueAt(TblPartidas.getSelectedRow(), 2));
-        FrmAsientoContable.TxtGlosaContable.setText((String) TblPartidas.getValueAt(TblPartidas.getSelectedRow(), 3));
+
+        if (varOP == 1) {
+            FrmAsientoContable.TxtCodigoPartida.setText((String) TblPartidas.getValueAt(TblPartidas.getSelectedRow(), 0));
+            FrmAsientoContable.TxtFecha.setText((String) TblPartidas.getValueAt(TblPartidas.getSelectedRow(), 1));
+            FrmAsientoContable.CmbPeriodoFiscal.setSelectedItem((String) TblPartidas.getValueAt(TblPartidas.getSelectedRow(), 2));
+            FrmAsientoContable.TxtGlosaContable.setText((String) TblPartidas.getValueAt(TblPartidas.getSelectedRow(), 3));
+        } else if (varOP == 2) {
+            FrmCuadre.TxtPartida.setText((String) TblPartidas.getValueAt(TblPartidas.getSelectedRow(), 0));
+            FrmCuadre.TxtGlosa.setText((String) TblPartidas.getValueAt(TblPartidas.getSelectedRow(), 3));
+        }
+
     }//GEN-LAST:event_BtnSeleccionarActionPerformed
 
     /**
