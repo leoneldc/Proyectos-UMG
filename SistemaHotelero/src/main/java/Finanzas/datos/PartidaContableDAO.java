@@ -128,15 +128,45 @@ public class PartidaContableDAO extends Conexion {
         return flagRegistro;
     }
 
-    public String[][] getDetallePartida(PartidaContable pc) {
-
-        String[][] matrixPartida;
-        int contadorData = getCantidadRegistros();
-        matrixPartida = new String[contadorData][3];
-
+    public int getDetalles(String codigo) {
+        int registros = 0;
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
+
+        try {
+
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement("SELECT COUNT(Codigo_DetalleAsiento) FROM asientocontabledetalle WHERE partida_asiento = ?");
+            stmt.setString(1, codigo);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                registros = rs.getInt("COUNT(Codigo_DetalleAsiento)");
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+
+        return registros;
+    }
+
+    public String[][] getDetallePartida(PartidaContable pc) {
+        
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        String[][] matrixPartida;
+        int contadorData = 0;
+        contadorData = getDetalles(pc.getCodigoPartidaContable());
+        matrixPartida = new String[contadorData][3];
 
         try {
             conn = Conexion.getConnection();

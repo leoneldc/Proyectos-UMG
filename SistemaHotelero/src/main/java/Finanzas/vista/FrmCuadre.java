@@ -6,9 +6,8 @@
 package Finanzas.vista;
 
 import Finanzas.dominio.PartidaContable;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
-
 
 /**
  *
@@ -71,8 +70,8 @@ public class FrmCuadre extends javax.swing.JFrame {
         TxtGlosa = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        TxtDif = new javax.swing.JTextField();
+        TxtEstado = new javax.swing.JTextField();
         BtnCuadrar = new javax.swing.JButton();
         BtnVerificar = new javax.swing.JButton();
 
@@ -117,14 +116,19 @@ public class FrmCuadre extends javax.swing.JFrame {
 
         jLabel5.setText("Estado:");
 
-        jTextField3.setEditable(false);
+        TxtDif.setEditable(false);
 
-        jTextField4.setEditable(false);
+        TxtEstado.setEditable(false);
 
         BtnCuadrar.setText("Cuadrar");
         BtnCuadrar.setEnabled(false);
 
         BtnVerificar.setText("Verificar");
+        BtnVerificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnVerificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,8 +143,8 @@ public class FrmCuadre extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                            .addComponent(TxtDif)
+                            .addComponent(TxtEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BtnVerificar)
@@ -190,12 +194,12 @@ public class FrmCuadre extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtDif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnVerificar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnCuadrar))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
@@ -217,6 +221,33 @@ public class FrmCuadre extends javax.swing.JFrame {
         cargarTabla(partidaContable);
 
     }//GEN-LAST:event_BtnAceptarActionPerformed
+
+    PartidaContable partidaContableCuadre = new PartidaContable();
+
+    private void BtnVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVerificarActionPerformed
+
+        for (int i = 0; i < TblPartida.getRowCount(); i++) {
+            partidaContableCuadre.setSumaDebe(partidaContableCuadre.getSumaDebe() + Double.parseDouble((String) TblPartida.getValueAt(i, 1)));
+        }
+
+        for (int i = 0; i < TblPartida.getRowCount(); i++) {
+            partidaContableCuadre.setSumaHaber(partidaContableCuadre.getSumaHaber() + Double.parseDouble((String) TblPartida.getValueAt(i, 2)));
+        }
+
+        partidaContableCuadre.setDiferencia(partidaContableCuadre.getSumaDebe() - partidaContableCuadre.getSumaHaber());
+
+        if (partidaContableCuadre.getDiferencia() == 0) {
+            TxtDif.setText(String.valueOf(partidaContableCuadre.getDiferencia()));
+            partidaContableCuadre.setMensaje("CUADRADO");
+            TxtEstado.setText(partidaContableCuadre.getMensaje());
+            BtnCuadrar.setEnabled(true);
+        } else {
+            TxtDif.setText(String.valueOf(partidaContableCuadre.getDiferencia()));
+            partidaContableCuadre.setMensaje("NO CUADRADO");
+            TxtEstado.setText(partidaContableCuadre.getMensaje());
+        }
+
+    }//GEN-LAST:event_BtnVerificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,6 +290,8 @@ public class FrmCuadre extends javax.swing.JFrame {
     private javax.swing.JButton BtnCuadrar;
     private javax.swing.JButton BtnVerificar;
     private javax.swing.JTable TblPartida;
+    private javax.swing.JTextField TxtDif;
+    private javax.swing.JTextField TxtEstado;
     public static javax.swing.JTextField TxtGlosa;
     public static javax.swing.JTextField TxtPartida;
     private javax.swing.JLabel jLabel1;
@@ -267,7 +300,5 @@ public class FrmCuadre extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }

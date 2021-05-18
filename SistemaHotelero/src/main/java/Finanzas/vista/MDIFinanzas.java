@@ -37,7 +37,7 @@ public class MDIFinanzas extends javax.swing.JFrame {
         var modulo_nombre = "Finanzas";
         initComponents();
         this.setTitle("Usuario: " + "[" + Login.usuarioFianzas + "]" + " \t" + "IP: [" + mdi_Components.getIp() + "]");
-        //permisos.getPermisos(modulo_nombre, Login.usuarioFianzas);
+        permisos.getPermisos(modulo_nombre, Login.usuarioFianzas);
     }
 
     @SuppressWarnings("unchecked")
@@ -64,7 +64,7 @@ public class MDIFinanzas extends javax.swing.JFrame {
         JMenuPersonaBancaria = new javax.swing.JMenuItem();
         JMenuProcesos = new javax.swing.JMenu();
         JMenuItemAsientoContable = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        JMenuItemTB = new javax.swing.JMenuItem();
         JMenunEmisionCheque = new javax.swing.JMenuItem();
         EncabezadoAsiento = new javax.swing.JMenuItem();
         JMenuInformes = new javax.swing.JMenu();
@@ -207,13 +207,13 @@ public class MDIFinanzas extends javax.swing.JFrame {
         });
         JMenuProcesos.add(JMenuItemAsientoContable);
 
-        jMenuItem1.setText("Transaccion Bancaria");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        JMenuItemTB.setText("Transaccion Bancaria");
+        JMenuItemTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                JMenuItemTBActionPerformed(evt);
             }
         });
-        JMenuProcesos.add(jMenuItem1);
+        JMenuProcesos.add(JMenuItemTB);
 
         JMenunEmisionCheque.setText("Emision Cheque");
         JMenunEmisionCheque.addActionListener(new java.awt.event.ActionListener() {
@@ -367,7 +367,7 @@ public class MDIFinanzas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JMenuCerrarSesionActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void JMenuItemTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuItemTBActionPerformed
 
         try {
             // TODO add your handling code here:
@@ -377,7 +377,7 @@ public class MDIFinanzas extends javax.swing.JFrame {
         }
 
         JDesktopFinanzas.add(FrmTransacion);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_JMenuItemTBActionPerformed
 
     private void JMenunEmisionChequeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenunEmisionChequeActionPerformed
         try {
@@ -433,7 +433,7 @@ public class MDIFinanzas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem EncabezadoAsiento;
+    public static javax.swing.JMenuItem EncabezadoAsiento;
     private javax.swing.JDesktopPane JDesktopFinanzas;
     private javax.swing.JMenu JMenuArchivo;
     private javax.swing.JMenu JMenuAyuda;
@@ -451,13 +451,13 @@ public class MDIFinanzas extends javax.swing.JFrame {
     private javax.swing.JMenu JMenuHerramientas;
     public static javax.swing.JMenu JMenuInformes;
     public static javax.swing.JMenuItem JMenuItemAsientoContable;
+    public static javax.swing.JMenuItem JMenuItemTB;
     public static javax.swing.JMenuItem JMenuPeriodoFiscal;
     public static javax.swing.JMenuItem JMenuPersonaBancaria;
     public static javax.swing.JMenu JMenuProcesos;
     public static javax.swing.JMenuItem JMenuTipoAsientoContable;
     public static javax.swing.JMenuItem JMenuTipoTransaccion;
-    private javax.swing.JMenuItem JMenunEmisionCheque;
-    private javax.swing.JMenuItem jMenuItem1;
+    public static javax.swing.JMenuItem JMenunEmisionCheque;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     // End of variables declaration//GEN-END:variables

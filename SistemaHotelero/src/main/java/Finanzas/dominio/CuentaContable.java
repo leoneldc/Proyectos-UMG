@@ -4,13 +4,16 @@
  * and open the template in the editor.
  */
 package Finanzas.dominio;
+
 import Finanzas.datos.CuentaContableDAO;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author Diego Vásquez
  */
 public class CuentaContable {
+
     private String codigoCuentaContable;
     private String nombreCuentaContable;
     private String clasificacionCuentaContable;
@@ -86,8 +89,8 @@ public class CuentaContable {
     public void setMontoCuentaContable(String montoCuentaContable) {
         this.montoCuentaContable = montoCuentaContable;
     }
-    
-        CuentaContableDAO cuentaDAO = new CuentaContableDAO();
+
+    CuentaContableDAO cuentaDAO = new CuentaContableDAO();
 
     public void Insertar(CuentaContable objCuenta) {
         if (objCuenta.getCodigoCuentaContable().equals("") || objCuenta.getNombreCuentaContable().equals("") || objCuenta.getClasificacionCuentaContable().equals("")) {
@@ -121,15 +124,15 @@ public class CuentaContable {
         }
     }
 
-    public void Eliminar(CuentaContable objCuenta) {
-        if (objCuenta.getCodigoCuentaContable().equals("") || objCuenta.getNombreCuentaContable().equals("") || objCuenta.getClasificacionCuentaContable().equals("")) {
+    public void Eliminar(String codigo) {
+        if (codigo.equals("")) {
 
             JOptionPane.showMessageDialog(null, "¡CAMPO CÓDIGO NO PUEDE ESTAR VACÍO!", "ERROR", JOptionPane.ERROR_MESSAGE);
 
         } else {
-            int respuesta = cuentaDAO.Eliminar(objCuenta);
+            boolean respuesta = cuentaDAO.Eliminar(codigo);
 
-            if (respuesta == 1) {
+            if (respuesta == true) {
                 JOptionPane.showMessageDialog(null, "¡ELIMINACIÓN EXITOSA!", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "¡ELIMINACIÓN ERRÓNEA!", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -160,9 +163,9 @@ public class CuentaContable {
 
     public String[][] getTablaRegistros() {
         String[][] matrixRegistros;
-        
+
         cuentaDAO.TablaDespliegue();
-        
+
         matrixRegistros = new String[cuentaDAO.TablaDespliegue().length][4];
 
         for (int i = 0; i < cuentaDAO.TablaDespliegue().length; i++) {

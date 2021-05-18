@@ -88,24 +88,24 @@ public class CuentaContableDAO {
         return flagRegistro;
     }
 
-    public int Eliminar(CuentaContable objCuenta) {
-        int flagRegistro = 0;
+    public boolean Eliminar(String codigo) {
+        boolean flagRegistro = false;
 
         Connection con = null;
         PreparedStatement stmt = null;
 
-        int row = 0;
+        boolean row = false;
 
         try {
             con = Conexion.getConnection();
             stmt = con.prepareStatement(SQL_DELETE);
-            stmt.setString(1, objCuenta.getCodigoCuentaContable());
-            row = stmt.executeUpdate();
+            stmt.setString(1, codigo);
+            row = stmt.execute();
 
-            if (row >= 1) {
-                flagRegistro = 1;
+            if (row == true) {
+                flagRegistro = true;
             } else {
-                flagRegistro = 0;
+                flagRegistro = false;
             }
 
         } catch (Exception ex) {

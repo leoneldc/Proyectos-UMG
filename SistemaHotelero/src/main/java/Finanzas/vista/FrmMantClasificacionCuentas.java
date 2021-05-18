@@ -66,7 +66,7 @@ public class FrmMantClasificacionCuentas extends javax.swing.JInternalFrame {
         JBtnAyuda = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         JTxtDescripcion = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        BtnPrint = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTableClasificacion = new javax.swing.JTable();
 
@@ -157,10 +157,10 @@ public class FrmMantClasificacionCuentas extends javax.swing.JInternalFrame {
         JTxtDescripcion.setRows(5);
         jScrollPane2.setViewportView(JTxtDescripcion);
 
-        jButton1.setText("Reporte");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BtnPrint.setText("Reporte");
+        BtnPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BtnPrintActionPerformed(evt);
             }
         });
 
@@ -183,7 +183,7 @@ public class FrmMantClasificacionCuentas extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(JTxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(BtnPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jScrollPane2))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -195,7 +195,7 @@ public class FrmMantClasificacionCuentas extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(JTxtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(BtnPrint))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JTxtClasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -253,6 +253,7 @@ public class FrmMantClasificacionCuentas extends javax.swing.JInternalFrame {
         BtnMod.setEnabled(false);
         BtnElim.setEnabled(false);
         BtnBus.setEnabled(false);
+        BtnPrint.setEnabled(false);
 
         GenerarPermisos permisos = new GenerarPermisos();
 
@@ -273,6 +274,9 @@ public class FrmMantClasificacionCuentas extends javax.swing.JInternalFrame {
         }
         if (permisosApp[3].equals("1")) {
             BtnElim.setEnabled(true);
+        }
+        if (permisosApp[4].equals("1")) {
+            BtnPrint.setEnabled(true);
         }
     }
 
@@ -323,7 +327,7 @@ public class FrmMantClasificacionCuentas extends javax.swing.JInternalFrame {
         AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Insertar");
         AInsertar.setCodigoAplicacion("1000");
-        AInsertar.setModulo("Finanzas");
+        AInsertar.setModulo("1000");
 
         try {
             BitacoraDAO.insert(AInsertar);
@@ -355,7 +359,7 @@ public class FrmMantClasificacionCuentas extends javax.swing.JInternalFrame {
         AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Búsqueda");
         AInsertar.setCodigoAplicacion("1000");
-        AInsertar.setModulo("Finanzas");
+        AInsertar.setModulo("1000");
 
         try {
             BitacoraDAO.insert(AInsertar);
@@ -384,7 +388,7 @@ public class FrmMantClasificacionCuentas extends javax.swing.JInternalFrame {
         AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Actualizar");
         AInsertar.setCodigoAplicacion("1000");
-        AInsertar.setModulo("Finanzas");
+        AInsertar.setModulo("1000");
 
         try {
             BitacoraDAO.insert(AInsertar);
@@ -407,7 +411,7 @@ public class FrmMantClasificacionCuentas extends javax.swing.JInternalFrame {
         AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Eliminar");
         AInsertar.setCodigoAplicacion("1000");
-        AInsertar.setModulo("Finanzas");
+        AInsertar.setModulo("1000");
 
         try {
             BitacoraDAO.insert(AInsertar);
@@ -434,7 +438,7 @@ public class FrmMantClasificacionCuentas extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_JBtnAyudaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BtnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPrintActionPerformed
 
         JasperReport report;
         JasperPrint print;
@@ -462,14 +466,14 @@ public class FrmMantClasificacionCuentas extends javax.swing.JInternalFrame {
         AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Imprimir");
         AInsertar.setCodigoAplicacion("1000");
-        AInsertar.setModulo("Finanzas");
+        AInsertar.setModulo("1000");
         try {
             BitacoraDAO.insert(AInsertar);
 
         } catch (UnknownHostException ex) {
             Logger.getLogger(FrmTipoTransaccion.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_BtnPrintActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -477,12 +481,12 @@ public class FrmMantClasificacionCuentas extends javax.swing.JInternalFrame {
     private javax.swing.JButton BtnElim;
     private javax.swing.JButton BtnIng;
     private javax.swing.JButton BtnMod;
+    private javax.swing.JButton BtnPrint;
     private javax.swing.JButton JBtnAyuda;
     private javax.swing.JTable JTableClasificacion;
     private javax.swing.JTextField JTxtClasificacion;
     private javax.swing.JTextField JTxtCodigo;
     private javax.swing.JTextArea JTxtDescripcion;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

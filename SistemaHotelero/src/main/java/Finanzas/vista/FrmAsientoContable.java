@@ -514,6 +514,7 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
 
     private void BtnBuscarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarPartidaActionPerformed
         CodigosPartidaContable codigosPartidaContable = new CodigosPartidaContable();
+        codigosPartidaContable.varOP = 1;
         codigosPartidaContable.setVisible(true);
     }//GEN-LAST:event_BtnBuscarPartidaActionPerformed
 
@@ -542,6 +543,7 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
         BtnAceptarPartida.setEnabled(true);
         BtnBuscarPartida.setEnabled(true);
         BtnBuscarEncabezado.setEnabled(true);
+        BtnNuevaPartida.setEnabled(true);
 
 
     }//GEN-LAST:event_BtnRegistrarActionPerformed
