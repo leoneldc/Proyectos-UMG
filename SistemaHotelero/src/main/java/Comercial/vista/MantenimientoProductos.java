@@ -13,8 +13,16 @@ import javax.swing.table.DefaultTableModel;
 import Comercial.datos.Conexion;
 import java.io.File;
 import java.net.UnknownHostException;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 import seguridad.datos.BitacoraDao;
 import seguridad.dominio.Bitacora;
 import seguridad.vista.Aplicacion_Perfil;
@@ -69,8 +77,10 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
         txt_Precio.setText(String.valueOf(proveedorAConsultar.getPrecio_producto()));
         txt_Descripcion.setText(proveedorAConsultar.getDescripcion_producto());
         txt_Estado.setText(proveedorAConsultar.getEstatus_producto());
+        txtBodega.setText(proveedorAConsultar.getBodega());
+      //  txtfechaActualizacion.setCalendar(proveedorAConsultar.getFechaIngreso());
         //bodega
-     //   txtfechaActualizacion.setDateFormatString("");
+        //   txtfechaActualizacion.setDateFormatString("");
 
     }
 
@@ -116,9 +126,10 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        cbx_Bodega = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         txtfechaActualizacion = new com.toedter.calendar.JDateChooser();
+        btnReporte = new javax.swing.JButton();
+        txtBodega = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
         TablaProducto1 = new javax.swing.JTable();
         btnAyuda = new javax.swing.JButton();
@@ -190,6 +201,13 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
 
         txtfechaActualizacion.setForeground(new java.awt.Color(255, 255, 255));
 
+        btnReporte.setText("Reporte");
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -220,15 +238,10 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
                             .addComponent(txtfechaActualizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txt_Precio, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
-                                .addComponent(cbx_Bodega, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jScrollPane1)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(0, 72, Short.MAX_VALUE))
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txt_Estado, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(133, 133, 133)
                 .addComponent(btnGuardar)
@@ -236,6 +249,14 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
                 .addComponent(btnModificar)
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminar)
+                .addGap(18, 18, 18)
+                .addComponent(btnReporte)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtBodega, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_Estado, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -266,9 +287,9 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel19)
                     .addComponent(txt_Estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addComponent(cbx_Bodega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBodega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
@@ -277,7 +298,8 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnModificar)
-                    .addComponent(btnEliminar))
+                    .addComponent(btnEliminar)
+                    .addComponent(btnReporte))
                 .addGap(160, 160, 160))
         );
 
@@ -332,6 +354,7 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+ private Connection connection = null;
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
@@ -349,9 +372,10 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
         productoAInsertar.setPrecio_producto(txt_Precio.getText());
         productoAInsertar.setDescripcion_producto(txt_Descripcion.getText());
         productoAInsertar.setEstatus_producto(txt_Estado.getText());
-        String cbxBodega = cbx_Bodega.getSelectedItem().toString();
+        productoAInsertar.setBodega(txtBodega.getText());
+        productoAInsertar.setFechaIngreso(txtfechaActualizacion.getDateFormatString());
         // productoAInsertar.setBodega(cbx_Bodega.getItemAt().toString());
-     //   productoAInsertar.setFechaIngreso("Ingreso de Articulo");
+        //   productoAInsertar.setFechaIngreso("Ingreso de Articulo");
         productoDAO.insert(productoAInsertar);
 
         BitacoraDao BitacoraDAO = new BitacoraDao();
@@ -378,9 +402,10 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
         productoAActualizar.setPK_id_producto(Integer.parseInt(txt_IdProducto.getText()));
         productoAActualizar.setNombre_producto(txt_Nombre.getText());
         productoAActualizar.setNombre_producto(txt_Precio.getText());
-
         productoAActualizar.setDescripcion_producto(txt_Descripcion.getText());
         productoAActualizar.setEstatus_producto(txt_Estado.getText());
+        productoAActualizar.setBodega(txtBodega.getText());
+        productoAActualizar.setFechaIngreso(txtfechaActualizacion.getDateFormatString());
         productoDAO.update(productoAActualizar);
         JOptionPane.showMessageDialog(null, "Modificación Exitosa.");
 
@@ -453,6 +478,26 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnAyudaActionPerformed
 
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        // TODO add your handling code here:
+        Map p = new HashMap();
+        JasperReport report;
+        JasperPrint print;
+
+        try {
+            connection = Conexion.getConnection();
+            report = JasperCompileManager.compileReport(new File("").getAbsolutePath()
+                    + "/src/main/java/Comercial/reportes/MantenimientoProducto.jrxml");
+            print = JasperFillManager.fillReport(report, p, connection);
+            JasperViewer view = new JasperViewer(print, false);
+            view.setTitle("Reporte de Proceso Productos");
+            view.setVisible(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnReporteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaProducto1;
@@ -460,7 +505,7 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JComboBox<String> cbx_Bodega;
+    private javax.swing.JButton btnReporte;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
@@ -473,6 +518,7 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTextField txtBodega;
     private javax.swing.JTextArea txt_Descripcion;
     public javax.swing.JTextField txt_Estado;
     public javax.swing.JTextField txt_IdProducto;
