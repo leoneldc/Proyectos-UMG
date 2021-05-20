@@ -50,7 +50,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
     /**
      * Creates new form Proceso_Producto
      */
-   public void llenadoDeTablas() {
+    public void llenadoDeTablas() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID Proveedor");
         modelo.addColumn("Producto");
@@ -73,7 +73,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
             dato[4] = procesoproducto.get(i).getBodegasNuevaExistencia();
             dato[5] = procesoproducto.get(i).getNuevaExistencia();
             dato[6] = procesoproducto.get(i).getBodegasNuevaExistencia();
-                    
+
             //System.out.println("vendedor:" + vendedores);
             modelo.addRow(dato);
         }
@@ -105,6 +105,21 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         SimpleDateFormat formato = new SimpleDateFormat("dd-MMM-YYYY");
         // txtfechaActualizacion.setCalendar(formato(sistFecha));
     }
+
+    public void llenadoDeCombos2() {
+        // List<Cliente> Bus = Cliente.select();
+//        txt_combox.addItem("Productos Disponibles");
+//        for (int i = 0; i < Bus.size(); i++) {
+//            txt_combox.addItem(Bus.get(i).getCliente());
+//            String valor = txt_combox.getSelectedItem().toString();
+//    }
+    }
+//              Buscar1.setCliente(cliente.getText());
+//Buscar1=Clientes.query2(Buscar1);
+//
+//
+////precio.setText(Buscar.);
+//E.setText(Buscar1.getCliente());
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -143,6 +158,9 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         txtProductoNuevo = new javax.swing.JTextField();
         txtNuevaExistencia = new javax.swing.JTextField();
         cbox_BodegasNuevaExistencia = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        txtExistenciasTotales = new javax.swing.JTextField();
+        btnActualizar = new javax.swing.JButton();
 
         setIconifiable(true);
         setMaximizable(true);
@@ -336,6 +354,11 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel12.setText("Bodega");
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel7.setText("Existencias totales");
+
+        btnActualizar.setText("Actualizar");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -344,31 +367,41 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel10)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel11))
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel12))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtProductoNuevo)
-                    .addComponent(txtNuevaExistencia)
-                    .addComponent(cbox_BodegasNuevaExistencia, 0, 115, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtProductoNuevo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                    .addComponent(txtNuevaExistencia, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtExistenciasTotales)
+                    .addComponent(cbox_BodegasNuevaExistencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(btnActualizar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(25, 25, 25)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel10)
-                    .addComponent(txtProductoNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtProductoNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnActualizar)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtNuevaExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtExistenciasTotales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(cbox_BodegasNuevaExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -403,7 +436,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -422,7 +455,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(null, "Modificación Exitosa.");
 
         BitacoraDao BitacoraDAO = new BitacoraDao();
-        
+
         Bitacora Insertar = new Bitacora();
         Insertar.setId_Usuario("MantenimientoProductos");
         Insertar.setAccion("Modificar");
@@ -556,6 +589,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaProducto;
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAyuda;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
@@ -572,11 +606,13 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtExistenciasProducto;
+    private javax.swing.JTextField txtExistenciasTotales;
     private javax.swing.JTextField txtIDNombreProducto;
     private javax.swing.JTextField txtNuevaExistencia;
     private javax.swing.JTextField txtProductoNuevo;
