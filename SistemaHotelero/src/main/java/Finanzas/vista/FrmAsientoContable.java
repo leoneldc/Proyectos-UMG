@@ -5,13 +5,25 @@
  */
 package Finanzas.vista;
 
+import Finanzas.datos.Conexion;
 import Finanzas.dominio.AsientoContable;
 import Finanzas.dominio.CuentaContable;
 import Finanzas.dominio.PartidaContable;
+import java.net.UnknownHostException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import seguridad.datos.BitacoraDao;
+import seguridad.dominio.Bitacora;
+import seguridad.vista.Login;
 
 /**
  *
@@ -156,7 +168,6 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
         BtnBuscarPartida = new javax.swing.JButton();
         BtnNuevaPartida = new javax.swing.JButton();
         BtnRegistrar = new javax.swing.JButton();
-        BtnAyuda = new javax.swing.JButton();
         TxtFecha = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -229,8 +240,6 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
             }
         });
 
-        BtnAyuda.setText("?");
-
         TxtFecha.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -253,9 +262,7 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnNuevaPartida)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BtnRegistrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BtnAyuda))
+                        .addComponent(BtnRegistrar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(TxtGlosaContable, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -274,8 +281,7 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
                         .addComponent(TxtCodigoPartida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(BtnBuscarPartida)
                         .addComponent(BtnNuevaPartida)
-                        .addComponent(BtnRegistrar)
-                        .addComponent(BtnAyuda))
+                        .addComponent(BtnRegistrar))
                     .addComponent(jLabel1))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -365,6 +371,11 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
         TxtPartida.setEditable(false);
 
         BtnImprimir.setText("Imprimir");
+        BtnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnImprimirActionPerformed(evt);
+            }
+        });
 
         BtnVerificarPartida.setText("Cuadrar Partida");
         BtnVerificarPartida.addActionListener(new java.awt.event.ActionListener() {
@@ -498,6 +509,17 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
         BtnNuevaPartida.setEnabled(false);
         BtnBuscarPartida.setEnabled(false);
         BtnAceptarPartida.setEnabled(false);
+        
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
+        AInsertar.setAccion("Nueva Partida");
+        AInsertar.setCodigoAplicacion("1101");
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(FrmTipoTransaccion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_BtnNuevaPartidaActionPerformed
 
     private void BtnAceptarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAceptarPartidaActionPerformed
@@ -508,6 +530,17 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
             TxtPartida.setText(codigoPartidaContable);
         } else {
             JOptionPane.showMessageDialog(null, "El Campo: 'Código Partida', está vacío", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
+        AInsertar.setAccion("Consulta Partida");
+        AInsertar.setCodigoAplicacion("1101");
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(FrmTipoTransaccion.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_BtnAceptarPartidaActionPerformed
@@ -545,6 +578,16 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
         BtnBuscarEncabezado.setEnabled(true);
         BtnNuevaPartida.setEnabled(true);
 
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
+        AInsertar.setAccion("REGISTRA NUEVA PARTIDA");
+        AInsertar.setCodigoAplicacion("1101");
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(FrmTipoTransaccion.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_BtnRegistrarActionPerformed
 
@@ -583,17 +626,75 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
 
         TxtMonto.setText("");
         BtnRegistrarDetalle.setEnabled(false);
+        
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
+        AInsertar.setAccion("Registra Detalle Partida");
+        AInsertar.setCodigoAplicacion("1101");
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(FrmTipoTransaccion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_BtnRegistrarDetalleActionPerformed
 
     private void BtnVerificarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVerificarPartidaActionPerformed
         FrmCuadre frmCuadre = new FrmCuadre();
         frmCuadre.setVisible(true);
+        
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
+        AInsertar.setAccion("Formulario Cuadrar Partida");
+        AInsertar.setCodigoAplicacion("1101");
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(FrmTipoTransaccion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_BtnVerificarPartidaActionPerformed
+
+    BitacoraDao BitacoraDAO = new BitacoraDao();
+    Bitacora AInsertar = new Bitacora();
+    
+    private void BtnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnImprimirActionPerformed
+        JasperReport report;
+        JasperPrint print;
+
+        try {
+            Connection conex = Conexion.getConnection();
+            String ruta = "src\\main\\java\\Finanzas\\reportes\\LibroDiario.jasper";
+
+            report = (JasperReport) JRLoader.loadObjectFromFile(ruta);
+
+            JasperPrint jprint = JasperFillManager.fillReport(ruta, null, conex);
+
+            JasperViewer jview = new JasperViewer(jprint, false);
+
+            jview.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+            jview.setVisible(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
+        AInsertar.setAccion("Imprimir Diario");
+        AInsertar.setCodigoAplicacion("1101");
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(FrmTipoTransaccion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BtnImprimirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAceptarPartida;
-    private javax.swing.JButton BtnAyuda;
     private javax.swing.JButton BtnBuscarEncabezado;
     private javax.swing.JButton BtnBuscarPartida;
     private javax.swing.JButton BtnImprimir;

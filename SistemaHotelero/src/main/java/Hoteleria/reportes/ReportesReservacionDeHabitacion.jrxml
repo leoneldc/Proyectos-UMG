@@ -38,12 +38,8 @@
 	</background>
 	<title>
 		<band height="79" splitType="Stretch">
-			<image>
-				<reportElement x="0" y="0" width="68" height="79" uuid="8758bcd3-4b3a-49d8-9d6d-d46cad82164d"/>
-				<imageExpression><![CDATA["C:\\Users\\leone\\Desktop\\Hoteleria\\SistemaHotelero\\src\\main\\java\\Hoteleria\\reportes\\Imagen1.png"]]></imageExpression>
-			</image>
 			<textField pattern="dd/MM/yyyy h.mm a">
-				<reportElement x="652" y="59" width="100" height="20" uuid="9567e8ae-bd79-402a-b68c-542921630d14"/>
+				<reportElement x="652" y="35" width="100" height="20" uuid="9567e8ae-bd79-402a-b68c-542921630d14"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -53,6 +49,10 @@
 				</textElement>
 				<text><![CDATA[Reportes de Reservación de las Habitaciones]]></text>
 			</staticText>
+			<image>
+				<reportElement x="29" y="3" width="75" height="76" uuid="8402552a-da8e-463e-b178-447f2e366eed"/>
+				<imageExpression><![CDATA["C:\\Users\\Jeff\\Desktop\\Nueva carpeta\\Proyectos-UMG\\SistemaHotelero\\src\\main\\java\\Hoteleria\\reportes\\Imagen1.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

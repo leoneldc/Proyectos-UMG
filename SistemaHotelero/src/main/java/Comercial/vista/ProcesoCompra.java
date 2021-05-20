@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Comercial.vista;
+
 import java.sql.Connection;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
@@ -27,37 +28,91 @@ import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import Comercial.datos.Conexion;
 import java.io.File;
-import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
-import seguridad.datos.BitacoraDao;
-import seguridad.dominio.Bitacora;
-import seguridad.vista.Aplicacion_Perfil;
-import seguridad.vista.GenerarPermisos;
-import seguridad.vista.Login;
 
 /**
  *
  * @author SipaqueRitaMaria
  */
 public class ProcesoCompra extends javax.swing.JInternalFrame {
-      ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
+
+
+    ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
+
+ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
+
     int estadovalidacion;
     ProductoDAO productos = new ProductoDAO();
     int variable1;
     DefaultTableModel model = new DefaultTableModel();
+
+    ButtonGroup RadiosGrupo;
+    int codigoAplicacion = 3007;
+
+    public void llenadoDeTablas() {
+
      ButtonGroup RadiosGrupo;
      int codigoAplicacion = 3007;
-    
+    /**
+     * Creates new form Compra
+     */
+     
+     public void llenadoDeTablas() {
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("NO.FACTURA");
+        model.addColumn("NO.PROVEEDOR");
+        model.addColumn("NOMBRE");
+        model.addColumn("NIT");
+        model.addColumn("ID");
+
+        model.addColumn("PRODUCTO");
+        model.addColumn("PRECIO");
+        model.addColumn("CANTIDAD");
+        model.addColumn("SUBTOTAL");
+        model.addColumn("FECHA");
+
+        model.addColumn("PAGO");
+
+
+         model.addColumn("PAGO");
+          
+        
+
+        CompraDAO proveedorDAO = new CompraDAO();
+
+        List<Compra> proveedor = proveedorDAO.select();
+        tbtTabla.setModel(model);
+        String[] dato = new String[11];
+        for (int i = 0; i < proveedor.size(); i++) {
+            dato[0] = Integer.toString(proveedor.get(i).getId_factura());
+            dato[1] = proveedor.get(i).getId_proveedor();
+            dato[2] = proveedor.get(i).getNombre_proveedor();
+            dato[3] = proveedor.get(i).getNit_proveedor();
+            dato[4] = proveedor.get(i).getId_producto();
+            dato[5] = proveedor.get(i).getNombre_producto();
+            dato[6] = proveedor.get(i).getPrecio_producto();
+            dato[7] = proveedor.get(i).getCantidad_producto();
+            dato[8] = proveedor.get(i).getSubtotal_producto();
+            dato[9] = proveedor.get(i).getFecha_producto();
+            dato[10] = proveedor.get(i).getPago_producto();
+
+
+            //System.out.println("vendedor:" + vendedores);
+            model.addRow(dato);
+
+        }
+
+    }
+
     void habilitarAcciones() {
 
         int codigoAplicacion = 3001;
@@ -88,11 +143,60 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
         if (permisosApp[3].equals("1")) {
             Eliminar.setEnabled(true);
         }
-     }
+
+    }
 
     /**
      * Creates new form ProcesoCompra
      */
+    public void buscar() {
+        Compra proveedorAConsultar = new Compra();
+
+             
+            
+            //System.out.println("vendedor:" + vendedores);
+            model.addRow(dato);
+            llenadoDeTablas();
+        }
+        
+            
+        }
+           
+     
+     public void buscar() {
+       Compra proveedorAConsultar = new Compra();
+
+        CompraDAO proveedorDAO = new CompraDAO();
+        proveedorAConsultar.setId_factura(Integer.parseInt(txt_idfacutra.getText()));
+        proveedorAConsultar = proveedorDAO.query(proveedorAConsultar);
+        txt_combox.setSelectedItem(proveedorAConsultar.getId_proveedor());
+
+        txt_nombre.setText(proveedorAConsultar.getNombre_proveedor());
+        txt_nit.setText(proveedorAConsultar.getNit_proveedor());
+        uno.setSelectedItem(proveedorAConsultar.getId_producto());
+        txt_nombreproducto.setText(proveedorAConsultar.getNombre_producto());
+        txt_precio.setText(proveedorAConsultar.getPrecio_producto());
+        txt_cantidad.setText(proveedorAConsultar.getCantidad_producto());
+        txt_1.setText(proveedorAConsultar.getSubtotal_producto());
+        txt_total.setText(proveedorAConsultar.getSubtotal_producto());
+
+        txt_fecha.setText(proveedorAConsultar.getFecha_producto());
+
+        pago.setSelectedItem(proveedorAConsultar.getId_proveedor());
+
+    }
+
+
+        txt_pago.setSelectedItem(proveedorAConsultar.getPago_producto());
+        
+        
+        
+      
+        
+        
+     }
+     
+
     public ProcesoCompra() {
         initComponents();
         cargarCombobox.query2(txt_combox);
@@ -104,24 +208,36 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
         model.addColumn("NIT");
         model.addColumn("NOMBRE");
         model.addColumn("PRECIO");
-        
+
         model.addColumn("NO.PRODUCTO");
         model.addColumn("CANTIDAD");
         model.addColumn("SUBTOTAL");
-        
+
         model.addColumn("FECHA");
-       
+        model.addColumn("PAGO");
+
 
         this.tbtTabla.setModel(model);
-        
-        Date sistFecha=new Date ();
-        SimpleDateFormat formato =new SimpleDateFormat("dd-MMM-YYYY");
+
+        Date sistFecha = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MMM-YYYY");
         txt_fecha.setText(formato.format(sistFecha));
         RadiosGrupo = new ButtonGroup();
-        RadiosGrupo.add(RBEP1);
-        RadiosGrupo.add(RBEP0);
-        RadiosGrupo.add(RBEPvacio);
-        RBEPvacio.setVisible(false);
+      
+       
+//
+        this.tbtTabla.setModel(model);
+//        
+//        Date sistFecha=new Date ();
+//        SimpleDateFormat formato =new SimpleDateFormat("dd-MMM-YYYY");
+//        txt_fecha.setText(formato.format(sistFecha));
+//        RadiosGrupo = new ButtonGroup();
+
+//        RadiosGrupo.add(RBEP1);
+//        RadiosGrupo.add(RBEP0);
+//        RadiosGrupo.add(RBEPvacio);
+//        RBEPvacio.setVisible(false);
+
     }
 
     /**
@@ -133,17 +249,19 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PRODUCTO = new javax.swing.JDialog();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        txt_idfacutra = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txt_nombre = new javax.swing.JTextField();
+        BOTONPROVEEDOR = new javax.swing.JButton();
         txt_nit = new javax.swing.JTextField();
         txt_combox = new javax.swing.JComboBox<>();
-        validar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        txt_fecha = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         uno = new javax.swing.JComboBox<>();
@@ -153,38 +271,24 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
         jLabel13 = new javax.swing.JLabel();
         txt_cantidad = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        valiar = new javax.swing.JButton();
-        jLabel20 = new javax.swing.JLabel();
-        RBEPvacio = new javax.swing.JRadioButton();
-        RBEP1 = new javax.swing.JRadioButton();
+        BOTONPRODUCTO = new javax.swing.JButton();
         RBEP0 = new javax.swing.JRadioButton();
+        txt_fecha = new javax.swing.JTextField();
+        GenerarCompra = new javax.swing.JButton();
+        jLabel20 = new javax.swing.JLabel();
+        txt_pago = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbtTabla = new javax.swing.JTable();
         jLabel15 = new javax.swing.JLabel();
+        Eliminar = new javax.swing.JButton();
         txt_total = new javax.swing.JTextField();
         txt_1 = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        Eliminar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        txt_idfacutra = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        GenerarCompra = new javax.swing.JButton();
+        Reporte = new javax.swing.JButton();
+        Reporte1 = new javax.swing.JButton();
+        Ayuda1 = new javax.swing.JButton();
         Ayuda = new javax.swing.JButton();
-
-        javax.swing.GroupLayout PRODUCTOLayout = new javax.swing.GroupLayout(PRODUCTO.getContentPane());
-        PRODUCTO.getContentPane().setLayout(PRODUCTOLayout);
-        PRODUCTOLayout.setHorizontalGroup(
-            PRODUCTOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        PRODUCTOLayout.setVerticalGroup(
-            PRODUCTOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
 
         setClosable(true);
         setIconifiable(true);
@@ -193,6 +297,15 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
         setTitle("Proceso Compra");
         setToolTipText("");
         setVisible(true);
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel17.setText("Factura De  Compras");
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel19.setText(" No. de Factura :");
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel21.setText(" Nit :001250089 56");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Proveedor"));
 
@@ -205,15 +318,10 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Nombre Proeedor:");
 
-        txt_nombre.setEditable(false);
-
-        txt_nit.setEditable(false);
-
-        validar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        validar.setText("Buscar");
-        validar.addActionListener(new java.awt.event.ActionListener() {
+        BOTONPROVEEDOR.setText("Buscar");
+        BOTONPROVEEDOR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                validarActionPerformed(evt);
+                BOTONPROVEEDORActionPerformed(evt);
             }
         });
 
@@ -228,8 +336,8 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_combox, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)
-                        .addComponent(validar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BOTONPROVEEDOR)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
@@ -238,7 +346,7 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_nit, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,32 +355,28 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BOTONPROVEEDOR, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
                             .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40))
+                        .addGap(37, 37, 37))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(txt_combox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(validar))
+                            .addComponent(txt_combox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(txt_nit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de Compra"));
-
-        txt_fecha.setEditable(false);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText("Id Producto:");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel11.setText("Nombre Producto");
-
-        txt_nombreproducto.setEditable(false);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText("Precio:");
@@ -283,10 +387,18 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel14.setText("Fecha:");
 
-        valiar.setText("Buscar");
-        valiar.addActionListener(new java.awt.event.ActionListener() {
+        BOTONPRODUCTO.setText("Buscar");
+        BOTONPRODUCTO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                valiarActionPerformed(evt);
+                BOTONPRODUCTOActionPerformed(evt);
+            }
+        });
+
+        RBEP0.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        RBEP0.setText("Existencia");
+        RBEP0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RBEP0ActionPerformed(evt);
             }
         });
 
@@ -295,31 +407,34 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(18, 18, 18)
-                        .addComponent(uno, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(valiar)
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_nombreproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel14)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(18, 18, 18)
+                                .addComponent(uno, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BOTONPRODUCTO)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_nombreproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(18, 18, 18)
+                                .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(RBEP0))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,9 +443,9 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(uno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BOTONPRODUCTO)
                     .addComponent(jLabel11)
-                    .addComponent(txt_nombreproducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(valiar))
+                    .addComponent(txt_nombreproducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -339,26 +454,22 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
                     .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
                     .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(RBEP0)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        GenerarCompra.setText("GenerarCompra");
+        GenerarCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GenerarCompraActionPerformed(evt);
+            }
+        });
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setText("Forma de pago");
 
-        RBEPvacio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RBEPvacioActionPerformed(evt);
-            }
-        });
-
-        RBEP1.setText("Efectivo");
-
-        RBEP0.setText("Tarjeta");
-        RBEP0.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RBEP0ActionPerformed(evt);
-            }
-        });
+        txt_pago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Tarjeta" }));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("DetalleCompra"));
 
@@ -377,8 +488,6 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
 
         jLabel15.setText("Total");
 
-        jLabel16.setText("SubTotal");
-
         Eliminar.setText("Eliminar");
         Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -386,10 +495,19 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("Reporte");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel16.setText("SubTotal");
+
+        Reporte.setText("Reporte");
+        Reporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ReporteActionPerformed(evt);
+            }
+        });
+
+        Reporte1.setText("Limpiar");
+        Reporte1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Reporte1ActionPerformed(evt);
             }
         });
 
@@ -400,51 +518,48 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(Eliminar)
-                        .addGap(31, 31, 31)
-                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(Reporte)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(51, Short.MAX_VALUE))
+                        .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 202, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(244, 244, 244)
+                .addComponent(Reporte1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Reporte)
                     .addComponent(Eliminar)
-                    .addComponent(jButton1)
                     .addComponent(jLabel16)
                     .addComponent(txt_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15)
                     .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Reporte1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel17.setText("Factura De  Compras");
-
-        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel19.setText(" No. de Factura :");
-
-        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel21.setText(" Nit :001250089 56");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Efectivo", "Trajeta", " " }));
-
-        GenerarCompra.setText("GenerarCompra");
-        GenerarCompra.addActionListener(new java.awt.event.ActionListener() {
+        Ayuda1.setText("Buscar");
+        Ayuda1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GenerarCompraActionPerformed(evt);
+                Ayuda1ActionPerformed(evt);
             }
         });
 
@@ -462,83 +577,80 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(461, 461, 461)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel17)
+                                .addGap(98, 98, 98))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addGap(18, 18, 18)
+                                .addComponent(txt_idfacutra, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(59, 59, 59)
+                                .addComponent(jLabel21)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Ayuda1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(156, 156, 156)
+                                .addComponent(Ayuda))))
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RBEP1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RBEP0)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RBEPvacio)
-                        .addGap(30, 30, 30)
-                        .addComponent(GenerarCompra)
-                        .addGap(49, 49, 49)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel20)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(GenerarCompra))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(320, 320, 320)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel17)
-                        .addGap(76, 76, 76))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel19)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_idfacutra, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel21)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Ayuda)
-                .addGap(271, 271, 271))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Ayuda))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_idfacutra)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel21)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel20)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(RBEP0)
-                        .addComponent(RBEP1))
+                        .addComponent(txt_idfacutra)
+                        .addComponent(Ayuda1))
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(RBEPvacio))
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(GenerarCompra))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(35, 35, 35))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(GenerarCompra)
+                            .addComponent(txt_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20))
+                        .addContainerGap(22, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BOTONPROVEEDORActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BOTONPROVEEDORActionPerformed
         // TODO add your handling code here:
+
         Map p = new HashMap();
         JasperReport report;
         JasperPrint print;
@@ -546,7 +658,7 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
         try {
             connection = Conexion.getConnection();
             report = JasperCompileManager.compileReport(new File("").getAbsolutePath()
-                + "/src/main/java/Comercial/reportes/ReporteCompra.jrxml");
+                    + "/src/main/java/Comercial/reportes/Compra.jrxml");
             print = JasperFillManager.fillReport(report, p, connection);
             JasperViewer view = new JasperViewer(print, false);
             view.setTitle("Reporte de Proceso compras");
@@ -555,38 +667,44 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-         txt_idfacutra.setText("");
+        txt_idfacutra.setText("");
         txt_nombre.setText("");
-         txt_combox.setSelectedIndex(0);
-       
+        txt_combox.setSelectedIndex(0);
+
         txt_nit.setText("");
-        
+
         model.getDataVector().removeAllElements();
         tbtTabla.updateUI();
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
         // TODO add your handling code here:
 
-        eliminar();
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-            
-        
-       Bitacora Insertar = new Bitacora();
-        Insertar.setId_Usuario(Login.usuarioComercial);
-        Insertar.setAccion("Eliminar");
+        eliminara();
 
-        Insertar.setCodigoAplicacion("3007");
-        Insertar.setModulo("3000");
-            try {
-                BitacoraDAO.insert(Insertar);
-            } catch (UnknownHostException ex) {
-                Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
     }//GEN-LAST:event_EliminarActionPerformed
 
-    private void valiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valiarActionPerformed
+        String valor = txt_combox.getSelectedItem().toString();
+        int valorint = Integer.parseInt(valor);
+        ProveedorDAO1 perfilDAO = new ProveedorDAO1();
+        Proveedor perfilconsultar = new Proveedor();
+        perfilconsultar.setPK_id_proveedor(valorint);
+        perfilconsultar = perfilDAO.query(perfilconsultar);
+        if (perfilconsultar.getPK_id_proveedor() != 0) {
+            estadovalidacion = 1;
+
+            txt_nombre.setText(perfilconsultar.getNombre_proveedor());
+
+            txt_nit.setText(perfilconsultar.getNit_proveedor());
+        } else {
+
+            estadovalidacion = 0;
+        }
+    }//GEN-LAST:event_BOTONPROVEEDORActionPerformed
+
+    private void BOTONPRODUCTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BOTONPRODUCTOActionPerformed
         // TODO add your handling code here:
         String valor1 = uno.getSelectedItem().toString();
         int valor1int = Integer.parseInt(valor1);
@@ -603,14 +721,13 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
 
             variable1 = 0;
         }
+
     }//GEN-LAST:event_valiarActionPerformed
 
     private void validarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validarActionPerformed
         // TODO add your handling code here:
-       
-        
 
-          String valor = txt_combox.getSelectedItem().toString();
+        String valor = txt_combox.getSelectedItem().toString();
         int valorint = Integer.parseInt(valor);
         ProveedorDAO1 perfilDAO = new ProveedorDAO1();
         Proveedor perfilconsultar = new Proveedor();
@@ -620,45 +737,45 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
             estadovalidacion = 1;
 
             txt_nombre.setText(perfilconsultar.getNombre_proveedor());
-            
 
             txt_nit.setText(perfilconsultar.getNit_proveedor());
         } else {
 
             estadovalidacion = 0;
         }
-        
+
         BitacoraDao BitacoraDAO = new BitacoraDao();
-            
-        
-       Bitacora Insertar = new Bitacora();
+
+        Bitacora Insertar = new Bitacora();
         Insertar.setId_Usuario(Login.usuarioComercial);
         Insertar.setAccion("Buscar");
 
         Insertar.setCodigoAplicacion("3007");
         Insertar.setModulo("3000");
-            try {
-                BitacoraDAO.insert(Insertar);
-            } catch (UnknownHostException ex) {
-                Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
-        
+        try {
+            BitacoraDAO.insert(Insertar);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_validarActionPerformed
 
     private void RBEP0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBEP0ActionPerformed
         // TODO add your handling code here:
+        Proceso_Producto uno = new Proceso_Producto();
+        MDIComercial.jdpescritorio.add(uno);
+        uno.toFront();
+        uno.setVisible(true);
+        Proceso_Producto.txtProductoNuevo.setText(txt_nombreproducto.getText());
+        Proceso_Producto.txtNuevaExistencia.setText(txt_cantidad.getText());
 
-prueba uno= new prueba();
-MDIComercial.jdpescritorio.add(uno);
-uno.toFront();
-uno.setVisible(true);
 
-
-        
-        
-        
     }//GEN-LAST:event_RBEP0ActionPerformed
+
+
+    }//GEN-LAST:event_BOTONPRODUCTOActionPerformed
+
 
     private void GenerarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerarCompraActionPerformed
         // TODO add your handling code here:
@@ -687,7 +804,7 @@ uno.setVisible(true);
             return;
         }
         //Entrada
-        String datos[] = new String[10];
+        String datos[] = new String[11];
         datos[0] = txt_idfacutra.getText();
         datos[1] = txt_combox.getSelectedItem().toString();
         datos[2] = txt_nombre.getText();
@@ -705,11 +822,18 @@ uno.setVisible(true);
         txt_total.setText(String.valueOf(tot));
         datos[9] = txt_fecha.getText();
 
+        datos[10] = pago.getSelectedItem().toString();
+
+        datos[10] = txt_pago.getSelectedItem().toString();
+        
+
+
         model.addRow(datos);
         calTot();
 
         CompraDAO proveedorDAO = new CompraDAO();
         Compra proveedorAInsertar = new Compra();
+//        String Inicio = new SimpleDateFormat("dd/MM/yyyy").format(Fecha.getDate());
         proveedorAInsertar.setId_factura((int) Integer.parseInt(txt_idfacutra.getText()));
         proveedorAInsertar.setId_proveedor(txt_combox.getSelectedItem().toString());
         proveedorAInsertar.setNombre_proveedor(txt_nombre.getText());
@@ -721,7 +845,8 @@ uno.setVisible(true);
         proveedorAInsertar.setSubtotal_producto(txt_1.getText());
         proveedorAInsertar.setTotal_producto(txt_total.getText());
         proveedorAInsertar.setFecha_producto(txt_fecha.getText());
-        //         proveedorAInsertar.setPago_producto(txt_1.getText());
+        proveedorAInsertar.setPago_producto(txt_pago.getSelectedItem().toString());
+//         proveedorAInsertar.setFecha_producto(Inicio);
 
         proveedorDAO.insert(proveedorAInsertar);
 
@@ -732,30 +857,90 @@ uno.setVisible(true);
         txt_precio.setText("");
         txt_cantidad.setText("");
         txt_1.setText("");
+
+        pago.setSelectedIndex(0);
         BitacoraDao BitacoraDAO = new BitacoraDao();
-            
-        
-       Bitacora Insertar = new Bitacora();
+
+        Bitacora Insertar = new Bitacora();
         Insertar.setId_Usuario(Login.usuarioComercial);
         Insertar.setAccion("Guardar");
 
         Insertar.setCodigoAplicacion("3007");
         Insertar.setModulo("3000");
-            try {
-                BitacoraDAO.insert(Insertar);
-            } catch (UnknownHostException ex) {
-                Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            BitacoraDAO.insert(Insertar);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        llenadoDeTablas();
+    }//GEN-LAST:event_GenerarCompraActionPerformed
+
+        txt_pago.setSelectedIndex(0);
 
     }//GEN-LAST:event_GenerarCompraActionPerformed
+
+    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
+        // TODO add your handling code here:
+
+        eliminar();
+        
+        
+        CompraDAO proveedorDAO = new CompraDAO();
+        Compra proveedorAEliminar = new Compra();
+        proveedorAEliminar.setId_factura(Integer.parseInt(txt_idfacutra.getText()));
+        proveedorDAO.delete(proveedorAEliminar);
+//        JOptionPane.showMessageDialog(null, "Registro Eliminado.");
+        
+    }//GEN-LAST:event_EliminarActionPerformed
+private java.sql.Connection connection = null;
+    private void ReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteActionPerformed
+        // TODO add your handling code here:
+        Map p = new HashMap();
+        JasperReport report;
+        JasperPrint print;
+
+        try {
+            connection = Conexion.getConnection();
+            report = JasperCompileManager.compileReport(new File("").getAbsolutePath()
+                + "/src/main/java/Comercial/reportes/Compra.jrxml");
+            print = JasperFillManager.fillReport(report, p, connection);
+            JasperViewer view = new JasperViewer(print, false);
+            view.setTitle("Reporte de Proceso compras");
+            view.setVisible(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_ReporteActionPerformed
+
+    private void RBEP0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBEP0ActionPerformed
+        // TODO add your handling code here:
+        Proceso_Producto uno= new Proceso_Producto();
+        MDIComercial.jdpescritorio.add(uno);
+        uno.toFront();
+        uno.setVisible(true);
+        Proceso_Producto.txtProductoNuevo.setText(txt_nombreproducto.getText());
+        Proceso_Producto.txtNuevaExistencia.setText(txt_cantidad.getText());
+
+    }//GEN-LAST:event_RBEP0ActionPerformed
+
+    private void Ayuda1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Ayuda1ActionPerformed
+        // TODO add your handling code here:
+        buscar();
+       
+        llenadoDeTablas();
+    }//GEN-LAST:event_Ayuda1ActionPerformed
+
 
     private void AyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AyudaActionPerformed
         // TODO add your handling code here:
         try {
             if ((new File("src\\main\\java\\Comercial\\reportes\\AyudaProcesoCompra.chm")).exists()) {
                 Process p = Runtime
-                .getRuntime()
-                .exec("rundll32 url.dll,FileProtocolHandler src\\main\\java\\Comercial\\reportes\\AyudaProcesoCompra.chm");
+                        .getRuntime()
+                        .exec("rundll32 url.dll,FileProtocolHandler src\\main\\java\\Comercial\\reportes\\AyudaProcesoCompra.chm");
                 p.waitFor();
             } else {
                 JOptionPane.showMessageDialog(null, "La ayuda no Fue encontrada");
@@ -764,60 +949,87 @@ uno.setVisible(true);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
+        llenadoDeTablas();
+
+
     }//GEN-LAST:event_AyudaActionPerformed
 
-    private void RBEPvacioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBEPvacioActionPerformed
+    private void Reporte1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Reporte1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_RBEPvacioActionPerformed
-private double redondear(double num) {
-        return Math.rint(num * 100) / 100;
-    }
 
-    private void eliminar() {
-        int rpta = JOptionPane.showConfirmDialog(this, "ESTA SEGURO DE ELIMINAR ESTA FILA", "SISTEMA", JOptionPane.INFORMATION_MESSAGE);
-        int fil;
+        buscar();
+    }//GEN-LAST:event_Ayuda1ActionPerformed
 
-        if (model.getRowCount() > 0) {
-            if (tbtTabla.getSelectedRow() != -1) {
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        CompraDAO proveedorDAO = new CompraDAO();
+        Compra proveedorAActualizar = new Compra();
 
-                fil = tbtTabla.getSelectedRow();
-                model.removeRow(fil);
-                calTot();
+        proveedorAActualizar.setId_factura(Integer.parseInt(txt_idfacutra.getText()));
+        proveedorAActualizar.setId_proveedor(txt_combox.getSelectedItem().toString());
+        proveedorAActualizar.setNombre_proveedor(txt_nombre.getText());
+        proveedorAActualizar.setNit_proveedor(txt_nit.getText());
+        proveedorAActualizar.setId_proveedor(uno.getSelectedItem().toString());
+        proveedorAActualizar.setNombre_producto(txt_nombreproducto.getText());
+        proveedorAActualizar.setPrecio_producto(txt_precio.getText());
+        proveedorAActualizar.setCantidad_producto(txt_cantidad.getText());
+        proveedorAActualizar.setSubtotal_producto(txt_1.getText());
+        proveedorAActualizar.setTotal_producto(txt_total.getText());
+        proveedorAActualizar.setFecha_producto(txt_fecha.getText());
+        proveedorAActualizar.setPago_producto(pago.getSelectedItem().toString());
 
-            } else {
-                JOptionPane.showMessageDialog(null, "Seleccione Una Fila");
+        proveedorDAO.update(proveedorAActualizar);
+        JOptionPane.showMessageDialog(null, "Modificación Exitosa.");
 
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No hay Filas en la Tabla");
+        BitacoraDao BitacoraDAO = new BitacoraDao();
+
+        Bitacora Insertar = new Bitacora();
+        Insertar.setId_Usuario(Login.usuarioComercial);
+        Insertar.setAccion("Modifcar");
+
+        Insertar.setCodigoAplicacion("3007");
+        Insertar.setModulo("3000");
+        try {
+            BitacoraDAO.insert(Insertar);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+        llenadoDeTablas();
 
-    private void calTot() {
-        double S = 0, tot;
-        for (int i = 0; i < tbtTabla.getRowCount(); i++) {
-            S = S + Double.parseDouble(model.getValueAt(i, 8).toString());
-            
+//        llenadoDeTablas();
+//        limpiar();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarActionPerformed
+    private double redondear(double num) {
+
+        int fila=tbtTabla.getRowCount();
+        for ( int i = fila-1; i>=0;i--){
+            model.removeRow(i);
         }
-        S = redondear(S);
-        //txt_subtotal.setText(String.valueOf(S));
-
-        tot = S;
-        tot = redondear(tot);
+        txt_idfacutra.setText("");
+        txt_combox.setSelectedIndex(0);
+        txt_nombre.setText("");
         
-        txt_total.setText(String.valueOf(tot));
-    }private Connection connection = null;
+        txt_nit.setText("");
+      txt_total.setText("");
+     
+        
+        
+        
+        
+    }//GEN-LAST:event_Reporte1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Ayuda;
+    private javax.swing.JButton Ayuda1;
+    private javax.swing.JButton BOTONPRODUCTO;
+    private javax.swing.JButton BOTONPROVEEDOR;
     private javax.swing.JButton Eliminar;
     private javax.swing.JButton GenerarCompra;
-    private javax.swing.JDialog PRODUCTO;
     private javax.swing.JRadioButton RBEP0;
-    private javax.swing.JRadioButton RBEP1;
-    public javax.swing.JRadioButton RBEPvacio;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton Reporte;
+    private javax.swing.JButton Reporte1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -845,10 +1057,114 @@ private double redondear(double num) {
     private javax.swing.JTextField txt_nit;
     private javax.swing.JTextField txt_nombre;
     private javax.swing.JTextField txt_nombreproducto;
+    private javax.swing.JComboBox<String> txt_pago;
+    private javax.swing.JTextField txt_precio;
+    private javax.swing.JTextField txt_total;
+    private javax.swing.JComboBox<String> uno;
+    // End of variables declaration//GEN-END:variables
+
+private double redondear(double num) {
+
+        return Math.rint(num * 100) / 100;
+    }
+
+    private void eliminar() {
+        int rpta = JOptionPane.showConfirmDialog(this, "ESTA SEGURO DE ELIMINAR ESTA FILA", "SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+        int fil;
+
+        if (model.getRowCount() > 0) {
+            if (tbtTabla.getSelectedRow() != -1) {
+
+                fil = tbtTabla.getSelectedRow();
+                model.removeRow(fil);
+                calTot();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione Una Fila");
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay Filas en la Tabla");
+        }
+    }
+
+    private void calTot() {
+        double S = 0, tot;
+        for (int i = 0; i < tbtTabla.getRowCount(); i++) {
+            S = S + Double.parseDouble(model.getValueAt(i, 8).toString());
+
+        }
+        S = redondear(S);
+        //txt_subtotal.setText(String.valueOf(S));
+
+        tot = S;
+        tot = redondear(tot);
+
+        txt_total.setText(String.valueOf(tot));
+    }
+
+    private Connection connection = null;
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay Filas en la Tabla");
+        }
+    }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Ayuda;
+    private javax.swing.JButton Ayuda1;
+    private javax.swing.JButton Eliminar;
+    private javax.swing.JButton GenerarCompra;
+    private javax.swing.JDialog PRODUCTO;
+    private javax.swing.JRadioButton RBEP0;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> pago;
+    private javax.swing.JTable tbtTabla;
+    private javax.swing.JTextField txt_1;
+    private javax.swing.JTextField txt_cantidad;
+    private javax.swing.JComboBox<String> txt_combox;
+    private javax.swing.JTextField txt_fecha;
+    private javax.swing.JTextField txt_idfacutra;
+    private javax.swing.JTextField txt_nit;
+    private javax.swing.JTextField txt_nombre;
+    private javax.swing.JTextField txt_nombreproducto;
     private javax.swing.JTextField txt_precio;
     private javax.swing.JTextField txt_total;
     private javax.swing.JComboBox<String> uno;
     private javax.swing.JButton valiar;
     private javax.swing.JButton validar;
     // End of variables declaration//GEN-END:variables
+
 }

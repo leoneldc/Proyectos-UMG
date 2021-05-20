@@ -158,7 +158,7 @@ public class PartidaContableDAO extends Conexion {
     }
 
     public String[][] getDetallePartida(PartidaContable pc) {
-        
+
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -193,5 +193,37 @@ public class PartidaContableDAO extends Conexion {
         }
 
         return matrixPartida;
+    }
+
+    public int cuadrarParida(String partidaContable, String monto) {
+
+        int flagRegistro = 0;
+
+        Connection con = null;
+        PreparedStatement stmt = null;
+        int row = 0;
+
+        try {
+            con = Conexion.getConnection();
+            stmt = con.prepareStatement("UPDATE partidacontable SET monto_decuadre = ? WHERE codigo_partidacontable = ?");
+            stmt.setString(1, monto);
+            stmt.setString(2, partidaContable);
+            row = stmt.executeUpdate();
+
+            if (row >= 1) {
+                flagRegistro = 1;
+            } else {
+                flagRegistro = 0;
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, "¡ERROR INTERNO, CONSULTE CON EL ADMINISTRADOR!", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            Conexion.close(con);
+            Conexion.close(stmt);
+        }
+
+        return flagRegistro;
     }
 }

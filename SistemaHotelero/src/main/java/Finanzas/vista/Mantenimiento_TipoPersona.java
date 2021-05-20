@@ -25,6 +25,8 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
 import seguridad.datos.BitacoraDao;
 import seguridad.dominio.Bitacora;
+import seguridad.vista.Login;
+import seguridad.vista.Mantenimiento_Perfil;
 
 /**
  *
@@ -69,7 +71,8 @@ public class Mantenimiento_TipoPersona extends javax.swing.JInternalFrame {
             modelo.addRow(dato);
         }
     }
-    
+    BitacoraDao BitacoraDAO = new BitacoraDao();
+    Bitacora AInsertar = new Bitacora();
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -272,7 +275,7 @@ public class Mantenimiento_TipoPersona extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void BtnIngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngActionPerformed
         TipoPersona tipoPersonaInsertar = new TipoPersona();
         TipoPersonaDAO tipoPersonaDAO = new TipoPersonaDAO();
@@ -280,19 +283,17 @@ public class Mantenimiento_TipoPersona extends javax.swing.JInternalFrame {
         tipoPersonaInsertar.setCodigo_TipoPersona(txt_CodigoTipoPersona.getText());
         tipoPersonaInsertar.setTipoPersona_Nombres(txt_NombreTipoPersona.getText());
         //bitacora
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-        Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario("MantenimientoTipoPersona");
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Insertar");
         AInsertar.setCodigoAplicacion("1007");
-        AInsertar.setModulo("Finanzas");
-        try{
-            BitacoraDAO.insert(AInsertar);   
-        }   catch (UnknownHostException ex) {
+        AInsertar.setModulo("1000");
+
+        try {
+            BitacoraDAO.insert(AInsertar);
+        } catch (UnknownHostException ex) {
             Logger.getLogger(Mantenimiento_TipoPersona.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-            JOptionPane.showMessageDialog(null, "Tipo Persona registrada Exitosamente"); 
+        JOptionPane.showMessageDialog(null, "Tipo Persona registrada Exitosamente"); 
             tipoPersonaDAO.insert(tipoPersonaInsertar);
             llenadodetablas(); 
             limpiar();
@@ -307,19 +308,18 @@ public class Mantenimiento_TipoPersona extends javax.swing.JInternalFrame {
         tipoPersonaModificar.setCodigo_TipoPersona(txt_CodigoTipoPersona.getText());
         tipoPersonaModificar.setTipoPersona_Nombres(txt_NombreTipoPersona.getText());
         //bitacora
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-        Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario("MantenimientoTipoPersona");
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Modificar");
         AInsertar.setCodigoAplicacion("1007");
-        AInsertar.setModulo("Finanzas");
-        try{
-            BitacoraDAO.insert(AInsertar);   
-        }   catch (UnknownHostException ex) {
+        AInsertar.setModulo("1000");
+
+        try {
+            BitacoraDAO.insert(AInsertar);
+        } catch (UnknownHostException ex) {
             Logger.getLogger(Mantenimiento_TipoPersona.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tipoPersonaDAO.update(tipoPersonaModificar);
         JOptionPane.showMessageDialog(null, "Tipo Persona Modificada Exitosamente");
+        tipoPersonaDAO.update(tipoPersonaModificar);
         llenadodetablas();
         limpiar();
     }//GEN-LAST:event_BtnModActionPerformed
@@ -329,16 +329,15 @@ public class Mantenimiento_TipoPersona extends javax.swing.JInternalFrame {
         TipoPersonaDAO tipoPersonaDAO = new TipoPersonaDAO();
         //Prueba delete
         tipoPersonaEliminar.setCodigo_TipoPersona(txt_CodigoTipoPersona.getText());
+       
         //bitacora
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-        Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario("MantenimientoTipoPersona");
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Eliminar");
         AInsertar.setCodigoAplicacion("1007");
-        AInsertar.setModulo("Finanzas");
-        try{
-            BitacoraDAO.insert(AInsertar);   
-        }   catch (UnknownHostException ex) {
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+        } catch (UnknownHostException ex) {
             Logger.getLogger(Mantenimiento_TipoPersona.class.getName()).log(Level.SEVERE, null, ex);
         }
         tipoPersonaDAO.delete(tipoPersonaEliminar);

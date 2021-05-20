@@ -236,6 +236,16 @@ public class PartidaContable {
         }
     }
 
+    public void ejecutarCuadre(String partidaContable, String monto) {
+
+        partidaContableDAO.cuadrarParida(partidaContable, monto);
+
+        if (partidaContableDAO.cuadrarParida(partidaContable, monto) >= 1) {
+            JOptionPane.showMessageDialog(null, "¡REGISTRO EXITOSO!", "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "¡REGISTRO ERRÓNEO!", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     //---------------------------------------------//
     private double sumaDebe = 0;
     private double sumaHaber = 0;

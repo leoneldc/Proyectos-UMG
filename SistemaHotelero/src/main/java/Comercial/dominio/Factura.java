@@ -23,7 +23,45 @@ String producto;
 String Cantidad;  
 String  Precio_por_unidad; 
 String Monto; 
-String TotalmoNto; 
+String TotalmoNto;
+String productoB; 
+String Existencia;
+String tipo; 
+
+String numero;
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+
+    public String getProductoB() {
+        return productoB;
+    }
+
+    public void setProductoB(String productoB) {
+        this.productoB = productoB;
+    }
+
+    public String getExistencia() {
+        return Existencia;
+    }
+
+    public void setExistencia(String Existencia) {
+        this.Existencia = Existencia;
+    }
 
     public String getId_cliente() {
         return Id_cliente;
