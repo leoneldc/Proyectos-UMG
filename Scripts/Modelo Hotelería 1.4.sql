@@ -140,11 +140,11 @@ CREATE TABLE IF NOT EXISTS `hoteleria`.`tbl_reservaciones` (
   FOREIGN KEY (`PK_no_identificacion`) REFERENCES `tbl_huespedes`(`PK_no_identificacion`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-INSERT INTO `tbl_reservaciones` (`PK_id_reservacion`, `PK_no_identificacion`, `PK_id_habitacion`, `cantidad_personas`, `fecha_reserva`, `desde`, `hasta`, `precio`, `estado`) VALUES ('1', '1', '1', '2 adultos', '2021-05-15', '2021-05-16', '2021-05-20', '1000', '0');
-INSERT INTO `tbl_reservaciones` (`PK_id_reservacion`, `PK_no_identificacion`, `PK_id_habitacion`, `cantidad_personas`, `fecha_reserva`, `desde`, `hasta`, `precio`, `estado`) VALUES ('2', '12', '2', '1 adulto y 2 niños', '2021-05-15', '2021-05-16', '2021-05-20', '750', '0');
-INSERT INTO `tbl_reservaciones` (`PK_id_reservacion`, `PK_no_identificacion`, `PK_id_habitacion`, `cantidad_personas`, `fecha_reserva`, `desde`, `hasta`, `precio`, `estado`) VALUES ('3', '123', '3', '2 adultos', '2021-05-15', '2021-05-16', '2021-05-22', '1500', '0');
-INSERT INTO `tbl_reservaciones` (`PK_id_reservacion`, `PK_no_identificacion`, `PK_id_habitacion`, `cantidad_personas`, `fecha_reserva`, `desde`, `hasta`, `precio`, `estado`) VALUES ('4', '12', '4', '1 adulto y 2 niños', '2021-05-17', '2021-12-01', '2021-12-31', '7500', '0');
-INSERT INTO `tbl_reservaciones` (`PK_id_reservacion`, `PK_no_identificacion`, `PK_id_habitacion`, `cantidad_personas`, `fecha_reserva`, `desde`, `hasta`, `precio`, `estado`) VALUES ('5', '12345', '5', '2 adultos', '2021-05-17', '2021-05-01', '2021-05-31', '7500', '0');
+INSERT INTO `tbl_reservaciones` (`PK_id_reservacion`, `PK_no_identificacion`, `PK_id_habitacion`, `cantidad_personas`, `fecha_reserva`, `desde`, `hasta`, `precio`, `estado`) VALUES ('1', '1', '1', '2', '2021-05-15', '2021-05-16', '2021-05-20', '1000', '0');
+INSERT INTO `tbl_reservaciones` (`PK_id_reservacion`, `PK_no_identificacion`, `PK_id_habitacion`, `cantidad_personas`, `fecha_reserva`, `desde`, `hasta`, `precio`, `estado`) VALUES ('2', '12', '2', '1', '2021-05-15', '2021-05-16', '2021-05-20', '750', '0');
+INSERT INTO `tbl_reservaciones` (`PK_id_reservacion`, `PK_no_identificacion`, `PK_id_habitacion`, `cantidad_personas`, `fecha_reserva`, `desde`, `hasta`, `precio`, `estado`) VALUES ('3', '123', '3', '2', '2021-05-15', '2021-05-16', '2021-05-22', '1500', '0');
+INSERT INTO `tbl_reservaciones` (`PK_id_reservacion`, `PK_no_identificacion`, `PK_id_habitacion`, `cantidad_personas`, `fecha_reserva`, `desde`, `hasta`, `precio`, `estado`) VALUES ('4', '12', '4', '1', '2021-05-17', '2021-12-01', '2021-12-31', '7500', '0');
+INSERT INTO `tbl_reservaciones` (`PK_id_reservacion`, `PK_no_identificacion`, `PK_id_habitacion`, `cantidad_personas`, `fecha_reserva`, `desde`, `hasta`, `precio`, `estado`) VALUES ('5', '12345', '5', '2', '2021-05-17', '2021-05-01', '2021-05-31', '7500', '0');
 
 -- -----------------------------------------------------
 -- Table `hoteleria`.`tbl_facturacion`
