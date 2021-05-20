@@ -210,7 +210,7 @@ public class Mantenimiento_AmaDeLlaves extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Mantenimiento Aplicaciones Hoteleria");
+        setTitle("Mantenimiento Ama de Llaves");
         setVisible(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {

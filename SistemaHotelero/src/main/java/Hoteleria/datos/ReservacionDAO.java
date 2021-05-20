@@ -75,7 +75,7 @@ public class ReservacionDAO {
         return reservar;
     }
     public List<Reservacion> select2(){
-        String SQL_SELECT2="SELECT * FROM tbl_reservaciones WHERE (PK_id_reservacion) AND ((desde BETWEEN '"+entrada+"' AND '"+salida+"') or (hasta between '"+entrada+"' AND '"+salida+"')) AND (estado < '2')";
+        String SQL_SELECT2="SELECT * FROM tbl_reservaciones WHERE (PK_id_habitacion='"+id+"') AND ((desde BETWEEN '"+entrada+"' AND '"+salida+"') or (hasta between '"+entrada+"' AND '"+salida+"')) AND (estado < '1')";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -107,7 +107,6 @@ public class ReservacionDAO {
                 reservacion.setPrecio(precio);
                 reservacion.setEstado(estado);
                 reservar.add(reservacion);
-                System.out.println(id_habitacion+" "+desde+" "+hasta+" "+estado);
             }
             
         } catch (SQLException ex) {

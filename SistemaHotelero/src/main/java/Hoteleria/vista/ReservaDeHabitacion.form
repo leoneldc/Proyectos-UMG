@@ -98,7 +98,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="txt_cantpersonas" max="32767" attributes="0"/>
+                                  <Component id="cpersonas" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -113,24 +113,6 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="txt_precio" max="32767" attributes="0"/>
-                                              <Component id="id_habitacion" max="32767" attributes="0"/>
-                                              <Component id="fecha_entrada" pref="125" max="32767" attributes="0"/>
-                                              <Component id="txt_total" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="fecha_salida" max="32767" attributes="0"/>
-                                              </Group>
-                                              <Component id="BtnCatalogo" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="BtnTotal" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                               <Component id="txt_nombrec" alignment="0" max="32767" attributes="0"/>
@@ -172,6 +154,24 @@
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="BtnCancelar" max="32767" attributes="0"/>
                                               <Component id="BtnReporte" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="txt_precio" max="32767" attributes="0"/>
+                                              <Component id="id_habitacion" max="32767" attributes="0"/>
+                                              <Component id="fecha_entrada" pref="125" max="32767" attributes="0"/>
+                                              <Component id="txt_total" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="fecha_salida" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Component id="BtnCatalogo" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="BtnTotal" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -268,7 +268,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_cantpersonas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cpersonas" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -287,7 +287,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="49" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="BtnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="BtnAyuda" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -525,7 +525,7 @@
             <Property name="text" type="java.lang.String" value="Cantidad de Personas:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_cantpersonas">
+        <Component class="javax.swing.JTextField" name="cpersonas">
         </Component>
         <Component class="javax.swing.JRadioButton" name="RC">
           <Properties>

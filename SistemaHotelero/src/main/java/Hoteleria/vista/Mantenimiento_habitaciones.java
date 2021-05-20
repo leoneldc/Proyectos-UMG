@@ -5,6 +5,7 @@
  */
 package Hoteleria.vista;
 
+import Hoteleria.datos.ConexionHoteleria;
 import java.io.File;
 import java.util.List;
 import javax.swing.ButtonGroup;
@@ -13,13 +14,21 @@ import javax.swing.table.DefaultTableModel;
 import Hoteleria.datos.HabitacionesDAO;
 import Hoteleria.dominio.Habitaciones;
 import java.net.UnknownHostException;
+import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 import seguridad.datos.BitacoraDao;
 import seguridad.dominio.Bitacora;
 import seguridad.vista.Aplicacion_Perfil;
@@ -54,10 +63,11 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
         modelo1.addColumn("Piso");
         modelo1.addColumn("Estado");
         modelo1.addColumn("Tipo");
+        modelo1.addColumn("cantidad_maxima_pers");
 
         jTable.setModel(modelo1);
 
-        String datos[] = new String[6];
+        String datos[] = new String[7];
         HabitacionesDAO habitacionesDAO = new HabitacionesDAO();
         List<Habitaciones> habitaciones = habitacionesDAO.select();
         for (Habitaciones habitacion : habitaciones) {
@@ -67,11 +77,22 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
             datos[3] = String.valueOf(habitacion.getPiso());
             datos[4] = String.valueOf(habitacion.getEstado_Habitacion());
             datos[5] = habitacion.getTipo_Habitacion();
+            datos[6] = habitacion.getMax_personas();
 
             modelo1.addRow(datos);
             jTable.setModel(modelo1);
 
         }
+    }
+    public void limpiar() {
+        txtId.setText("");
+        txtDescripcion.setText("");
+        txt_max.setText("");
+        cbxPiso.setSelectedIndex(0);
+        txtPrecio.setText("");
+        cbxTipo.setSelectedIndex(0);
+        txtBuscar.setText("");
+        
     }
 
     private void GuardarEnBitacora(String accion, String codigoModulo, String idUsuario) {
@@ -144,6 +165,9 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
         cbxTipo = new javax.swing.JComboBox<>();
         jradioDisponible = new javax.swing.JRadioButton();
         jradioOcupado = new javax.swing.JRadioButton();
+        jLabel9 = new javax.swing.JLabel();
+        txt_max = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -220,7 +244,7 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
                 .addComponent(btnBuscar)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(324, Short.MAX_VALUE))
+                .addContainerGap(304, Short.MAX_VALUE))
             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel1Layout.setVerticalGroup(
@@ -319,82 +343,96 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
         buttonGroup1.add(jradioOcupado);
         jradioOcupado.setText("Ocupado");
 
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel9.setText("Max. de Personas:");
+
+        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jButton2.setText("Reportes");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(15, 15, 15)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(40, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(btnGuardar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnModificar)
-                        .addGap(32, 32, 32)
+                        .addGap(115, 115, 115)
                         .addComponent(btnAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtPrecio, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addComponent(cbxTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, 103, Short.MAX_VALUE)
+                        .addComponent(cbxPiso, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jradioDisponible)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnModificar)
+                            .addComponent(jradioDisponible))
                         .addGap(18, 18, 18)
                         .addComponent(jradioOcupado))
+                    .addComponent(jButton2)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(cbxTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, 103, Short.MAX_VALUE)
-                        .addComponent(cbxPiso, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(40, 40, 40))
+                        .addComponent(txtPrecio, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txt_max, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)))
+                .addGap(34, 34, 34))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel7)
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(cbxPiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(17, 17, 17)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_max, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxPiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel8)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jradioDisponible)
-                        .addComponent(jradioOcupado)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jradioDisponible)
+                    .addComponent(jradioOcupado)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnModificar)
                     .addComponent(btnAyuda))
-                .addGap(42, 42, 42))
+                .addGap(26, 26, 26)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -403,23 +441,23 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(10, 10, 10)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblModulo))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(209, Short.MAX_VALUE)
                 .addComponent(lblModulo)
                 .addGap(292, 292, 292))
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         jPanel2.getAccessibleContext().setAccessibleName("Mantenimiento habitaciones");
@@ -443,10 +481,12 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
                 && jradioDisponible.isSelected() || jradioOcupado.isSelected()) {
             int id = Integer.parseInt(txtId.getText());
             String desc = txtDescripcion.getText();
+            String max_pers = txt_max.getText();
             int precio = Integer.parseInt(txtPrecio.getText());
             int piso = cbxPiso.getSelectedIndex();
             habitaciones.setId_Habitaciones(id);
             habitaciones.setDescripcion(desc);
+            habitaciones.setMax_personas(max_pers);
             habitaciones.setPrecio(precio);
             habitaciones.setPiso(Integer.parseInt(cbx_piso));
             habitaciones.setPiso(piso);
@@ -465,6 +505,7 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos.");
         }
         tabla();
+        limpiar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -480,6 +521,7 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
 
             int id = Integer.parseInt(txtId.getText());
             String desc = txtDescripcion.getText();
+            String max_pers = txt_max.getText();
             int precio = Integer.parseInt(txtPrecio.getText());
             int piso = cbxPiso.getSelectedIndex();
             String tipo = String.valueOf(cbxTipo.getSelectedItem());
@@ -487,6 +529,7 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
 
             habitaciones_Modificar.setId_Habitaciones(id);
             habitaciones_Modificar.setDescripcion(desc);
+            habitaciones_Modificar.setMax_personas(max_pers);
             habitaciones_Modificar.setPrecio(precio);
             habitaciones_Modificar.setPiso(Integer.parseInt(cbx_piso));
             habitaciones_Modificar.setTipo_Habitacion(tipo);
@@ -503,6 +546,7 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos.");
         }
         tabla();
+        limpiar();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -515,6 +559,7 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
             
         txtId.setText(String.valueOf(habitaciones_Buscar.getId_Habitaciones()));
         txtDescripcion.setText(String.valueOf(habitaciones_Buscar.getDescripcion()));
+        txt_max.setText(habitaciones_Buscar.getMax_personas());
         txtPrecio.setText(String.valueOf(habitaciones_Buscar.getPrecio()));
         cbxPiso.setSelectedItem(habitaciones_Buscar.getPiso());
         cbxTipo.setSelectedItem(String.valueOf(habitaciones_Buscar.getTipo_Habitacion()));
@@ -542,7 +587,19 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtIdKeyTyped
 
     private void btnAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyudaActionPerformed
-
+try {
+            if ((new File("src\\main\\java\\Hoteleria\\ayuda\\Ayuda Mantenimiento Habitaciones.chm")).exists()) {
+                Process p = Runtime
+                        .getRuntime()
+                        .exec("rundll32 url.dll,FileProtocolHandler src\\main\\java\\Hoteleria\\ayuda\\Ayuda Mantenimiento Habitaciones.chm");
+                p.waitFor();
+            } else {
+                JOptionPane.showMessageDialog(null, "La ayuda no Fue encontrada");
+            }
+            //System.out.println("Correcto");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }//GEN-LAST:event_btnAyudaActionPerformed
 
@@ -575,6 +632,7 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Habitaciones habitaciones_Eliminar = new Habitaciones();
         HabitacionesDAO habitacionesDAO = new HabitacionesDAO();
+        
         if (txtBuscar.getText().length() !=0) {
             
         habitaciones_Eliminar.setId_Habitaciones(Integer.parseInt(txtBuscar.getText()));
@@ -584,7 +642,9 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
         }else  {
             JOptionPane.showMessageDialog(null, "No puede eliminar si el campo esta vacio");
         }
+        
         tabla();
+        limpiar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
@@ -594,6 +654,26 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
     private void formInternalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameDeactivated
     MDIHoteleria.logo.setVisible(true); 
     }//GEN-LAST:event_formInternalFrameDeactivated
+private Connection connection = null;
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        Map p = new HashMap();
+        JasperReport report;
+        JasperPrint print;
+
+        try {
+            connection = ConexionHoteleria.getConnection();
+            report = JasperCompileManager.compileReport(new File("").getAbsolutePath()
+                    + "/src/main/java/Hoteleria/reportes/reporteManHabitaciones.jrxml");
+            print = JasperFillManager.fillReport(report, p, connection);
+            JasperViewer view = new JasperViewer(print, false);
+            view.setTitle("Reporte de Mantenimiento Habitaciones");
+            view.setVisible(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -605,6 +685,7 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbxPiso;
     private javax.swing.JComboBox<String> cbxTipo;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -612,6 +693,7 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -624,5 +706,6 @@ public class Mantenimiento_habitaciones extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txt_max;
     // End of variables declaration//GEN-END:variables
 }

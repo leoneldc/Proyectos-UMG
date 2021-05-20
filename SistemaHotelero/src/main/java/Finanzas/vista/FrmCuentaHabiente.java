@@ -26,12 +26,17 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
 import seguridad.datos.BitacoraDao;
 import seguridad.dominio.Bitacora;
+import seguridad.vista.Login;
+import seguridad.vista.Mantenimiento_Perfil;
 /**
  *
  * @author Santiago Martinez Diaz
  */
 public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
       int codigoAplicacion = 1009;
+      
+    BitacoraDao BitacoraDAO = new BitacoraDao();
+    Bitacora AInsertar = new Bitacora();
 //Metodo Llenado de Combos consulta los dominios y datos TipoPersonaDAO y TipoPersona para obetner el codigo en el combobox
    public void llenadoDeCombos()  {
        TipoPersonaDAO tipodao = new TipoPersonaDAO();
@@ -336,18 +341,16 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
         insertarcuenta.setApellidoM_CuentaHabiente(TxtApellidoM.getText());
          insertarcuenta.setTipoPersona_CuentaHabiente(Cbox_Tipo.getSelectedItem().toString());
        
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-        Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario("FrmCuentaHabiente");
-        AInsertar.setAccion("Registrar");
+         AInsertar.setId_Usuario(Login.usuarioFianzas);
+        AInsertar.setAccion("Insertar");
         AInsertar.setCodigoAplicacion("1009");
-        AInsertar.setModulo("Finanzas");
-        try{
+        AInsertar.setModulo("1000");
+
+        try {
             BitacoraDAO.insert(AInsertar);
-            
         } catch (UnknownHostException ex) {
-              Logger.getLogger(FrmCuentaHabiente.class.getName()).log(Level.SEVERE, null, ex);
-          }
+            Logger.getLogger(Mantenimiento_Perfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
        
          cuentadao.insert(insertarcuenta);
 
@@ -364,19 +367,16 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
            llenadoDeTablas();
 
        
-       
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-        Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario("FrmCuentaHabiente");
+       AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Eliminar");
         AInsertar.setCodigoAplicacion("1009");
-        AInsertar.setModulo("Finanzas");
-        try{
+        AInsertar.setModulo("1000");
+
+        try {
             BitacoraDAO.insert(AInsertar);
-            
         } catch (UnknownHostException ex) {
-              Logger.getLogger(FrmCuentaHabiente.class.getName()).log(Level.SEVERE, null, ex);
-          }
+            Logger.getLogger(Mantenimiento_Perfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ssActionPerformed
 
     private void btnLimpiar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiar3ActionPerformed
@@ -396,6 +396,19 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }    
+                     
+                         
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
+        AInsertar.setAccion("Ver Ayuda");
+        AInsertar.setCodigoAplicacion("1009");
+        AInsertar.setModulo("1000");
+
+        try {
+            BitacoraDAO.insert(AInsertar);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Mantenimiento_Perfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   
     }//GEN-LAST:event_btnLimpiar3ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -430,18 +443,16 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
             e.printStackTrace();
         }
         
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-        Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario("FrmCuentaHabiente");
+       AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Imprimir");
         AInsertar.setCodigoAplicacion("1009");
-        AInsertar.setModulo("Finanzas");
-        try{
+        AInsertar.setModulo("1000");
+
+        try {
             BitacoraDAO.insert(AInsertar);
-            
         } catch (UnknownHostException ex) {
-              Logger.getLogger(FrmCuentaHabiente.class.getName()).log(Level.SEVERE, null, ex);
-          }
+            Logger.getLogger(Mantenimiento_Perfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnImprimirActionPerformed
 
 

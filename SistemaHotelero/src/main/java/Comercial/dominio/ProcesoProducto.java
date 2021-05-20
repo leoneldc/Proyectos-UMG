@@ -15,6 +15,42 @@ public class ProcesoProducto {
     String nombre_producto;
     String nombre_bodega;
     String existencias_producto;
+    String fechaActualizacion;
+    String ProductoNuevo;
+    String NuevaExistencia;
+    String BodegasNuevaExistencia;
+
+    public int getPK_id_procesoproducto() {
+        return PK_id_procesoproducto;
+    }
+
+    public String getNombre_producto() {
+        return nombre_producto;
+    }
+
+    public String getNombre_bodega() {
+        return nombre_bodega;
+    }
+
+    public String getExistencias_producto() {
+        return existencias_producto;
+    }
+
+    public String getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+
+    public String getProductoNuevo() {
+        return ProductoNuevo;
+    }
+
+    public String getNuevaExistencia() {
+        return NuevaExistencia;
+    }
+
+    public String getBodegasNuevaExistencia() {
+        return BodegasNuevaExistencia;
+    }
 
     public void setPK_id_procesoproducto(int PK_id_procesoproducto) {
         this.PK_id_procesoproducto = PK_id_procesoproducto;
@@ -32,20 +68,20 @@ public class ProcesoProducto {
         this.existencias_producto = existencias_producto;
     }
 
-    public int getPK_id_procesoproducto() {
-        return PK_id_procesoproducto;
+    public void setFechaActualizacion(String fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
     }
 
-    public String getNombre_producto() {
-        return nombre_producto;
+    public void setProductoNuevo(String ProductoNuevo) {
+        this.ProductoNuevo = ProductoNuevo;
     }
 
-    public String getNombre_bodega() {
-        return nombre_bodega;
+    public void setNuevaExistencia(String NuevaExistencia) {
+        this.NuevaExistencia = NuevaExistencia;
     }
 
-    public String getExistencias_producto() {
-        return existencias_producto;
+    public void setBodegasNuevaExistencia(String BodegasNuevaExistencia) {
+        this.BodegasNuevaExistencia = BodegasNuevaExistencia;
     }
 
     

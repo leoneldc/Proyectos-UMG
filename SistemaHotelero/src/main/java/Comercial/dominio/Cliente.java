@@ -17,19 +17,12 @@ public class Cliente {
   String Cliente;
 String Nit;  
 String Telefono;
-String Producto;
+
 String Estatus_Cliente;
-String Monto;
-String cuenta ;
 
-    public String getCuenta() {
-        return cuenta;
-    }
 
-    public void setCuenta(String cuenta) {
-        this.cuenta = cuenta;
-    }
 
+  
 
 
     public String getId_cliente() {
@@ -64,13 +57,7 @@ String cuenta ;
         this.Telefono = Telefono;
     }
 
-    public String getProducto() {
-        return Producto;
-    }
-
-    public void setProducto(String Producto) {
-        this.Producto = Producto;
-    }
+   
 
     public String getEstatus_Cliente() {
         return Estatus_Cliente;
@@ -80,21 +67,16 @@ String cuenta ;
         this.Estatus_Cliente = Estatus_Cliente;
     }
 
-    public String getMonto() {
-        return Monto;
+    @Override
+    public String toString() {
+        return "Cliente{" + "Id_cliente=" + Id_cliente + ", Cliente=" + Cliente + ", Nit=" + Nit + ", Telefono=" + Telefono + ", Estatus_Cliente=" + Estatus_Cliente + '}';
     }
 
-    public void setMonto(String Monto) {
-        this.Monto = Monto;
-    }
+ 
 
   
 
-    @Override
-    public String toString() {
-        return "Cliente{" + "Id_cliente=" + Id_cliente + ", Cliente=" + Cliente + ", Nit=" + Nit + ", Telefono=" + Telefono + ", Producto=" + Producto + ", Estatus_Cliente=" + Estatus_Cliente + '}';
-    }
-
+   
 
     
 }
