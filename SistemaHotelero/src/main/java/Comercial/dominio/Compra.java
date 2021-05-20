@@ -21,7 +21,7 @@ String Cantidad_producto;
 String Subtotal_producto;
 String Total_producto;
 String Fecha_producto;
-//String Pago_producto;
+String Pago_producto;
 
     public int getId_factura() {
         return Id_factura;
@@ -111,11 +111,12 @@ String Fecha_producto;
         this.Fecha_producto = Fecha_producto;
     }
 
-    @Override
-    public String toString() {
-        return "Compra{" + "Id_factura=" + Id_factura + ", Id_proveedor=" + Id_proveedor + ", Nombre_proveedor=" + Nombre_proveedor + ", Nit_proveedor=" + Nit_proveedor + ", Id_producto=" + Id_producto + ", Nombre_producto=" + Nombre_producto + ", Precio_producto=" + Precio_producto + ", Cantidad_producto=" + Cantidad_producto + ", Subtotal_producto=" + Subtotal_producto + ", Total_producto=" + Total_producto + ", Fecha_producto=" + Fecha_producto + '}';
+    public String getPago_producto() {
+        return Pago_producto;
     }
 
-    
-}
+    public void setPago_producto(String Pago_producto) {
+        this.Pago_producto = Pago_producto;
+    }
 
+}

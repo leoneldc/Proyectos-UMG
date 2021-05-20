@@ -21,13 +21,48 @@ import javax.swing.JOptionPane;
  */
 public class ProcesoProductoDAO {
 
-    private static final String SQL_SELECT = "SELECT PK_id_procesoproducto, nombre_producto, nombre_bodega, existencias_producto FROM tbl_proceso_producto";
-    private static final String SQL_SELECT2 = "SELECT  nombre_producto, existencias_producto FROM tbl_proceso_producto";
-    private static final String SQL_INSERT = "INSERT INTO tbl_proceso_producto (PK_id_procesoproducto, nombre_producto, nombre_bodega, existencias_producto) VALUES(?,?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE tbl_proceso_producto SET   nombre_producto= ?, nombre_bodega= ?, existencias_producto= ?   WHERE PK_id_procesoproducto= ?";
-    private static final String SQL_QUERY = "SELECT PK_id_procesoproducto, nombre_producto, nombre_bodega, existencias_producto FROM tbl_proceso_producto WHERE PK_id_procesoproducto=?";
+    private static final String SQL_SELECT = "SELECT PK_id_procesoproducto, nombre_producto, nombre_bodega, existencias_producto, fechaActualizacion, ProductoNuevo, NuevaExistencia, BodegasNuevaExistencia FROM tbl_proceso_producto";
+    private static final String SQL_SELECT2 = "SELECT  nombre_producto, existencias_producto, fechaActualizacion, ProductoNuevo, NuevaExistencia, BodegasNuevaExistencia FROM tbl_proceso_producto";
+    private static final String SQL_INSERT = "INSERT INTO tbl_proceso_producto (PK_id_procesoproducto, nombre_producto, nombre_bodega, existencias_producto, fechaActualizacion, ProductoNuevo, NuevaExistencia, BodegasNuevaExistencia) VALUES(?,?,?,?,?,?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE tbl_proceso_producto SET   nombre_producto= ?, nombre_bodega= ?, existencias_producto= ?, fechaActualizacion=?, ProductoNuevo=?, NuevaExistencia=?, BodegasNuevaExistencia=?  WHERE PK_id_procesoproducto= ?";
+    private static final String SQL_QUERY = "SELECT PK_id_procesoproducto, nombre_producto, nombre_bodega, existencias_producto, fechaActualizacion, ProductoNuevo, NuevaExistencia, BodegasNuevaExistencia FROM tbl_proceso_producto WHERE PK_id_procesoproducto=?";
     private static final String SQL_DELETE = "DELETE FROM tbl_proceso_producto WHERE PK_id_procesoproducto=?";
 
+     
+   private static final String SQL_UPDATE2 = "UPDATE tbl_proceso_producto SET   existencias_producto= ? WHERE existencias_producto= ?";
+    /**
+     *
+     * seleccion de listas de la bitacora
+     */
+    public int update2(ProcesoProducto MOD) {
+        
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rows = 0;
+        try {
+             
+            
+            conn = Conexion.getConnection();
+           stmt = conn.prepareStatement(SQL_UPDATE2);
+          
+              stmt.setString(1,  MOD.getNombre_producto());
+       
+           
+
+            System.out.println("ejecutando query: " + SQL_UPDATE2);
+           
+            rows = stmt.executeUpdate();
+            System.out.println("Registros afectados:" + rows);
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+
+        return rows;
+    }
+    
     public List<ProcesoProducto> select() {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -44,6 +79,7 @@ public class ProcesoProductoDAO {
                 String nombre_producto = rs.getString("nombre_producto");
                 String nombre_bodega = rs.getString("nombre_bodega");
                 String existencias_producto = rs.getString("existencias_producto");
+                
 
                 procesoproducto = new ProcesoProducto();
                 procesoproducto.setPK_id_procesoproducto(PK_id_procesoproducto);

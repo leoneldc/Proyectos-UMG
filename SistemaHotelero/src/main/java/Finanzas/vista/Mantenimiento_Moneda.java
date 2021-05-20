@@ -25,6 +25,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
 import seguridad.datos.BitacoraDao;
 import seguridad.dominio.Bitacora;
+import seguridad.vista.Login;
 
 /**
  *
@@ -77,7 +78,9 @@ public class Mantenimiento_Moneda extends javax.swing.JInternalFrame {
             modelo.addRow(dato);
         }
     }
-
+    //bitacora
+        BitacoraDao BitacoraDAO = new BitacoraDao();
+        Bitacora AInsertar = new Bitacora();
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -297,18 +300,15 @@ public class Mantenimiento_Moneda extends javax.swing.JInternalFrame {
         monedaInsertar.setNombre_Moneda(txt_NombreMoneda.getText());
         monedaInsertar.setSimbolo_Moneda(txt_SimboloMoneda.getText());
         //bitacora
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-        Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario("MantenimientoMoneda");
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Insertar");
         AInsertar.setCodigoAplicacion("1005");
-        AInsertar.setModulo("Finanzas");
+        AInsertar.setModulo("1000");
         try {
             BitacoraDAO.insert(AInsertar);
         } catch (UnknownHostException ex) {
             Logger.getLogger(Mantenimiento_Moneda.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         JOptionPane.showMessageDialog(null, "Moneda registrada Exitosamente");
         monedaDAO.insert(monedaInsertar);
         llenadodetablas();
@@ -325,12 +325,10 @@ public class Mantenimiento_Moneda extends javax.swing.JInternalFrame {
         monedaModificar.setNombre_Moneda(txt_NombreMoneda.getText());
         monedaModificar.setSimbolo_Moneda(txt_SimboloMoneda.getText());
         //bitacora
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-        Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario("MantenimientoMoneda");
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Modificar");
         AInsertar.setCodigoAplicacion("1005");
-        AInsertar.setModulo("Finanzas");
+        AInsertar.setModulo("1000");
         try {
             BitacoraDAO.insert(AInsertar);
         } catch (UnknownHostException ex) {
@@ -348,12 +346,10 @@ public class Mantenimiento_Moneda extends javax.swing.JInternalFrame {
         //Prueba delete
         monedaEliminar.setCodigo_Moneda(txt_CodigoMoneda.getText());
         //bitacora
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-        Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario("MantenimientoMoneda");
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Eliminar");
         AInsertar.setCodigoAplicacion("1005");
-        AInsertar.setModulo("Finanzas");
+        AInsertar.setModulo("1000");
         try {
             BitacoraDAO.insert(AInsertar);
         } catch (UnknownHostException ex) {

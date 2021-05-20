@@ -38,17 +38,25 @@
 			<staticText>
 				<reportElement x="0" y="0" width="802" height="79" uuid="1436cca9-623b-46f7-ac97-fa48aee9b3ed"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="24" isBold="true"/>
+					<font size="24" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Reporte De Huespedes]]></text>
 			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="652" y="30" width="100" height="20" uuid="ccbf9f6d-1463-4da2-8904-eadafa0a2721"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="41" y="3" width="75" height="76" uuid="11e5a129-5ecb-4866-87c9-9ae51953305f"/>
+				<imageExpression><![CDATA["C:\\Users\\Jeff\\Desktop\\Nueva carpeta\\Proyectos-UMG\\SistemaHotelero\\src\\main\\java\\Hoteleria\\reportes\\Imagen1.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="62" splitType="Stretch">
+		<band height="26" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="100" height="20" uuid="d01d0747-241a-4a20-8152-2c040aa61ded"/>
 				<textElement textAlignment="Center"/>
@@ -89,10 +97,16 @@
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[NIT]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="802" height="1" uuid="eee1641d-ce4b-4987-aeb9-05bb96852b09"/>
+			</line>
+			<line>
+				<reportElement x="0" y="20" width="802" height="1" uuid="7ef3c99c-43d6-4d8b-b91a-eda56a3463b2"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="38" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="100" height="20" uuid="d88dbaa5-c108-47d6-a007-bcaa1bf75078"/>
 				<textElement textAlignment="Center"/>
@@ -135,13 +149,4 @@
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JComboBox;
+//import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,11 +21,11 @@ import javax.swing.JOptionPane;
  */
 public class FacturacionDAO {
 
-    private static final String SQL_SELECT = "SELECT PK_id_factura, PK_id_reservacion, nombre_factura, formaPago_factura, noTarjeta_factura, totalReservacion_factura, totalServicios_factura, totalFacturacion_factura FROM tbl_facturacion";
+    private static final String SQL_SELECT = "SELECT PK_id_factura, PK_id_reservacion, nombre_factura, formaPago_factura, totalReservacion_factura, totalServicios_factura, totalFacturacion_factura FROM tbl_facturacion";
     private static final String SQL_QUERY = "SELECT nombre_metodo FROM tbl_metodos_de_pago";
     private static final String SQL_PK = "nombre_metodo";
     private static final String SQL_QUERY2 = "SELECT PK_id_entrega, nombre FROM tbl_entrega_habitacion WHERE PK_id_entrega = ?";
-    private static final String SQL_INSERT = "INSERT INTO tbl_facturacion(PK_id_factura, PK_id_reservacion, nombre_factura, fechaEntrada_factura, fechaSalida_factura, formaPago_factura, noTarjeta_factura, cvv_factura, fechaCaducidad_factura, totalReservacion_factura, totalServicios_factura, totalFacturacion_factura, estado) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO tbl_facturacion(PK_id_factura, PK_id_reservacion, nombre_factura, fechaEntrada_factura, fechaSalida_factura, formaPago_factura, totalReservacion_factura, totalServicios_factura, totalFacturacion_factura, estado) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public List<Facturacion> select() {
         Connection conn = null;
@@ -43,7 +43,7 @@ public class FacturacionDAO {
                 int nombre_ama_de_llaves = rs.getInt("PK_id_reservacion");
                 String apellido_ama_de_llaves = rs.getString("nombre_factura");
                 String piso_ama_de_llaves = rs.getString("formaPago_factura");
-                int entrada_ama_de_llaves = rs.getInt("noTarjeta_factura");
+                //int entrada_ama_de_llaves = rs.getInt("noTarjeta_factura");
                 int salida_ama_de_llaves = rs.getInt("totalReservacion_factura");
                 int inicio_labores_ama_de_llaves = rs.getInt("totalServicios_factura");
                 int descripcion_ama_de_llaves = rs.getInt("totalFacturacion_factura");
@@ -53,7 +53,7 @@ public class FacturacionDAO {
                 factura.setId_Reservacion(nombre_ama_de_llaves);
                 factura.setNombre_Factura(apellido_ama_de_llaves);
                 factura.setFormaPago_Factura(piso_ama_de_llaves);
-                factura.setNoTarjeta_Factura(entrada_ama_de_llaves);
+                //factura.setNoTarjeta_Factura(entrada_ama_de_llaves);
                 factura.setTotalReservacion_Factura(salida_ama_de_llaves);
                 factura.setTotalServicios_Factura(inicio_labores_ama_de_llaves);
                 factura.setTotalFactura_Factura(descripcion_ama_de_llaves);
@@ -71,10 +71,10 @@ public class FacturacionDAO {
         return facturacion;
     }
 
-    public void llenarCbx(JComboBox cbxModulo) {
-        LlenarCbxDAO llenar = new LlenarCbxDAO();
-        llenar.llenarString(SQL_QUERY, SQL_PK, cbxModulo);
-    }
+//    public void llenarCbx(JComboBox cbxModulo) {
+//        LlenarCbxDAO llenar = new LlenarCbxDAO();
+//        llenar.llenarString(SQL_QUERY, SQL_PK, cbxModulo);
+//    }
 
     public Facturacion query(Facturacion ama_De_Llaves) {
 
@@ -121,13 +121,13 @@ public class FacturacionDAO {
             stmt.setString(4, ama_De_Llaves.getFechaEntrada_Factura());
             stmt.setString(5, ama_De_Llaves.getFechaSalida_Factura());
             stmt.setString(6, ama_De_Llaves.getFormaPago_Factura());
-            stmt.setInt(7, ama_De_Llaves.getNoTarjeta_Factura());
-            stmt.setInt(8, ama_De_Llaves.getCvv_Factura());
-            stmt.setString(9, ama_De_Llaves.getCaducidad_Factura());
-            stmt.setInt(10, ama_De_Llaves.getTotalReservacion_Factura());
-            stmt.setInt(11, ama_De_Llaves.getTotalServicios_Factura());
-            stmt.setInt(12, ama_De_Llaves.getTotalFactura_Factura());
-            stmt.setInt(13, ama_De_Llaves.getEstado_Factura());
+//            stmt.setInt(7, ama_De_Llaves.getNoTarjeta_Factura());
+//            stmt.setInt(8, ama_De_Llaves.getCvv_Factura());
+//            stmt.setString(9, ama_De_Llaves.getCaducidad_Factura());
+            stmt.setInt(7, ama_De_Llaves.getTotalReservacion_Factura());
+            stmt.setInt(8, ama_De_Llaves.getTotalServicios_Factura());
+            stmt.setInt(9, ama_De_Llaves.getTotalFactura_Factura());
+            stmt.setInt(10, ama_De_Llaves.getEstado_Factura());
 
             rows = stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Transferencia Exitosa");

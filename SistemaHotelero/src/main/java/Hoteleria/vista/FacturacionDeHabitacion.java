@@ -2,14 +2,16 @@ package Hoteleria.vista;
 
 import Hoteleria.datos.ConexionHoteleria;
 import Hoteleria.datos.FacturacionDAO;
+import Hoteleria.datos.FormasDePagoDAO;
 import Hoteleria.datos.ReservacionDAO;
 import Hoteleria.datos.ServiciosDAO;
 import Hoteleria.dominio.Facturacion;
+import Hoteleria.dominio.FormasDePago;
 import Hoteleria.dominio.Reservacion;
 import Hoteleria.dominio.Servicios;
 import java.io.File;
 import java.sql.Connection;
-import java.text.SimpleDateFormat;
+//import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +37,7 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
     DefaultTableModel modelo2;
     DefaultTableModel modelo3;
     DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
-    FacturacionDAO cargarCbx = new FacturacionDAO();
+    //FacturacionDAO cargarCbx = new FacturacionDAO();
     int suma = 0, total;
 
     void habilitarAcciones() {
@@ -65,9 +67,21 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
     public FacturacionDeHabitacion() {
         initComponents();
         tabla();
-        cargarCbx.llenarCbx(cbxPago);
+        //cargarCbx.llenarCbx(cbxPago);
+        cargar_habitaciones();
         tabla1();
         tabla2();
+    }
+
+    public void cargar_habitaciones() {
+        cbxPago.addItem("Seleccionar...");
+        FormasDePagoDAO personaDAO = new FormasDePagoDAO();
+        List<FormasDePago> habitaciones = personaDAO.select();
+        for (FormasDePago habitacion : habitaciones) {
+            if (Integer.parseInt(habitacion.getEstado())== 1) {
+                cbxPago.addItem(String.valueOf(habitacion.getNombre()));
+            }
+        }
     }
 
     public void tabla() {
@@ -76,7 +90,7 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         modelo1.addColumn("Reserva");
         modelo1.addColumn("Nombre");
         modelo1.addColumn("Pago");
-        modelo1.addColumn("No. Tarjeta");
+//        modelo1.addColumn("No. Tarjeta");
         modelo1.addColumn("Reservación");
         modelo1.addColumn("Servicios");
         modelo1.addColumn("Total");
@@ -87,21 +101,21 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         jTable.getColumnModel().getColumn(1).setCellRenderer(centro);
         jTable.getColumnModel().getColumn(2).setCellRenderer(centro);
         jTable.getColumnModel().getColumn(3).setCellRenderer(centro);
+//        jTable.getColumnModel().getColumn(4).setCellRenderer(centro);
         jTable.getColumnModel().getColumn(4).setCellRenderer(centro);
         jTable.getColumnModel().getColumn(5).setCellRenderer(centro);
         jTable.getColumnModel().getColumn(6).setCellRenderer(centro);
-        jTable.getColumnModel().getColumn(7).setCellRenderer(centro);
 
         jTable.getColumnModel().getColumn(0).setPreferredWidth(25);
         jTable.getColumnModel().getColumn(1).setPreferredWidth(25);
         jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(3).setPreferredWidth(65);
+//        jTable.getColumnModel().getColumn(4).setPreferredWidth(60);
         jTable.getColumnModel().getColumn(4).setPreferredWidth(60);
         jTable.getColumnModel().getColumn(5).setPreferredWidth(60);
         jTable.getColumnModel().getColumn(6).setPreferredWidth(60);
-        jTable.getColumnModel().getColumn(7).setPreferredWidth(60);
 
-        String datos[] = new String[8];
+        String datos[] = new String[7];
         FacturacionDAO ama_De_Llaves_DAO = new FacturacionDAO();
         List<Facturacion> ama_De_Llaves = ama_De_Llaves_DAO.select();
         for (Facturacion ama_De_Llave : ama_De_Llaves) {
@@ -109,10 +123,10 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
             datos[1] = String.valueOf(ama_De_Llave.getId_Reservacion());
             datos[2] = ama_De_Llave.getNombre_Factura();
             datos[3] = ama_De_Llave.getFormaPago_Factura();
-            datos[4] = String.valueOf(ama_De_Llave.getNoTarjeta_Factura());
-            datos[5] = String.valueOf(ama_De_Llave.getTotalReservacion_Factura());
-            datos[6] = String.valueOf(ama_De_Llave.getTotalServicios_Factura());
-            datos[7] = String.valueOf(ama_De_Llave.getTotalFactura_Factura());
+//            datos[4] = String.valueOf(ama_De_Llave.getNoTarjeta_Factura());
+            datos[4] = String.valueOf(ama_De_Llave.getTotalReservacion_Factura());
+            datos[5] = String.valueOf(ama_De_Llave.getTotalServicios_Factura());
+            datos[6] = String.valueOf(ama_De_Llave.getTotalFactura_Factura());
             modelo1.addRow(datos);
             jTable.setModel(modelo1);
         }
@@ -183,8 +197,8 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         jTable2.getColumnModel().getColumn(0).setPreferredWidth(50);
         jTable2.getColumnModel().getColumn(1).setPreferredWidth(50);
     }
-    
-    public void limpiarCompra(){
+
+    public void limpiarCompra() {
         for (int i = 0; i < jTable2.getRowCount(); i++) {
             String Vector[] = new String[2];
             Vector[0] = jTable2.getValueAt(i, 0).toString();
@@ -202,9 +216,9 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         txtEntrada.setText("");
         txtSalida.setText("");
         cbxPago.setSelectedIndex(0);
-        txtNoTarjeta.setText("");
-        txtCvv.setText("");
-        jdateCaducidad.setDate(null);
+//        txtNoTarjeta.setText("");
+//        txtCvv.setText("");
+//        jdateCaducidad.setDate(null);
         txtTotalReservacion.setText("");
         txtTotalServicios.setText("");
         txtTotalFacturacion.setText("");
@@ -228,11 +242,6 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         txtSalida = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         cbxPago = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
-        txtNoTarjeta = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        txtCvv = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
@@ -251,7 +260,6 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         txtTotalServicios = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         txtTotalFacturacion = new javax.swing.JTextField();
-        jdateCaducidad = new com.toedter.calendar.JDateChooser();
         btnConfirmarPago = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -368,38 +376,6 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel7.setText("No. Tarjeta / Cuenta:");
-
-        txtNoTarjeta.setEditable(false);
-        txtNoTarjeta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtNoTarjeta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNoTarjetaActionPerformed(evt);
-            }
-        });
-        txtNoTarjeta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNoTarjetaKeyTyped(evt);
-            }
-        });
-
-        jLabel9.setText("CVV:");
-
-        txtCvv.setEditable(false);
-        txtCvv.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtCvv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCvvActionPerformed(evt);
-            }
-        });
-        txtCvv.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCvvKeyTyped(evt);
-            }
-        });
-
-        jLabel8.setText("Fecha caducidad:");
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -487,9 +463,6 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
             }
         });
 
-        jdateCaducidad.setDateFormatString("yyyy-MM-dd");
-        jdateCaducidad.setEnabled(false);
-
         btnConfirmarPago.setText("Confirmar Pago");
         btnConfirmarPago.setEnabled(false);
         btnConfirmarPago.addActionListener(new java.awt.event.ActionListener() {
@@ -507,8 +480,6 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel7)
                             .addComponent(jLabel6)
                             .addComponent(jLabel4)
                             .addComponent(jLabel1)
@@ -517,33 +488,26 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbxPago, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtNoTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel9)
+                                        .addComponent(txtFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(24, 24, 24)
+                                        .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtCvv, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(txtFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(24, 24, 24)
-                                            .addComponent(jLabel2)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txtReserva))
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                            .addComponent(txtEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jLabel5)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txtSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(txtReserva))
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(txtEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jdateCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(20, Short.MAX_VALUE))
+                                .addComponent(btnVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
+                        .addGap(13, 13, 13)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel16)
@@ -554,26 +518,27 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel14)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(txtTotalReservacion))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnAsignarUno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnAsignarTodos, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnQuitarUno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnQuitarTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAsignarUno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAsignarTodos, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnQuitarUno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnQuitarTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnConfirmarPago, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(btnConfirmarPago, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTotalServicios)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addComponent(txtTotalServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -599,17 +564,7 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(cbxPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtNoTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtCvv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jdateCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(22, 22, 22)
+                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -640,7 +595,7 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                     .addComponent(jLabel16)
                     .addComponent(txtTotalFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConfirmarPago))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro Facturas"));
@@ -681,7 +636,7 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -735,14 +690,6 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
     private void txtSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSalidaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSalidaActionPerformed
-
-    private void txtNoTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoTarjetaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNoTarjetaActionPerformed
-
-    private void txtCvvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCvvActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCvvActionPerformed
 
     private void txtTotalFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalFacturacionActionPerformed
         // TODO add your handling code here:
@@ -857,22 +804,21 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
 
         if (cbx_Pago.equals("Tarjeta")) {
             if (txtFactura.getText().length() != 0 && txtReserva.getText().length() != 0
-                    && txtNoTarjeta.getText().length() != 0 && txtCvv.getText().length() != 0
+                    /*&& txtNoTarjeta.getText().length() != 0 && txtCvv.getText().length() != 0*/
                     && txtTotalReservacion.getText().length() != 0 && txtTotalServicios.getText().length() != 0
-                    && txtTotalFacturacion.getText().length() != 0 && jdateCaducidad.getDate() != null
-                    && cbx_Pago != "Seleccionar...") {
+                    && txtTotalFacturacion.getText().length() != 0 /*&& jdateCaducidad.getDate() != null
+                    && cbx_Pago != "Seleccionar..."*/) {
                 {
-                    String fecha = new SimpleDateFormat("yyyy-MM-dd").format(jdateCaducidad.getDate());
+                    //String fecha = new SimpleDateFormat("yyyy-MM-dd").format(jdateCaducidad.getDate());
                     ama_De_Llaves_Insertar.setId_Factura(Integer.parseInt(txtFactura.getText()));
                     ama_De_Llaves_Insertar.setId_Reservacion(Integer.parseInt(txtReserva.getText()));
                     ama_De_Llaves_Insertar.setNombre_Factura(txtNombre.getText());
                     ama_De_Llaves_Insertar.setFechaEntrada_Factura(txtEntrada.getText());
                     ama_De_Llaves_Insertar.setFechaSalida_Factura(txtSalida.getText());
-                    ama_De_Llaves_Insertar.setFechaEntrada_Factura(txtEntrada.getText());
                     ama_De_Llaves_Insertar.setFormaPago_Factura(cbx_Pago);
-                    ama_De_Llaves_Insertar.setNoTarjeta_Factura(Integer.parseInt(txtNoTarjeta.getText()));
-                    ama_De_Llaves_Insertar.setCvv_Factura(Integer.parseInt(txtCvv.getText()));
-                    ama_De_Llaves_Insertar.setCaducidad_Factura(fecha);
+//                    ama_De_Llaves_Insertar.setNoTarjeta_Factura(Integer.parseInt(txtNoTarjeta.getText()));
+//                    ama_De_Llaves_Insertar.setCvv_Factura(Integer.parseInt(txtCvv.getText()));
+//                    ama_De_Llaves_Insertar.setCaducidad_Factura(fecha);
                     ama_De_Llaves_Insertar.setTotalReservacion_Factura(Integer.parseInt(txtTotalReservacion.getText()));
                     ama_De_Llaves_Insertar.setTotalServicios_Factura(Integer.parseInt(txtTotalServicios.getText()));
                     ama_De_Llaves_Insertar.setTotalFactura_Factura(Integer.parseInt(txtTotalFacturacion.getText()));
@@ -887,9 +833,9 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                         //guardarBitacora.GuardarEnBitacora("Facturacion", Integer.toString(codigoAplicacion), Login.usuarioHoteleria);
                         txtNombre.setEditable(false);
                         cbxPago.setEnabled(false);
-                        txtNoTarjeta.setEditable(false);
-                        txtCvv.setEditable(false);
-                        jdateCaducidad.setEnabled(false);
+//                        txtNoTarjeta.setEditable(false);
+//                        txtCvv.setEditable(false);
+//                        jdateCaducidad.setEnabled(false);
                         btnAsignarUno.setEnabled(false);
                         btnAsignarTodos.setEnabled(false);
                         btnQuitarUno.setEnabled(false);
@@ -913,11 +859,10 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                     ama_De_Llaves_Insertar.setNombre_Factura(txtNombre.getText());
                     ama_De_Llaves_Insertar.setFechaEntrada_Factura(txtEntrada.getText());
                     ama_De_Llaves_Insertar.setFechaSalida_Factura(txtSalida.getText());
-                    ama_De_Llaves_Insertar.setFechaEntrada_Factura(txtEntrada.getText());
                     ama_De_Llaves_Insertar.setFormaPago_Factura(cbx_Pago);
-                    ama_De_Llaves_Insertar.setNoTarjeta_Factura(0);
-                    ama_De_Llaves_Insertar.setCvv_Factura(0);
-                    ama_De_Llaves_Insertar.setCaducidad_Factura(null);
+//                    ama_De_Llaves_Insertar.setNoTarjeta_Factura(0);
+//                    ama_De_Llaves_Insertar.setCvv_Factura(0);
+//                    ama_De_Llaves_Insertar.setCaducidad_Factura(null);
                     ama_De_Llaves_Insertar.setTotalReservacion_Factura(Integer.parseInt(txtTotalReservacion.getText()));
                     ama_De_Llaves_Insertar.setTotalServicios_Factura(Integer.parseInt(txtTotalServicios.getText()));
                     ama_De_Llaves_Insertar.setTotalFactura_Factura(Integer.parseInt(txtTotalFacturacion.getText()));
@@ -938,9 +883,9 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                             limpiarCompra();
                             txtNombre.setEditable(false);
                             cbxPago.setEnabled(false);
-                            txtNoTarjeta.setEditable(false);
-                            txtCvv.setEditable(false);
-                            jdateCaducidad.setEnabled(false);
+//                            txtNoTarjeta.setEditable(false);
+//                            txtCvv.setEditable(false);
+//                            jdateCaducidad.setEnabled(false);
                             btnAsignarUno.setEnabled(false);
                             btnAsignarTodos.setEnabled(false);
                             btnQuitarUno.setEnabled(false);
@@ -957,9 +902,9 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                             //guardarBitacora.GuardarEnBitacora("Facturacion", Integer.toString(codigoAplicacion), Login.usuarioHoteleria);
                             txtNombre.setEditable(false);
                             cbxPago.setEnabled(false);
-                            txtNoTarjeta.setEditable(false);
-                            txtCvv.setEditable(false);
-                            jdateCaducidad.setEnabled(false);
+//                            txtNoTarjeta.setEditable(false);
+//                            txtCvv.setEditable(false);
+//                            jdateCaducidad.setEnabled(false);
                             btnAsignarUno.setEnabled(false);
                             btnAsignarTodos.setEnabled(false);
                             btnQuitarUno.setEnabled(false);
@@ -974,7 +919,7 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         } else if (cbx_Pago.equals("Criptomoneda Ethereum") || cbx_Pago.equals("PAYPAL")
                 || cbx_Pago.equals("MovilPay")) {
             if (txtFactura.getText().length() != 0 && txtReserva.getText().length() != 0
-                    && txtNoTarjeta.getText().length() != 0
+                    /*&& txtNoTarjeta.getText().length() != 0*/
                     && txtTotalReservacion.getText().length() != 0 && txtTotalServicios.getText().length() != 0
                     && txtTotalFacturacion.getText().length() != 0 && cbx_Pago != "Seleccionar...") {
                 {
@@ -983,11 +928,10 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                     ama_De_Llaves_Insertar.setNombre_Factura(txtNombre.getText());
                     ama_De_Llaves_Insertar.setFechaEntrada_Factura(txtEntrada.getText());
                     ama_De_Llaves_Insertar.setFechaSalida_Factura(txtSalida.getText());
-                    ama_De_Llaves_Insertar.setFechaEntrada_Factura(txtEntrada.getText());
                     ama_De_Llaves_Insertar.setFormaPago_Factura(cbx_Pago);
-                    ama_De_Llaves_Insertar.setNoTarjeta_Factura(Integer.parseInt(txtNoTarjeta.getText()));
-                    ama_De_Llaves_Insertar.setCvv_Factura(0);
-                    ama_De_Llaves_Insertar.setCaducidad_Factura(null);
+//                    ama_De_Llaves_Insertar.setNoTarjeta_Factura(Integer.parseInt(txtNoTarjeta.getText()));
+//                    ama_De_Llaves_Insertar.setCvv_Factura(0);
+//                    ama_De_Llaves_Insertar.setCaducidad_Factura(null);
                     ama_De_Llaves_Insertar.setTotalReservacion_Factura(Integer.parseInt(txtTotalReservacion.getText()));
                     ama_De_Llaves_Insertar.setTotalServicios_Factura(Integer.parseInt(txtTotalServicios.getText()));
                     ama_De_Llaves_Insertar.setTotalFactura_Factura(Integer.parseInt(txtTotalFacturacion.getText()));
@@ -1002,9 +946,9 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
                         //guardarBitacora.GuardarEnBitacora("Facturacion", Integer.toString(codigoAplicacion), Login.usuarioHoteleria);
                         txtNombre.setEditable(false);
                         cbxPago.setEnabled(false);
-                        txtNoTarjeta.setEditable(false);
-                        txtCvv.setEditable(false);
-                        jdateCaducidad.setEnabled(false);
+//                        txtNoTarjeta.setEditable(false);
+//                        txtCvv.setEditable(false);
+//                        jdateCaducidad.setEnabled(false);
                         btnAsignarUno.setEnabled(false);
                         btnAsignarTodos.setEnabled(false);
                         btnQuitarUno.setEnabled(false);
@@ -1047,24 +991,6 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtNombreKeyTyped
 
-    private void txtNoTarjetaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNoTarjetaKeyTyped
-        char validar = evt.getKeyChar();
-        if (Character.isLetter(validar)) {
-            getToolkit().beep();
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingrese solo números.");
-        }
-    }//GEN-LAST:event_txtNoTarjetaKeyTyped
-
-    private void txtCvvKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCvvKeyTyped
-        char validar = evt.getKeyChar();
-        if (Character.isLetter(validar)) {
-            getToolkit().beep();
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "Ingrese solo números.");
-        }
-    }//GEN-LAST:event_txtCvvKeyTyped
-
     private void cbxPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPagoActionPerformed
 
     }//GEN-LAST:event_cbxPagoActionPerformed
@@ -1072,25 +998,25 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
     private void cbxPagoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxPagoItemStateChanged
         String cbx_Pago = cbxPago.getSelectedItem().toString();
         if (cbx_Pago.equals("Tarjeta")) {
-            txtNoTarjeta.setEditable(true);
-            txtCvv.setEditable(true);
-            jdateCaducidad.setEnabled(true);
+//            txtNoTarjeta.setEditable(false);
+//            txtCvv.setEditable(true);
+//            jdateCaducidad.setEnabled(true);
         } else if (cbx_Pago.equals("Efectivo")) {
-            txtNoTarjeta.setEditable(false);
-            txtCvv.setEditable(false);
-            jdateCaducidad.setEnabled(false);
+//            txtNoTarjeta.setEditable(false);
+//            txtCvv.setEditable(false);
+//            jdateCaducidad.setEnabled(false);
         } else if (cbx_Pago.equals("Criptomoneda Ethereum")) {
-            txtNoTarjeta.setEditable(true);
-            txtCvv.setEditable(false);
-            jdateCaducidad.setEnabled(false);
+//            txtNoTarjeta.setEditable(true);
+//            txtCvv.setEditable(false);
+//            jdateCaducidad.setEnabled(false);
         } else if (cbx_Pago.equals("PAYPAL")) {
-            txtNoTarjeta.setEditable(true);
-            txtCvv.setEditable(false);
-            jdateCaducidad.setEnabled(false);
+//            txtNoTarjeta.setEditable(true);
+//            txtCvv.setEditable(false);
+//            jdateCaducidad.setEnabled(false);
         } else if (cbx_Pago.equals("MovilPay")) {
-            txtNoTarjeta.setEditable(true);
-            txtCvv.setEditable(false);
-            jdateCaducidad.setEnabled(false);
+//            txtNoTarjeta.setEditable(true);
+//            txtCvv.setEditable(false);
+//            jdateCaducidad.setEnabled(false);
         }
     }//GEN-LAST:event_cbxPagoItemStateChanged
 
@@ -1166,9 +1092,6 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1177,11 +1100,8 @@ public class FacturacionDeHabitacion extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable;
     public static javax.swing.JTable jTable1;
     public static javax.swing.JTable jTable2;
-    private com.toedter.calendar.JDateChooser jdateCaducidad;
-    private javax.swing.JTextField txtCvv;
     private javax.swing.JTextField txtEntrada;
     private javax.swing.JTextField txtFactura;
-    private javax.swing.JTextField txtNoTarjeta;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtReserva;
     private javax.swing.JTextField txtSalida;

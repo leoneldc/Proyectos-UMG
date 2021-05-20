@@ -52,6 +52,7 @@ public class CatalogoDeHabitaciones extends javax.swing.JFrame {
         modelo1.addColumn("Piso");
         modelo1.addColumn("Estado");
         modelo1.addColumn("Tipo");
+        modelo1.addColumn("Cantidad Personas");
 
         tabla.setModel(modelo1);
         
@@ -63,17 +64,19 @@ public class CatalogoDeHabitaciones extends javax.swing.JFrame {
         tabla.getColumnModel().getColumn(3).setCellRenderer(centro);
         tabla.getColumnModel().getColumn(4).setCellRenderer(centro);
         tabla.getColumnModel().getColumn(5).setCellRenderer(centro);
+        tabla.getColumnModel().getColumn(6).setCellRenderer(centro);
         
         tabla.getColumnModel().getColumn(0).setPreferredWidth(50);        
         tabla.getColumnModel().getColumn(1).setPreferredWidth(200);
         tabla.getColumnModel().getColumn(2).setPreferredWidth(75);        
         tabla.getColumnModel().getColumn(3).setPreferredWidth(25);
         tabla.getColumnModel().getColumn(4).setPreferredWidth(50);        
-        tabla.getColumnModel().getColumn(5).setPreferredWidth(75);
+        tabla.getColumnModel().getColumn(5).setPreferredWidth(75);        
+        tabla.getColumnModel().getColumn(6).setPreferredWidth(100);
         
         
         
-        String datos[] = new String[6];
+        String datos[] = new String[7];
         HabitacionesDAO habitacionesDAO = new HabitacionesDAO();
         List<Habitaciones> habitaciones = habitacionesDAO.select();
         for (Habitaciones habitacion : habitaciones) {
@@ -84,7 +87,7 @@ public class CatalogoDeHabitaciones extends javax.swing.JFrame {
             datos[3] = String.valueOf(habitacion.getPiso());
             datos[4] = "Disponible";
             datos[5] = habitacion.getTipo_Habitacion();
-
+            datos[6] = habitacion.getMax_personas();
             modelo1.addRow(datos);
             tabla.setModel(modelo1);
             }

@@ -22,12 +22,12 @@ import java.util.List;
  */
 public class ClienteDao {
     
-        private static final String SQL_INSERT = "INSERT INTO tbl_cliente(Id_cliente,cliente,Nit,telefono,producto,Estatus_Cliente,Monto,cuenta) VALUES(?, ?,?, ?,?, ?,?,?)";
-    private static final String SQL_SELECT = "SELECT Id_cliente,cliente,Nit,telefono,producto,Estatus_Cliente,Monto,cuenta FROM tbl_cliente";
-    private static final String SQL_QUERY = "SELECT Id_cliente,cliente,Nit,telefono,producto,Estatus_Cliente,Monto, cuenta FROM tbl_cliente WHERE Id_cliente = ?";
-  private static final String SQL_UPDATE = "UPDATE tbl_cliente SET  Id_cliente = ?,cliente =?,Nit= ? , telefono = ? ,producto = ? , Estatus_Cliente = ? , Monto = ?,cuenta =? WHERE Id_cliente";
+        private static final String SQL_INSERT = "INSERT INTO tbl_cliente(Id_cliente,cliente,Nit,telefono,Estatus_Cliente) VALUES(?, ?,?, ?,?)";
+    private static final String SQL_SELECT = "SELECT Id_cliente,cliente,Nit,telefono,Estatus_Cliente FROM tbl_cliente";
+    private static final String SQL_QUERY = "SELECT Id_cliente,cliente,Nit,telefono,Estatus_Cliente FROM tbl_cliente WHERE Id_cliente = ?";
+  private static final String SQL_UPDATE = "UPDATE tbl_cliente SET  Id_cliente = ?,cliente =?,Nit= ? , telefono = ?  , Estatus_Cliente = ?  WHERE Id_cliente";
     private static final String SQL_DELETE = "DELETE FROM tbl_cliente  WHERE Id_cliente = ? ";
-      private static final String SQL_QUERY22 = "SELECT Id_cliente,cliente,Nit,telefono,producto,Estatus_Cliente,Monto,cliente, cuenta FROM tbl_cliente WHERE cliente = ?";
+      private static final String SQL_QUERY22 = "SELECT Id_cliente,cliente,Nit,telefono,Estatus_Cliente FROM tbl_cliente WHERE cliente = ?";
   
      public List<Cliente> select() {
         Connection conn = null;
@@ -52,10 +52,10 @@ public class ClienteDao {
                 String cliente  = rs.getString("cliente");
                 String nit =      rs.getString("Nit");
                 String telefono = rs.getString("telefono");
-                    String producto =      rs.getString("producto");
-                  String monto = rs.getString("Monto");
+                
+                 
                     String estatus_cliente  = rs.getString("Estatus_Cliente");
-                          String cuenta  = rs.getString("cuenta");
+                      ;
 
                 /**
                  *
@@ -68,10 +68,9 @@ public class ClienteDao {
                     venta.setId_cliente(id_cliente);
                  venta.setNit(nit);
                  venta.setTelefono(telefono);
-                 venta.setProducto(producto);
-                    venta.setMonto(monto);
+                 
                venta.setEstatus_Cliente(estatus_cliente);
-                    venta.setCuenta(cuenta);
+                 
                     ventas.add(venta);
             }
 
@@ -110,11 +109,10 @@ public class ClienteDao {
                 String cliente  = rs.getString("Cliente");
                 String nit =      rs.getString("Nit");
                 String telefono = rs.getString("telefono");
-                    String producto =      rs.getString("producto");
-                  String monto = rs.getString("Monto");
+              
                     String estatus_cliente  = rs.getString("Estatus_Cliente");
                   String id = rs.getString("Id_cliente");
-                      String cuenta = rs.getString("cuenta");
+               
                 /**
                  *
                  * concatenacionde de variables de de busqueda
@@ -126,10 +124,9 @@ public class ClienteDao {
               venta.setId_cliente(id);
                  venta.setNit(nit);
                  venta.setTelefono(telefono);
-                 venta.setProducto(producto);
-                    venta.setMonto(monto);
+               
                venta.setEstatus_Cliente(estatus_cliente);
-                  venta.setCuenta(cuenta);
+                
                     ventas.add(venta);
                 /**
                  *
@@ -175,11 +172,8 @@ public class ClienteDao {
                 String cliente  = rs.getString("Cliente");
                 String nit =      rs.getString("Nit");
                 String telefono = rs.getString("telefono");
-                    String producto =      rs.getString("producto");
-                  String monto = rs.getString("Monto");
-                    String estatus_cliente  = rs.getString("Estatus_Cliente");
                   String id = rs.getString("Id_cliente");
-                     String cuenta = rs.getString("cuenta");
+             
                 /**
                  *
                  * concatenacionde de variables de de busqueda
@@ -191,10 +185,8 @@ public class ClienteDao {
               venta.setId_cliente(id);
                  venta.setNit(nit);
                  venta.setTelefono(telefono);
-                 venta.setProducto(producto);
-                    venta.setMonto(monto);
-               venta.setEstatus_Cliente(estatus_cliente);
-                   venta.setCuenta(cuenta);
+               
+                
                     ventas.add(venta);
                 /**
                  *
@@ -231,10 +223,9 @@ public class ClienteDao {
             stmt.setString(2,  insertar.getCliente());       
             stmt.setString(3,   insertar.getNit());
               stmt.setString(4,  insertar.getTelefono());
-               stmt.setString(5,  insertar.getProducto());
-                stmt.setString(6,  insertar.getEstatus_Cliente());
-               stmt.setString(7,  insertar.getMonto());
-     stmt.setString(8,  insertar.getCuenta());
+          
+                stmt.setString(5,  insertar.getEstatus_Cliente());
+       
             System.out.println("ejecutando query:" + SQL_INSERT);
             rows = stmt.executeUpdate();
             System.out.println("Registros afectados:" + rows);
@@ -260,11 +251,10 @@ public class ClienteDao {
             stmt.setString(1,   mod.getId_cliente());
             stmt.setString(2,   mod.getCliente());       
             stmt.setString(3,    mod.getNit());
-             stmt.setString(4,   mod.getMonto());
-             stmt.setString(5,   mod.getEstatus_Cliente());
-            stmt.setString(6,   mod.getTelefono());
-             stmt.setString(7,  mod.getProducto());
-                  stmt.setString(8,  mod.getCuenta());
+           
+             stmt.setString(4,   mod.getEstatus_Cliente());
+            stmt.setString(5,   mod.getTelefono());
+           
    rows = stmt.executeUpdate();
          
             System.out.println("Registros actualizado:" + rows);

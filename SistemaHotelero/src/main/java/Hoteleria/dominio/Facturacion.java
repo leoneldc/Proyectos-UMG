@@ -18,8 +18,8 @@ public class Facturacion {
     private String FechaSalida_Factura;
     private String FormaPago_Factura;
     private int NoTarjeta_Factura;
-    private int Cvv_Factura;
-    private String Caducidad_Factura;
+//    private int Cvv_Factura;
+//    private String Caducidad_Factura;
     private int TotalReservacion_Factura;
     private int TotalServicios_Factura;
     private int TotalFactura_Factura;
@@ -81,21 +81,21 @@ public class Facturacion {
         this.NoTarjeta_Factura = NoTarjeta_Factura;
     }
 
-    public int getCvv_Factura() {
-        return Cvv_Factura;
-    }
-
-    public void setCvv_Factura(int Cvv_Factura) {
-        this.Cvv_Factura = Cvv_Factura;
-    }
-
-    public String getCaducidad_Factura() {
-        return Caducidad_Factura;
-    }
-
-    public void setCaducidad_Factura(String Caducidad_Factura) {
-        this.Caducidad_Factura = Caducidad_Factura;
-    }
+//    public int getCvv_Factura() {
+//        return Cvv_Factura;
+//    }
+//
+//    public void setCvv_Factura(int Cvv_Factura) {
+//        this.Cvv_Factura = Cvv_Factura;
+//    }
+//
+//    public String getCaducidad_Factura() {
+//        return Caducidad_Factura;
+//    }
+//
+//    public void setCaducidad_Factura(String Caducidad_Factura) {
+//        this.Caducidad_Factura = Caducidad_Factura;
+//    }
 
     public int getTotalReservacion_Factura() {
         return TotalReservacion_Factura;
@@ -139,8 +139,8 @@ public class Facturacion {
                 + ", FechaSalida_Factura=" + FechaSalida_Factura
                 + ", FormaPago_Factura=" + FormaPago_Factura
                 + ", NoTarjeta_Factura=" + NoTarjeta_Factura
-                + ", Cvv_Factura=" + Cvv_Factura
-                + ", Caducidad_Factura=" + Caducidad_Factura
+//                + ", Cvv_Factura=" + Cvv_Factura
+//                + ", Caducidad_Factura=" + Caducidad_Factura
                 + "TotalReservacion_Factura=" + TotalReservacion_Factura
                 + ", TotalServicios_Factura=" + TotalServicios_Factura
                 + ", TotalFactura_Factura=" + TotalFactura_Factura

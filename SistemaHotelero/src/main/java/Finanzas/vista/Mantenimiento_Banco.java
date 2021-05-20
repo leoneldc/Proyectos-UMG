@@ -25,6 +25,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
 import seguridad.datos.BitacoraDao;
 import seguridad.dominio.Bitacora;
+import seguridad.vista.Login;
 
 /**
  *
@@ -76,6 +77,9 @@ int codigoAplicacion = 1008;
             modelo.addRow(dato);
         }
 }
+  //bitacora
+        BitacoraDao BitacoraDAO = new BitacoraDao();
+        Bitacora AInsertar = new Bitacora();
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -326,15 +330,13 @@ int codigoAplicacion = 1008;
         bancosInsertar.setClave_Banco(txt_ClaveBanco.getText()); 
         bancosInsertar.setTelefono_Banco(txt_TelefonoBanco.getText());
         //bitacora
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-        Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario("MantenimientoBanco");
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Insertar");
         AInsertar.setCodigoAplicacion("1008");
-        AInsertar.setModulo("Finanzas");
-        try{
-            BitacoraDAO.insert(AInsertar);   
-        }   catch (UnknownHostException ex) {
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+        } catch (UnknownHostException ex) {
             Logger.getLogger(Mantenimiento_Banco.class.getName()).log(Level.SEVERE, null, ex);
         }
             JOptionPane.showMessageDialog(null, "Banco registrado Exitosamente"); 
@@ -354,15 +356,13 @@ int codigoAplicacion = 1008;
         bancosModificar.setClave_Banco(txt_ClaveBanco.getText()); 
         bancosModificar.setTelefono_Banco(txt_TelefonoBanco.getText());
         //bitacora
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-        Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario("MantenimientoBanco");
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Modificar");
         AInsertar.setCodigoAplicacion("1008");
-        AInsertar.setModulo("Finanzas");
-        try{
-            BitacoraDAO.insert(AInsertar);   
-        }   catch (UnknownHostException ex) {
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+        } catch (UnknownHostException ex) {
             Logger.getLogger(Mantenimiento_Banco.class.getName()).log(Level.SEVERE, null, ex);
         }
         bancoDAO.update(bancosModificar);
@@ -377,15 +377,13 @@ int codigoAplicacion = 1008;
         //Prueba delete
         bancoEliminar.setCodigo_Banco(txt_CodigoBanco.getText());
         //bitacora
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-        Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario("MantenimientoBanco");
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Eliminar");
         AInsertar.setCodigoAplicacion("1008");
-        AInsertar.setModulo("Finanzas");
-        try{
-            BitacoraDAO.insert(AInsertar);   
-        }   catch (UnknownHostException ex) {
+        AInsertar.setModulo("1000");
+        try {
+            BitacoraDAO.insert(AInsertar);
+        } catch (UnknownHostException ex) {
             Logger.getLogger(Mantenimiento_Banco.class.getName()).log(Level.SEVERE, null, ex);
         }
         bancoDAO.delete(bancoEliminar);

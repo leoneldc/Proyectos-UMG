@@ -16,6 +16,9 @@ String precio_producto;
 String descripcion_producto; 
 String estatus_producto;
 String cantidad;
+String Bodega;
+String FechaIngreso;
+
 
    
     public String getCantidad() {
@@ -65,11 +68,32 @@ String cantidad;
     public void setEstatus_producto(String estatus_producto) {
         this.estatus_producto = estatus_producto;
     }
+
+    public String getBodega() {
+        return Bodega;
+    }
+
+    public void setBodega(String Bodega) {
+        this.Bodega = Bodega;
+    }
+
+
+    public String getFechaIngreso() {
+        return FechaIngreso;
+    }
+        public void setFechaIngreso(String FechaIngreso) {
+        this.FechaIngreso = FechaIngreso;
+    }
     
 
     @Override
     public String toString() {
-        return "Producto{" + "PK_id_producto=" + PK_id_producto + ", nombre_producto=" + nombre_producto + ", precio_producto=" + precio_producto + ", descripcion_producto=" + descripcion_producto + ", estatus_producto=" + estatus_producto + '}';
+        return "Producto{" + "PK_id_producto=" + PK_id_producto +
+                ", nombre_producto=" + nombre_producto + 
+                ", precio_producto=" + precio_producto +
+                ", descripcion_producto=" + descripcion_producto + 
+                ", estatus_producto=" + estatus_producto +
+                ",Bodega=" + Bodega + ",FechaIngreso=" + FechaIngreso + '}';
     }
 
 

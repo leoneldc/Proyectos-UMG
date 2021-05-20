@@ -19,13 +19,13 @@ import javax.swing.JOptionPane;
  */
 public class HabitacionesDAO {
 
-    private static final String SQL_INSERT = "INSERT INTO tbl_mantenimiento_habitaciones(PK_id_habitacion, descripcion_habitacion, precio_habitacion, piso_habitaciones, estado_habitacion, tipo_de_habitacion) VALUES(?,?,?,?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO tbl_mantenimiento_habitaciones(PK_id_habitacion, descripcion_habitacion,precio_habitacion, piso_habitaciones, estado_habitacion, tipo_de_habitacion,cantidad_maxima_pers) VALUES(?,?,?,?,?,?,?)";
 
-    private static final String SQL_SELECT = "SELECT PK_id_habitacion, descripcion_habitacion, precio_habitacion, piso_habitaciones, estado_habitacion, tipo_de_habitacion FROM tbl_mantenimiento_habitaciones";
+    private static final String SQL_SELECT = "SELECT PK_id_habitacion, descripcion_habitacion, precio_habitacion, piso_habitaciones, estado_habitacion, tipo_de_habitacion,cantidad_maxima_pers FROM tbl_mantenimiento_habitaciones";
 
-    private static final String SQL_UPDATE = "UPDATE tbl_mantenimiento_habitaciones SET descripcion_habitacion=?, precio_habitacion=?, piso_habitaciones=?, estado_habitacion=?, tipo_de_habitacion=? WHERE PK_id_habitacion = ?";
+    private static final String SQL_UPDATE = "UPDATE tbl_mantenimiento_habitaciones SET descripcion_habitacion=?, precio_habitacion=?, piso_habitaciones=?, estado_habitacion=?, tipo_de_habitacion=?,cantidad_maxima_pers=? WHERE PK_id_habitacion = ?";
 
-    public static final String SQL_QUERY = "SELECT PK_id_habitacion, descripcion_habitacion, precio_habitacion, piso_habitaciones, estado_habitacion, tipo_de_habitacion FROM tbl_mantenimiento_habitaciones WHERE PK_id_habitacion = ?";
+    public static final String SQL_QUERY = "SELECT PK_id_habitacion, descripcion_habitacion, precio_habitacion, piso_habitaciones, estado_habitacion, tipo_de_habitacion,cantidad_maxima_pers FROM tbl_mantenimiento_habitaciones WHERE PK_id_habitacion = ?";
 
     public static final String SQL_QUERY2 = "SELECT PK_numero_piso FROM tbl_piso_hotel";
     
@@ -73,6 +73,7 @@ public class HabitacionesDAO {
             stmt.setInt(4, mantenimiento_habitaciones.getPiso());
             stmt.setInt(5, mantenimiento_habitaciones.getEstado_Habitacion());
             stmt.setString(6, mantenimiento_habitaciones.getTipo_Habitacion());
+            stmt.setString (7, mantenimiento_habitaciones.getMax_personas());
 
             //System.out.println("ejecutando query:" + SQL_INSERT);
             rows = stmt.executeUpdate();
@@ -103,6 +104,7 @@ public class HabitacionesDAO {
             stmt.setInt(4, mantenimiento_habitaciones.getEstado_Habitacion());
             stmt.setString(5, mantenimiento_habitaciones.getTipo_Habitacion());
             stmt.setInt(6, mantenimiento_habitaciones.getId_Habitaciones());
+            stmt.setString(7, mantenimiento_habitaciones.getMax_personas());
 
             rows = stmt.executeUpdate();
             //System.out.println("Registros actualizado:" + rows);
@@ -140,6 +142,7 @@ public class HabitacionesDAO {
                 int piso = rs.getInt("piso_habitaciones");
                 int estado_hab = rs.getInt("estado_habitacion");
                 String tipo_hab = rs.getString("tipo_de_habitacion");
+                String max_per = rs.getString("cantidad_maxima_pers");
 
                 habitaciones = new Habitaciones();
                 habitaciones.setId_Habitaciones(id_habitacion);
@@ -148,6 +151,7 @@ public class HabitacionesDAO {
                 habitaciones.setPiso(piso);
                 habitaciones.setEstado_Habitacion(estado_hab);
                 habitaciones.setTipo_Habitacion(tipo_hab);
+                habitaciones.setMax_personas(max_per);
                 rows++;
             }
         } catch (SQLException ex) {
@@ -179,6 +183,7 @@ public class HabitacionesDAO {
                 int piso = rs.getInt("piso_habitaciones");
                 int estado = rs.getInt("estado_habitacion");
                 String tipo = rs.getString("tipo_de_habitacion");
+                String max_pers = rs.getString("cantidad_maxima_pers");
 
                 habitaciones = new Habitaciones();
                 habitaciones.setId_Habitaciones(id_habitaciones);
@@ -187,6 +192,7 @@ public class HabitacionesDAO {
                 habitaciones.setPiso(piso);
                 habitaciones.setEstado_Habitacion(estado);
                 habitaciones.setTipo_Habitacion(tipo);
+                habitaciones.setMax_personas(max_pers);
 
                 habitacione.add(habitaciones);
             }

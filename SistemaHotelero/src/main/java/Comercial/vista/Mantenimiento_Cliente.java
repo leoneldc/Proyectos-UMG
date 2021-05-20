@@ -57,7 +57,7 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
             permisosApp[i] = permisos.getAccionesAplicacion(codigoAplicacion, usuario)[i];
         }
 
-        if (permisosApp[0].equals("0")) {
+        if (permisosApp[0].equals("1")) {
             btnAgregar.setEnabled(true);
         }
         if (permisosApp[1].equals("1")) {
@@ -81,10 +81,8 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
         modelo.addColumn("Cliente");
         modelo.addColumn("Nit");
         modelo.addColumn("Telefono");
-        modelo.addColumn("Poducto");
         modelo.addColumn("Estatis Cliente");
-        modelo.addColumn("Capital");
-        modelo.addColumn("Cuenta");
+      
 
         ClienteDao ventasDAO = new ClienteDao();
 
@@ -96,10 +94,8 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
             dato[1] = ventas.get(i).getCliente();
             dato[2] = ventas.get(i).getNit();
             dato[3] = (ventas.get(i).getTelefono());
-            dato[4] = (ventas.get(i).getProducto());
-            dato[5] = (ventas.get(i).getEstatus_Cliente());
-            dato[6] = ventas.get(i).getMonto();
-            dato[7] = ventas.get(i).getCuenta();
+            dato[4] = (ventas.get(i).getEstatus_Cliente());
+         
 
             System.out.println("vendedor:" + ventas);
             modelo.addRow(dato);
@@ -112,16 +108,15 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
 
         Cliente Buscar = new Cliente();
 
-        Buscar.setId_cliente(i.getText());
+        Buscar.setId_cliente(ID.getText());
         Buscar = Clientes.query(Buscar);
         cliente.setText(Buscar.getCliente());
-        ID.setText(Buscar.getId_cliente());
+     
         nit.setText(Buscar.getNit());
-        monto.setText(Buscar.getMonto());
+       
         estatus.setText(Buscar.getEstatus_Cliente());
         telefono.setText(Buscar.getTelefono());
-        producto.setText(Buscar.getProducto());
-        cuenta.setText(Buscar.getCuenta());
+   
 
     }
 
@@ -129,11 +124,10 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
         ID.setText("");
         cliente.setText("");
         nit.setText("");
-        monto.setText("");
+      
         estatus.setText("");
         telefono.setText("");
-        producto.setText("");
-        cuenta.setText("");
+    
     }
 
     /**
@@ -167,20 +161,13 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
         ID = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         cliente = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         nit = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         telefono = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        producto = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         JtProductos1 = new javax.swing.JTable();
         estatus = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        monto = new javax.swing.JTextField();
-        i = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        cuenta = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
 
         setClosable(true);
@@ -232,9 +219,6 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setText("Telefono");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel6.setText(" Producto");
-
         nit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nitActionPerformed(evt);
@@ -243,9 +227,6 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel7.setText("Estatus de Cliente");
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel8.setText("Capital");
 
         JtProductos1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -273,9 +254,6 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel9.setText("Cuenta");
-
         jButton2.setText("Reporte");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,12 +269,8 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(btnAgregar)))
+                        .addGap(11, 11, 11)
+                        .addComponent(btnAgregar)
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -310,9 +284,7 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
                                 .addComponent(btnEliminar)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnBuscar)
-                                .addGap(18, 18, 18)
-                                .addComponent(i, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44)
+                                .addGap(113, 113, 113)
                                 .addComponent(jButton2)
                                 .addGap(38, 38, 38))))
                     .addGroup(layout.createSequentialGroup()
@@ -327,26 +299,16 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(jLabel5)
                                             .addGap(18, 18, 18)))
-                                    .addComponent(jLabel6)
                                     .addComponent(jLabel7))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(monto, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(estatus, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(producto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                                        .addComponent(nit, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(ID, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cliente, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(telefono))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(estatus, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                                    .addComponent(ID)
+                                    .addComponent(cliente)
+                                    .addComponent(telefono)
+                                    .addComponent(nit)))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(208, 208, 208))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,33 +333,20 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
                     .addComponent(nit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(producto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(monto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(cuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnModificar)
                         .addComponent(btnEliminar)
                         .addComponent(btnBuscar)
-                        .addComponent(i, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton2)))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -415,11 +364,10 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
         modi.setId_cliente(ID.getText());
         modi.setCliente(cliente.getText());
         modi.setNit(nit.getText());
-        modi.setMonto(monto.getText());
+     
         modi.setEstatus_Cliente(estatus.getText());
         modi.setTelefono(telefono.getText());
-        modi.setProducto(producto.getText());
-        modi.setCuenta(cuenta.getText());
+      
 
         dao.update(modi);
         llenadoDeTablas();
@@ -452,11 +400,10 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
         vendedorAEliminar.setId_cliente(ID.getText());
         vendedorAEliminar.setCliente(cliente.getText());
         vendedorAEliminar.setNit(nit.getText());
-        vendedorAEliminar.setMonto(monto.getText());
+     
         vendedorAEliminar.setEstatus_Cliente(estatus.getText());
         vendedorAEliminar.setTelefono(telefono.getText());
-        vendedorAEliminar.setProducto(producto.getText());
-        vendedorAEliminar.setCuenta(cuenta.getText());
+       
         acreedor.delete(vendedorAEliminar);
         llenadoDeTablas();
         limpiar();
@@ -513,11 +460,10 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
         AInsertar.setId_cliente(ID.getText());
         AInsertar.setCliente(cliente.getText());
         AInsertar.setNit(nit.getText());
-        AInsertar.setMonto(monto.getText());
+       
         AInsertar.setEstatus_Cliente(estatus.getText());
         AInsertar.setTelefono(telefono.getText());
-        AInsertar.setProducto(producto.getText());
-        AInsertar.setCuenta(cuenta.getText());
+      
         ClienteDAO.insert(AInsertar);
 
         llenadoDeTablas();
@@ -596,9 +542,7 @@ private Connection connection = null;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JTextField cliente;
-    private javax.swing.JTextField cuenta;
     private javax.swing.JTextField estatus;
-    private javax.swing.JTextField i;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -606,15 +550,10 @@ private Connection connection = null;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField monto;
     private javax.swing.JTextField nit;
-    private javax.swing.JTextField producto;
     private javax.swing.JTextField telefono;
     // End of variables declaration//GEN-END:variables
 }
