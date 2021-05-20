@@ -7,21 +7,34 @@ package Comercial.vista;
 
 import Comercial.datos.Conexion;
 import Comercial.datos.ProcesoProductoDAO;
+import Comercial.datos.ProductoDAO;
+import Comercial.datos.ProveedorDAO1;
 import Comercial.dominio.ProcesoProducto;
+import Comercial.dominio.Producto;
+import Comercial.dominio.Proveedor;
 import java.awt.HeadlessException;
 import java.io.File;
+import java.net.UnknownHostException;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
+import seguridad.datos.BitacoraDao;
+import seguridad.dominio.Bitacora;
+import seguridad.vista.Aplicacion_Perfil;
 import seguridad.vista.GenerarPermisos;
+import seguridad.vista.Login;
 import seguridad.vista.MDI_Components;
 
 /**
@@ -29,6 +42,10 @@ import seguridad.vista.MDI_Components;
  * @author Diana
  */
 public class Proceso_Producto extends javax.swing.JInternalFrame {
+
+    ProcesoProductoDAO procesoproducto = new ProcesoProductoDAO();
+    int estadovalidacion;
+    ProcesoProducto Buscar = new ProcesoProducto();
 
     /**
      * Creates new form Proceso_Producto
@@ -39,45 +56,70 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         modelo.addColumn("Producto");
         modelo.addColumn("Bodega");
         modelo.addColumn("Existencias");
+        modelo.addColumn("Fecha de Entrega");
+        modelo.addColumn("Bodega");
+        modelo.addColumn("Nueva Existencia");
+        modelo.addColumn("Nueva Bodega");
 
         ProcesoProductoDAO procesoproductoDAO = new ProcesoProductoDAO();
-
         List<ProcesoProducto> procesoproducto = procesoproductoDAO.select();
         TablaProducto.setModel(modelo);
-        String[] dato = new String[5];
+        String[] dato = new String[7];
         for (int i = 0; i < procesoproducto.size(); i++) {
             dato[0] = Integer.toString(procesoproducto.get(i).getPK_id_procesoproducto());
             dato[1] = procesoproducto.get(i).getNombre_producto();
             dato[2] = procesoproducto.get(i).getNombre_bodega();
             dato[3] = procesoproducto.get(i).getExistencias_producto();
+            dato[4] = procesoproducto.get(i).getBodegasNuevaExistencia();
+            dato[5] = procesoproducto.get(i).getNuevaExistencia();
+            dato[6] = procesoproducto.get(i).getBodegasNuevaExistencia();
 
             //System.out.println("vendedor:" + vendedores);
             modelo.addRow(dato);
         }
     }
 
-    public void buscar() {
-        ProcesoProducto productoAConsultar = new ProcesoProducto();
-        ProcesoProductoDAO procesoproductoDAO = new ProcesoProductoDAO();
-        productoAConsultar.setPK_id_procesoproducto(Integer.parseInt(txtIDprocesoproducto.getText()));
-        productoAConsultar = procesoproductoDAO.query(productoAConsultar);
-        txtNombreProducto.setText(productoAConsultar.getNombre_producto());
-        txtnombrebodega.setText(productoAConsultar.getNombre_bodega());
-        txtExistenciasProducto.setText(productoAConsultar.getExistencias_producto());
+    public void limpiar() {
+        txtIDNombreProducto.setText("");
+        txtnombrebodega.setText("");
+        txtExistenciasProducto.setText("");
+//        txt_fechaActualizacion.setText("");
+        txtProductoNuevo.setText("");
+        txtNuevaExistencia.setText("");
 
     }
 
-    public void limpiar() {
-        txtIDprocesoproducto.setText("");
-        txtNombreProducto.setText("");
-        txtnombrebodega.setText("");
-        txtExistenciasProducto.setText("");
+    public void buscar() {
+        Buscar.setNombre_producto(txtIDNombreProducto.getText());
+        Buscar = procesoproducto.query(Buscar);
+        txtnombrebodega.setText(Buscar.getNombre_bodega());
+        txtExistenciasProducto.setText(Buscar.getExistencias_producto());
+        txtProductoNuevo.setText(Buscar.getProductoNuevo());
+        // cbox_BodegasNuevaExistencia.setText(Buscar.getBodegasNuevaExistencia());
 
     }
 
     public Proceso_Producto() {
         initComponents();
+        Date sistFecha = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MMM-YYYY");
+        // txtfechaActualizacion.setCalendar(formato(sistFecha));
     }
+
+    public void llenadoDeCombos2() {
+        // List<Cliente> Bus = Cliente.select();
+//        txt_combox.addItem("Productos Disponibles");
+//        for (int i = 0; i < Bus.size(); i++) {
+//            txt_combox.addItem(Bus.get(i).getCliente());
+//            String valor = txt_combox.getSelectedItem().toString();
+//    }
+    }
+//              Buscar1.setCliente(cliente.getText());
+//Buscar1=Clientes.query2(Buscar1);
+//
+//
+////precio.setText(Buscar.);
+//E.setText(Buscar1.getCliente());
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -93,22 +135,43 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtNombreProducto = new javax.swing.JTextField();
+        txtIDNombreProducto = new javax.swing.JTextField();
         txtnombrebodega = new javax.swing.JTextField();
         txtExistenciasProducto = new javax.swing.JTextField();
-        btnValidar = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        txtIDprocesoproducto = new javax.swing.JTextField();
-        btnReporte = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
+        txt_combox = new javax.swing.JComboBox<>();
+        txtfechaActualizacion = new com.toedter.calendar.JDateChooser();
         btnAyuda = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaProducto = new javax.swing.JTable();
+        btnModificar = new javax.swing.JButton();
+        btnReporte = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txtProductoNuevo = new javax.swing.JTextField();
+        txtNuevaExistencia = new javax.swing.JTextField();
+        cbox_BodegasNuevaExistencia = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        txtExistenciasTotales = new javax.swing.JTextField();
+        btnActualizar = new javax.swing.JButton();
 
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Proceso Productos");
+        try {
+            setSelected(true);
+        } catch (java.beans.PropertyVetoException e1) {
+            e1.printStackTrace();
+        }
+        setVisible(true);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("PROCESO PRODUCTOS");
@@ -124,82 +187,78 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Existencias");
 
-        btnValidar.setText("Validar");
-        btnValidar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnValidarActionPerformed(evt);
-            }
-        });
-
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setText("ID");
 
-        btnReporte.setText("Reporte");
-        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel6.setText("Fecha de Actualización");
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReporteActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
+
+        txtfechaActualizacion.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtExistenciasProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                            .addComponent(txtfechaActualizacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(128, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel3)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombreProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                            .addComponent(txtnombrebodega)
-                            .addComponent(txtExistenciasProducto)
-                            .addComponent(txtIDprocesoproducto)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnValidar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnReporte)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtnombrebodega, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_combox, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtIDNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBuscar)))
+                        .addGap(23, 23, 23))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtIDprocesoproducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
+                    .addComponent(txtIDNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_combox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtnombrebodega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addComponent(txtnombrebodega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtExistenciasProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnValidar)
-                    .addComponent(btnReporte))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(txtfechaActualizacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         btnAyuda.setText("Ayuda");
@@ -208,6 +267,8 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
                 btnAyudaActionPerformed(evt);
             }
         });
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle"));
 
         TablaProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -222,21 +283,145 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(TablaProducto);
 
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        btnReporte.setText("Reporte");
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnGuardar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnModificar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnReporte)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnModificar)
+                    .addComponent(btnReporte)
+                    .addComponent(btnGuardar))
+                .addGap(40, 40, 40))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Nuevos Articulos"));
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel10.setText("Producto");
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel11.setText("Nueva existencia");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel12.setText("Bodega");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel7.setText("Existencias totales");
+
+        btnActualizar.setText("Actualizar");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel12))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtProductoNuevo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                    .addComponent(txtNuevaExistencia, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtExistenciasTotales)
+                    .addComponent(cbox_BodegasNuevaExistencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(btnActualizar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtProductoNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnActualizar)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtNuevaExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtExistenciasTotales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(cbox_BodegasNuevaExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(412, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(435, 435, 435)
+                .addComponent(btnAyuda)
+                .addGap(19, 19, 19))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(167, 167, 167)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAyuda)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,77 +430,44 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAyuda)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private Connection connection = null;
-    
-    private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:}buscar();
-        GenerarPermisos permisos = new GenerarPermisos();
-        MDI_Components mdi_Components = new MDI_Components();
+        ProcesoProductoDAO productoDAO = new ProcesoProductoDAO();
+        ProcesoProducto productoAActualizar = new ProcesoProducto();
+        // productoAActualizar.setPK_id_producto(Integer.parseInt(txt_IdProducto.getText()));
+        productoAActualizar.setNombre_producto(txtnombrebodega.getText());
+        productoAActualizar.setNombre_producto(txtExistenciasProducto.getText());
+//        productoAActualizar.setFechaIngreso_producto(fechaActualizacion.getText());
+        productoDAO.update(productoAActualizar);
+        JOptionPane.showMessageDialog(null, "Modificación Exitosa.");
 
-        if (txtnombrebodega.getText().trim().isEmpty() || txtExistenciasProducto.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "NO PUEDEN HABER CAMPOS VACIOS", "ERROR", JOptionPane.ERROR_MESSAGE);
-        } else {
-            try {
+        BitacoraDao BitacoraDAO = new BitacoraDao();
 
-                //viene de Uusuario y UsuarioDAO ...
-                ProcesoProducto usuarioAConsultar = new ProcesoProducto();
-                ProcesoProductoDAO procesoproductoDAO = new ProcesoProductoDAO();
-                usuarioAConsultar.setNombre_bodega((txtnombrebodega.getText()));
-
-                System.out.println(usuarioAConsultar.toString());
-                // Recuperación de información a través de otro objeto
-                usuarioAConsultar = procesoproductoDAO.query(usuarioAConsultar);
-                System.out.println("regresa objeto usuario " + usuarioAConsultar.getPK_id_procesoproducto());
-                //**********************************************************************************************************************************************************************
-                if (txtnombrebodega.getText().equals(usuarioAConsultar.getNombre_bodega()) && txtExistenciasProducto.getText().equals(usuarioAConsultar.getExistencias_producto())) {
-                    //  if (txtUsuario.getText().equals(Integer.toString(usuarioAConsultar.getId_usuario()))) {
-                    // if (txtContraseña.getText().equals(usuarioAConsultar.getPassword_usuario())){
-                    JOptionPane.showMessageDialog(null, "Bienvenido\n", "Mensaje de bienvenida", JOptionPane.INFORMATION_MESSAGE);
-
-                    //buscar nombre de producto
-                    //variable local
-                    //if = a lo que tengo en producto y si es asi que lo elimine JOptionPane
-                    //si no que lo guarde normal
-                }
-            } catch (HeadlessException e) {
-                JOptionPane.showMessageDialog(this, "ERROR AL ENCONTRAR USUARIO O CONTRASEÑA", "ERROR", JOptionPane.ERROR_MESSAGE);
-                txtnombrebodega.setText("");
-                txtExistenciasProducto.setText("");
-            }
+        Bitacora Insertar = new Bitacora();
+        Insertar.setId_Usuario("MantenimientoProductos");
+        Insertar.setAccion("Modificar");
+        Insertar.setCodigoAplicacion("3010");
+        try {
+            BitacoraDAO.insert(Insertar);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnValidarActionPerformed
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        GenerarPermisos permisos = new GenerarPermisos();
-        MDI_Components mdi_Components = new MDI_Components();
-
-        String id = "0";
-        MantenimientoProductos manteminetoProductosDAO = new MantenimientoProductos();
-
-        ProcesoProductoDAO procesoproductoDAO = new ProcesoProductoDAO();
-        ProcesoProducto productoAInsertar = new ProcesoProducto();
-
-        productoAInsertar.setPK_id_procesoproducto((int) Integer.parseInt(txtIDprocesoproducto.getText()));
-        productoAInsertar.setNombre_producto(txtNombreProducto.getText());
-        productoAInsertar.setNombre_bodega(txtnombrebodega.getText());
-        productoAInsertar.setExistencias_producto(txtExistenciasProducto.getText());
-
-        procesoproductoDAO.insert(productoAInsertar);
 
         llenadoDeTablas();
-        limpiar();
-
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyudaActionPerformed
         // TODO add your handling code here:
@@ -337,14 +489,14 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
 
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
         // TODO add your handling code here:
-         Map p = new HashMap();
+        Map p = new HashMap();
         JasperReport report;
         JasperPrint print;
 
         try {
             connection = Conexion.getConnection();
             report = JasperCompileManager.compileReport(new File("").getAbsolutePath()
-                + "/src/main/java/Comercial/reportes/ProcesoProducto.jrxml");
+                    + "/src/main/java/Comercial/reportes/ProcesoProducto.jrxml");
             print = JasperFillManager.fillReport(report, p, connection);
             JasperViewer view = new JasperViewer(print, false);
             view.setTitle("Reporte de Proceso Productos");
@@ -353,26 +505,119 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }//GEN-LAST:event_btnReporteActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        buscar();
+        BitacoraDao BitacoraDAO = new BitacoraDao();
+
+        Bitacora Insertar = new Bitacora();
+        Insertar.setId_Usuario(Login.usuarioComercial);
+        Insertar.setAccion("Buscar");
+
+        Insertar.setCodigoAplicacion("3006");
+        Insertar.setModulo("3000");
+
+        try {
+            BitacoraDAO.insert(Insertar);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        ProcesoProductoDAO productoDAO = new ProcesoProductoDAO();
+        ProcesoProducto productoAEliminar = new ProcesoProducto();
+        productoAEliminar.setPK_id_procesoproducto(Integer.parseInt(txtIDNombreProducto.getText()));
+        productoDAO.delete(productoAEliminar);
+        JOptionPane.showMessageDialog(null, "Registro Eliminado.");
+
+        BitacoraDao BitacoraDAO = new BitacoraDao();
+        Bitacora Insertar = new Bitacora();
+        Insertar.setId_Usuario("MantenimientoProductos");
+        Insertar.setAccion("Modificar");
+        Insertar.setCodigoAplicacion("3010");
+        try {
+            BitacoraDAO.insert(Insertar);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        llenadoDeTablas();
+        limpiar();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        GenerarPermisos permisos = new GenerarPermisos();
+        MDI_Components mdi_Components = new MDI_Components();
+        String cbx_AccesoSeguridad = txt_combox.getSelectedItem().toString();
+        String id = "0";
+        MantenimientoProductos manteminetoProductosDAO = new MantenimientoProductos();
+        ProcesoProductoDAO productoDAO = new ProcesoProductoDAO();
+        ProcesoProducto productoAInsertar = new ProcesoProducto();
+
+        productoAInsertar.setPK_id_procesoproducto((int) Integer.parseInt(txtIDNombreProducto.getText()));
+        productoAInsertar.setNombre_producto(txt_combox.getSelectedItem().toString());
+        productoAInsertar.setNombre_bodega(txtnombrebodega.getText());
+        productoAInsertar.setExistencias_producto(txtExistenciasProducto.getText());
+        productoAInsertar.setFechaActualizacion(txtfechaActualizacion.getDateFormatString());
+        productoAInsertar.setProductoNuevo(txtProductoNuevo.getText());
+        productoAInsertar.setNuevaExistencia(txtNuevaExistencia.getText());
+        productoAInsertar.setBodegasNuevaExistencia(cbox_BodegasNuevaExistencia.getSelectedItem().toString());
+        productoDAO.insert(productoAInsertar);
+
+        BitacoraDao BitacoraDAO = new BitacoraDao();
+        Bitacora Insertar = new Bitacora();
+        Insertar.setId_Usuario("MantenimientoProductos");
+        Insertar.setAccion("Insertar");
+        Insertar.setCodigoAplicacion("3000");
+        Insertar.setId_Usuario(Login.usuarioComercial);
+
+        try {
+            BitacoraDAO.insert(Insertar);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        llenadoDeTablas();
+        limpiar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaProducto;
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAyuda;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnReporte;
-    private javax.swing.JButton btnValidar;
+    private javax.swing.JComboBox<String> cbox_BodegasNuevaExistencia;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtExistenciasProducto;
-    private javax.swing.JTextField txtIDprocesoproducto;
-    private javax.swing.JTextField txtNombreProducto;
+    private javax.swing.JTextField txtExistenciasTotales;
+    private javax.swing.JTextField txtIDNombreProducto;
+    private javax.swing.JTextField txtNuevaExistencia;
+    private javax.swing.JTextField txtProductoNuevo;
+    private javax.swing.JComboBox<String> txt_combox;
+    private com.toedter.calendar.JDateChooser txtfechaActualizacion;
     private javax.swing.JTextField txtnombrebodega;
     // End of variables declaration//GEN-END:variables
 }

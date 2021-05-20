@@ -345,6 +345,12 @@ public class ProcesoCompra extends javax.swing.JInternalFrame {
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setText("Forma de pago");
 
+        RBEPvacio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RBEPvacioActionPerformed(evt);
+            }
+        });
+
         RBEP1.setText("Efectivo");
 
         RBEP0.setText("Tarjeta");
@@ -759,6 +765,10 @@ uno.setVisible(true);
             ex.printStackTrace();
         }
     }//GEN-LAST:event_AyudaActionPerformed
+
+    private void RBEPvacioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBEPvacioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RBEPvacioActionPerformed
 private double redondear(double num) {
         return Math.rint(num * 100) / 100;
     }

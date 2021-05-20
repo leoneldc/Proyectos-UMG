@@ -54,10 +54,6 @@
 				<text><![CDATA[telefono]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="443" y="0" width="100" height="20" uuid="aba150bd-2d0d-41a6-9341-d8ce4d05896a"/>
-				<text><![CDATA[cuenta]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="11" y="2" width="72" height="20" uuid="208d4c65-fe7a-4749-90b3-69152a9ea441"/>
 				<text><![CDATA[Id_cliente]]></text>
 			</staticText>
@@ -68,6 +64,10 @@
 			<staticText>
 				<reportElement x="216" y="2" width="86" height="20" uuid="31a8fb0e-9345-4648-8581-6c9e8fc05ed0"/>
 				<text><![CDATA[Nit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="0" width="100" height="20" uuid="18c0eac6-6d31-45fd-9ab0-8bcc11f5b363"/>
+				<text><![CDATA[Estatus_Cliente]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -90,8 +90,8 @@
 				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="443" y="19" width="100" height="20" uuid="31a3f765-8277-4e3e-9ec5-d74605ff2c26"/>
-				<textFieldExpression><![CDATA[$F{cuenta}]]></textFieldExpression>
+				<reportElement x="439" y="19" width="100" height="20" uuid="94343890-b888-43b0-8569-91a1d3a9e501"/>
+				<textFieldExpression><![CDATA[$F{Estatus_Cliente}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

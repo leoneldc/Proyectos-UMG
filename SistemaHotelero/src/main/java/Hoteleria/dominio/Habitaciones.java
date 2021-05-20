@@ -12,6 +12,7 @@ package Hoteleria.dominio;
 public class Habitaciones {
     private int Id_Habitaciones;
     private String Descripcion;
+    private String Max_personas;
     private int Precio;
     private int piso;
     private int Estado_Habitacion;
@@ -31,6 +32,14 @@ public class Habitaciones {
 
     public void setDescripcion(String Descripcion) {
         this.Descripcion = Descripcion;
+    }
+
+    public String getMax_personas() {
+        return Max_personas;
+    }
+
+    public void setMax_personas(String Max_personas) {
+        this.Max_personas = Max_personas;
     }
 
     public int getPrecio() {
@@ -64,4 +73,5 @@ public class Habitaciones {
     public void setTipo_Habitacion(String Tipo_Habitacion) {
         this.Tipo_Habitacion = Tipo_Habitacion;
     }
+
 }

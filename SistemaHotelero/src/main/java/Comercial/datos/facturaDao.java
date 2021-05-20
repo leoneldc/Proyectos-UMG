@@ -23,11 +23,11 @@ import java.util.List;
  */
 public class facturaDao {
     
-   private static final String SQL_INSERT = "INSERT INTO tbl_pedido_factura(id_cliente,Cliente,Nit,telefono,producto , Cantidad ,Precio_por_unidad,Monto,Total) VALUES(?, ?,?, ?,?, ?,?,?,?)";
-    private static final String SQL_SELECT = "SELECT id_cliente,Cliente,Nit,telefono,producto , Cantidad ,Precio_por_unidad,Monto,Total FROM tbl_pedido_factura";
-    private static final String SQL_QUERY = "SELECT id_cliente,Cliente,Nit,telefono,producto , Cantidad ,Precio_por_unidad,Monto,Total FROM tbl_pedido_factura WHERE id_cliente = ?";
-  private static final String SQL_UPDATE = "UPDATE tbl_pedido_factura  SET Cliente=? , Nit=? , telefono=? , producto=? , Cantidad =? , Precio_por_unidad , Monto=? , Total =? WHERE id_cliente =?";
-    private static final String SQL_DELETE = "DELETE FROM tbl_pedido_factura WHERE id_cliente= ?";
+   private static final String SQL_INSERT = "INSERT INTO tbl_pedido_factura(ID,Cliente,Nit,telefono,producto , Cantidad ,Precio_por_unidad,Monto,Total) VALUES(?, ?,?, ?,?, ?,?,?,?)";
+    private static final String SQL_SELECT = "SELECT ID,Cliente,Nit,telefono,producto , Cantidad ,Precio_por_unidad,Monto,Total FROM tbl_pedido_factura";
+    private static final String SQL_QUERY = "SELECT ID,Cliente,Nit,telefono,producto , Cantidad ,Precio_por_unidad,Monto,Total FROM tbl_pedido_factura WHERE ID=?";
+    private static final String SQL_UPDATE = "UPDATE tbl_pedido_factura  SET ID=?, Cliente=? , Nit=? , telefono=? , producto=? , Cantidad =? , Precio_por_unidad=? , Monto=? , Total =? WHERE ID";
+    private static final String SQL_DELETE = "DELETE FROM tbl_pedido_factura WHERE ID= ?";
   
 
     /**
@@ -53,7 +53,7 @@ public class facturaDao {
                  *
                  * busqueda de datos de la bitacocora en la de usuarios
                  */
-                 String id_cliente  = rs.getString("id_cliente");
+                 String id_cliente  = rs.getString("ID");
                 String cliente  = rs.getString("Cliente");
                  String nit = rs.getString("Nit");
                 String telefono = rs.getString("telefono");
@@ -118,7 +118,7 @@ public class facturaDao {
                  *
                  * busqueda de datos de la bitacocora en la de usuarios
                  */
-                 String id_cliente  = rs.getString("id_cliente");
+                 String id_cliente  = rs.getString("ID");
                 String cliente  = rs.getString("Cliente");
                  String nit = rs.getString("Nit");
                 String telefono = rs.getString("telefono");
@@ -192,7 +192,7 @@ public class facturaDao {
         return rows;
     }
      
-    public int update(Factura insertar) {
+    public int update(Factura MOD) {
         
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -203,17 +203,15 @@ public class facturaDao {
             conn = Conexion.getConnection();
            stmt = conn.prepareStatement(SQL_UPDATE);
           
-            
-              stmt.setString(1,  insertar.getId_cliente());
-            stmt.setString(2,  insertar.getCliente());
-            stmt.setString(3,  insertar.getNit());
-              stmt.setString(4,   insertar.getTelefono());
-            stmt.setString(5,   insertar.getProducto());
-                stmt.setString(6,  insertar.getCantidad());
-            stmt.setString(7,  insertar.getPrecio_por_unidad());
-           
-                 stmt.setString(8,  insertar.getMonto());
-                      stmt.setString(9,  insertar.getTotalmoNto());
+              stmt.setString(1,  MOD.getId_cliente());
+            stmt.setString(2,  MOD.getCliente());
+            stmt.setString(3,  MOD.getNit());
+            stmt.setString(4,  MOD.getTelefono());
+            stmt.setString(5,  MOD.getProducto());
+            stmt.setString(6,  MOD.getCantidad());
+            stmt.setString(7,  MOD.getPrecio_por_unidad());
+            stmt.setString(8,  MOD.getMonto());
+            stmt.setString(9,  MOD.getTotalmoNto());
 
             System.out.println("ejecutando query: " + SQL_UPDATE);
            
