@@ -30,14 +30,14 @@
 				</textElement>
 				<text><![CDATA[Reporte de Metodos de Pago:]]></text>
 			</staticText>
-			<image>
-				<reportElement x="0" y="0" width="78" height="79" uuid="6bd7519e-c45a-4a45-b6ba-e4b584d98355"/>
-				<imageExpression><![CDATA["C:\\Users\\leone\\Desktop\\Hoteleria\\SistemaHotelero\\src\\main\\java\\Hoteleria\\reportes\\Imagen1.png"]]></imageExpression>
-			</image>
 			<textField pattern="dd/MM/yyyy h.mm a">
-				<reportElement x="702" y="59" width="100" height="20" uuid="a2867640-0c94-4574-a7cf-be57f5929507"/>
+				<reportElement x="703" y="31" width="100" height="20" uuid="a2867640-0c94-4574-a7cf-be57f5929507"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="37" y="3" width="75" height="76" uuid="086f38c7-68aa-4b2e-aa76-c3ac4f11486a"/>
+				<imageExpression><![CDATA["C:\\Users\\Jeff\\Desktop\\Nueva carpeta\\Proyectos-UMG\\SistemaHotelero\\src\\main\\java\\Hoteleria\\reportes\\Imagen1.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

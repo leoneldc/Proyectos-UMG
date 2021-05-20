@@ -5,6 +5,7 @@
  */
 package Finanzas.vista;
 
+import Finanzas.datos.PartidaContableDAO;
 import Finanzas.dominio.PartidaContable;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -122,6 +123,11 @@ public class FrmCuadre extends javax.swing.JFrame {
 
         BtnCuadrar.setText("Cuadrar");
         BtnCuadrar.setEnabled(false);
+        BtnCuadrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCuadrarActionPerformed(evt);
+            }
+        });
 
         BtnVerificar.setText("Verificar");
         BtnVerificar.addActionListener(new java.awt.event.ActionListener() {
@@ -248,6 +254,10 @@ public class FrmCuadre extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_BtnVerificarActionPerformed
+
+    private void BtnCuadrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCuadrarActionPerformed
+        partidaContableCuadre.ejecutarCuadre(TxtPartida.getText(), String.valueOf(partidaContableCuadre.getSumaHaber()));
+    }//GEN-LAST:event_BtnCuadrarActionPerformed
 
     /**
      * @param args the command line arguments

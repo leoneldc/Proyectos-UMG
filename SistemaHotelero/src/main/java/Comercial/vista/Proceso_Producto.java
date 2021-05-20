@@ -358,6 +358,11 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         jLabel7.setText("Existencias totales");
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -586,6 +591,16 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         limpiar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        int numero1, numero2, total;
+     numero1=Integer.parseInt(txtExistenciasProducto.getText());
+     numero2=Integer.parseInt(txtNuevaExistencia.getText());
+     
+     total=numero1 + numero2 ;
+     txtExistenciasTotales.setText(String.valueOf(total));
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaProducto;
@@ -611,13 +626,13 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txtExistenciasProducto;
+    public static javax.swing.JTextField txtExistenciasProducto;
     private javax.swing.JTextField txtExistenciasTotales;
     private javax.swing.JTextField txtIDNombreProducto;
-    private javax.swing.JTextField txtNuevaExistencia;
-    private javax.swing.JTextField txtProductoNuevo;
+    public static javax.swing.JTextField txtNuevaExistencia;
+    public static javax.swing.JTextField txtProductoNuevo;
     private javax.swing.JComboBox<String> txt_combox;
     private com.toedter.calendar.JDateChooser txtfechaActualizacion;
-    private javax.swing.JTextField txtnombrebodega;
+    public static javax.swing.JTextField txtnombrebodega;
     // End of variables declaration//GEN-END:variables
 }

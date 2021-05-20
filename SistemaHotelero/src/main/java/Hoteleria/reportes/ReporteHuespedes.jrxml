@@ -43,9 +43,13 @@
 				<text><![CDATA[Reporte De Huespedes]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy h.mm a">
-				<reportElement x="589" y="31" width="100" height="20" uuid="ccbf9f6d-1463-4da2-8904-eadafa0a2721"/>
+				<reportElement x="652" y="30" width="100" height="20" uuid="ccbf9f6d-1463-4da2-8904-eadafa0a2721"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="41" y="3" width="75" height="76" uuid="11e5a129-5ecb-4866-87c9-9ae51953305f"/>
+				<imageExpression><![CDATA["C:\\Users\\Jeff\\Desktop\\Nueva carpeta\\Proyectos-UMG\\SistemaHotelero\\src\\main\\java\\Hoteleria\\reportes\\Imagen1.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
