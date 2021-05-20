@@ -189,14 +189,14 @@ public class Login extends javax.swing.JFrame {
                 BitacoraDao BitacoraDAO = new BitacoraDao();
 
                 Bitacora Insertar = new Bitacora();
-                Insertar.setId_Usuario("Login");
-                Insertar.setAccion("Insertar");
-                Insertar.setCodigoAplicacion("000");
+                Insertar.setId_Usuario(Login.usuarioSesion);
+                Insertar.setAccion("Login");
+                Insertar.setCodigoAplicacion("100");
 
                 Insertar.setModulo("Login");
 
 
-                Insertar.setModulo("0000");
+                Insertar.setModulo("100");
                 
                 try {
                     BitacoraDAO.insert(Insertar);

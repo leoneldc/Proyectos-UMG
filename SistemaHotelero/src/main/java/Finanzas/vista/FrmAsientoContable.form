@@ -82,8 +82,6 @@
                           <Component id="BtnNuevaPartida" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="BtnRegistrar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="BtnAyuda" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="TxtGlosaContable" min="-2" pref="360" max="-2" attributes="0"/>
@@ -109,7 +107,6 @@
                           <Component id="BtnBuscarPartida" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="BtnNuevaPartida" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="BtnRegistrar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="BtnAyuda" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -223,11 +220,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnRegistrarActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="BtnAyuda">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="?"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="TxtFecha">
           <Properties>
@@ -483,6 +475,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Imprimir"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnImprimirActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="BtnVerificarPartida">
           <Properties>

@@ -80,7 +80,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
     }
 
     public void limpiar() {
-        txtIDNombreProducto.setText("");
+        //   txt_combox.setText("");
         txtnombrebodega.setText("");
         txtExistenciasProducto.setText("");
 //        txt_fechaActualizacion.setText("");
@@ -90,7 +90,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
     }
 
     public void buscar() {
-        Buscar.setNombre_producto(txtIDNombreProducto.getText());
+        //  Buscar.setNombre_producto(txt_combox.getText());
         Buscar = procesoproducto.query(Buscar);
         txtnombrebodega.setText(Buscar.getNombre_bodega());
         txtExistenciasProducto.setText(Buscar.getExistencias_producto());
@@ -135,14 +135,14 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtIDNombreProducto = new javax.swing.JTextField();
         txtnombrebodega = new javax.swing.JTextField();
         txtExistenciasProducto = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
-        txt_combox = new javax.swing.JComboBox<>();
         txtfechaActualizacion = new com.toedter.calendar.JDateChooser();
+        txtProdcuto = new javax.swing.JTextField();
+        txt_combox = new javax.swing.JComboBox<>();
         btnAyuda = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -157,10 +157,10 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         jLabel12 = new javax.swing.JLabel();
         txtProductoNuevo = new javax.swing.JTextField();
         txtNuevaExistencia = new javax.swing.JTextField();
-        cbox_BodegasNuevaExistencia = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         txtExistenciasTotales = new javax.swing.JTextField();
         btnActualizar = new javax.swing.JButton();
+        txtBodegasNuevaExistencia = new javax.swing.JTextField();
 
         setIconifiable(true);
         setMaximizable(true);
@@ -226,13 +226,17 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtnombrebodega, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_combox, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtIDNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnBuscar)))
-                        .addGap(23, 23, 23))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtnombrebodega, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txt_combox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(38, 38, 38)
+                                        .addComponent(btnBuscar)))
+                                .addGap(23, 23, 23))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtProdcuto, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,12 +244,12 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtIDNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addGap(24, 24, 24)
+                    .addComponent(btnBuscar)
+                    .addComponent(txt_combox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_combox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(txtProdcuto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtnombrebodega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -380,7 +384,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
                     .addComponent(txtProductoNuevo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
                     .addComponent(txtNuevaExistencia, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtExistenciasTotales)
-                    .addComponent(cbox_BodegasNuevaExistencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtBodegasNuevaExistencia))
                 .addGap(35, 35, 35)
                 .addComponent(btnActualizar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -405,8 +409,8 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(cbox_BodegasNuevaExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(txtBodegasNuevaExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -441,7 +445,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -515,16 +519,30 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        buscar();
+        String valor = txt_combox.getSelectedItem().toString();
+        int valorint = Integer.parseInt(valor);
+        ProductoDAO perfilDAO = new ProductoDAO();
+        Producto perfilconsultar = new Producto();
+        perfilconsultar.setPK_id_producto(valorint);
+        perfilconsultar = perfilDAO.query(perfilconsultar);
+        if (perfilconsultar.getPK_id_producto() != 0) {
+            estadovalidacion = 1;
+            txtProdcuto.setText(perfilconsultar.getNombre_producto());
+            txtnombrebodega.setText(perfilconsultar.getBodega());
+            //      txtfechaActualizacion.setCalendar(perfilconsultar.getFechaIngreso());
+        } else {
+
+            estadovalidacion = 0;
+        }
+
         BitacoraDao BitacoraDAO = new BitacoraDao();
 
         Bitacora Insertar = new Bitacora();
         Insertar.setId_Usuario(Login.usuarioComercial);
         Insertar.setAccion("Buscar");
 
-        Insertar.setCodigoAplicacion("3006");
+        Insertar.setCodigoAplicacion("3007");
         Insertar.setModulo("3000");
-
         try {
             BitacoraDAO.insert(Insertar);
         } catch (UnknownHostException ex) {
@@ -536,7 +554,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         ProcesoProductoDAO productoDAO = new ProcesoProductoDAO();
         ProcesoProducto productoAEliminar = new ProcesoProducto();
-        productoAEliminar.setPK_id_procesoproducto(Integer.parseInt(txtIDNombreProducto.getText()));
+        productoAEliminar.setPK_id_procesoproducto(Integer.parseInt(txt_combox.getItemAt(WIDTH)));
         productoDAO.delete(productoAEliminar);
         JOptionPane.showMessageDialog(null, "Registro Eliminado.");
 
@@ -565,14 +583,14 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         ProcesoProductoDAO productoDAO = new ProcesoProductoDAO();
         ProcesoProducto productoAInsertar = new ProcesoProducto();
 
-        productoAInsertar.setPK_id_procesoproducto((int) Integer.parseInt(txtIDNombreProducto.getText()));
+        productoAInsertar.setPK_id_procesoproducto((int) Integer.parseInt(txt_combox.getActionCommand()));
         productoAInsertar.setNombre_producto(txt_combox.getSelectedItem().toString());
         productoAInsertar.setNombre_bodega(txtnombrebodega.getText());
         productoAInsertar.setExistencias_producto(txtExistenciasProducto.getText());
         productoAInsertar.setFechaActualizacion(txtfechaActualizacion.getDateFormatString());
         productoAInsertar.setProductoNuevo(txtProductoNuevo.getText());
         productoAInsertar.setNuevaExistencia(txtNuevaExistencia.getText());
-        productoAInsertar.setBodegasNuevaExistencia(cbox_BodegasNuevaExistencia.getSelectedItem().toString());
+        productoAInsertar.setBodegasNuevaExistencia(txtBodegasNuevaExistencia.getText());
         productoDAO.insert(productoAInsertar);
 
         BitacoraDao BitacoraDAO = new BitacoraDao();
@@ -594,11 +612,11 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
         int numero1, numero2, total;
-     numero1=Integer.parseInt(txtExistenciasProducto.getText());
-     numero2=Integer.parseInt(txtNuevaExistencia.getText());
-     
-     total=numero1 + numero2 ;
-     txtExistenciasTotales.setText(String.valueOf(total));
+        numero1 = Integer.parseInt(txtExistenciasProducto.getText());
+        numero2 = Integer.parseInt(txtNuevaExistencia.getText());
+
+        total = numero1 + numero2;
+        txtExistenciasTotales.setText(String.valueOf(total));
     }//GEN-LAST:event_btnActualizarActionPerformed
 
 
@@ -611,7 +629,6 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnReporte;
-    private javax.swing.JComboBox<String> cbox_BodegasNuevaExistencia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -626,10 +643,11 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField txtBodegasNuevaExistencia;
     public static javax.swing.JTextField txtExistenciasProducto;
     private javax.swing.JTextField txtExistenciasTotales;
-    private javax.swing.JTextField txtIDNombreProducto;
     public static javax.swing.JTextField txtNuevaExistencia;
+    private javax.swing.JTextField txtProdcuto;
     public static javax.swing.JTextField txtProductoNuevo;
     private javax.swing.JComboBox<String> txt_combox;
     private com.toedter.calendar.JDateChooser txtfechaActualizacion;
