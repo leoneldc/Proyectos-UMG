@@ -22,10 +22,10 @@ import javax.swing.JOptionPane;
  */
 public class ProductoDAO {
 
-    private static final String SQL_SELECT = "SELECT PK_id_producto, nombre_producto, precio_producto, descripcion_producto, estatus_producto FROM tbl_producto";
-    private static final String SQL_INSERT = "INSERT INTO tbl_producto (PK_id_producto, nombre_producto, precio_producto, descripcion_producto, estatus_producto) VALUES(?,?,?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE tbl_producto SET   nombre_producto= ?, precio_producto= ?, descripcion_producto= ?, estatus_producto= ?    WHERE PK_id_producto= ?";
-    private static final String SQL_QUERY = "SELECT PK_id_producto, nombre_producto, precio_producto, descripcion_producto, estatus_producto FROM tbl_producto WHERE PK_id_producto=?";
+    private static final String SQL_SELECT = "SELECT PK_id_producto, nombre_producto, precio_producto, descripcion_producto, estatus_producto, bodega, fechaIngreso FROM tbl_producto";
+    private static final String SQL_INSERT = "INSERT INTO tbl_producto (PK_id_producto, nombre_producto, precio_producto, descripcion_producto, estatus_producto, bodega, fechaIngreso) VALUES(?,?,?,?,?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE tbl_producto SET   nombre_producto= ?, precio_producto= ?, descripcion_producto= ?, estatus_producto= ? bodega=?, fechaIngreso=?   WHERE PK_id_producto= ?";
+    private static final String SQL_QUERY = "SELECT PK_id_producto, nombre_producto, precio_producto, descripcion_producto, estatus_producto, bodega, fechaIngreso FROM tbl_producto WHERE PK_id_producto=?";
     private static final String SQL_DELETE = "DELETE FROM tbl_producto WHERE PK_id_producto=?";
     public static final String SQL_QUERY2 = "SELECT  PK_id_producto  FROM tbl_producto";
 
@@ -46,6 +46,8 @@ public class ProductoDAO {
                 String precio_producto = rs.getString("precio_producto");
                 String descripcion_producto = rs.getString("descripcion_producto");
                 String estatus_producto = rs.getString("estatus_producto");
+                String bodega = rs.getString("bodega");
+                String fechaIngreso = rs.getString("fechaIngreso");
 
                 producto = new Producto();
                 producto.setPK_id_producto(PK_id_producto);
@@ -53,6 +55,8 @@ public class ProductoDAO {
                 producto.setPrecio_producto(precio_producto);
                 producto.setDescripcion_producto(descripcion_producto);
                 producto.setEstatus_producto(estatus_producto);
+                producto.setBodega(bodega);
+                producto.setFechaIngreso(fechaIngreso);
                 productos.add(producto);
             }
 
@@ -79,7 +83,8 @@ public class ProductoDAO {
             stmt.setString(3, aplicacion.getPrecio_producto());
             stmt.setString(4, aplicacion.getDescripcion_producto());
             stmt.setString(5, aplicacion.getEstatus_producto());
-
+            stmt.setString(6, aplicacion.getBodega());
+            stmt.setString(7, aplicacion.getFechaIngreso());
             //System.out.println("ejecutando query:" + SQL_INSERT);
             rows = stmt.executeUpdate();
             //System.out.println("Registros afectados:" + rows);
@@ -108,8 +113,9 @@ public class ProductoDAO {
             stmt.setString(2, aplicacion.getPrecio_producto());
             stmt.setString(3, aplicacion.getDescripcion_producto());
             stmt.setString(4, aplicacion.getEstatus_producto());
-            stmt.setInt(5, aplicacion.getPK_id_producto());
-
+            stmt.setString(5, aplicacion.getCantidad());
+            stmt.setString(6, aplicacion.getBodega());
+            stmt.setString(7, aplicacion.getFechaIngreso());
             rows = stmt.executeUpdate();
             //System.out.println("Registros actualizado:" + rows);
 
@@ -141,6 +147,8 @@ public class ProductoDAO {
                 String apellido = rs.getString("precio_producto");
                 String contacto = rs.getString("descripcion_producto");
                 String estatus = rs.getString("estatus_producto");
+                String bodega = rs.getString("bodega");
+                String fechaIngreso = rs.getString("fechaIngreso");
 
                 moduloC = new Producto();
                 moduloC.setPK_id_producto(id_proveedor);
@@ -148,6 +156,8 @@ public class ProductoDAO {
                 moduloC.setPrecio_producto(apellido);
                 moduloC.setDescripcion_producto(contacto);
                 moduloC.setEstatus_producto(estatus);
+                moduloC.setBodega(bodega);
+                moduloC.setFechaIngreso(fechaIngreso);
 
             }
         } catch (SQLException ex) {
@@ -230,6 +240,9 @@ public class ProductoDAO {
                 usr.setPrecio_producto(rs.getString(3));
                 usr.setDescripcion_producto(rs.getString(4));
                 usr.setEstatus_producto(rs.getString(5));
+                usr.setBodega(rs.getString(6));
+                usr.setFechaIngreso(rs.getString(7));
+
                 perfil.add(usr);
             }
         } catch (Exception e) {
