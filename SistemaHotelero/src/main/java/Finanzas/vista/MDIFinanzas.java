@@ -2,6 +2,7 @@ package Finanzas.vista;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.net.UnknownHostException;
@@ -297,6 +298,9 @@ public class MDIFinanzas extends javax.swing.JFrame {
         // TODO add your handling code here:
         fmTipo = new FrmTipoTransaccion();
         JDesktopFinanzas.add(fmTipo);
+         Dimension desktopSize = JDesktopFinanzas.getSize();
+        Dimension FrameSize = fmTipo.getSize();
+        fmTipo.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
     }//GEN-LAST:event_JMenuTipoTransaccionActionPerformed
 
     private void JMenuBancosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuBancosActionPerformed
@@ -318,22 +322,18 @@ public class MDIFinanzas extends javax.swing.JFrame {
     }//GEN-LAST:event_JMenuPersonaBancariaActionPerformed
 
     private void JMenuCuentaBancariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuCuentaBancariaActionPerformed
-        try {
+      
             // TODO add your handling code here:
             FrmBancaria = new FrmCuentaBancaria();
-        } catch (SQLException ex) {
-            Logger.getLogger(MDIFinanzas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+   
         JDesktopFinanzas.add(FrmBancaria);
     }//GEN-LAST:event_JMenuCuentaBancariaActionPerformed
 
     private void JMenuCuentahabienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuCuentahabienteActionPerformed
-        try {
+       
             // TODO add your handling code here:
             FrmHabiente = new FrmCuentaHabiente();
-        } catch (SQLException ex) {
-            Logger.getLogger(MDIFinanzas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+     
         JDesktopFinanzas.add(FrmHabiente);
     }//GEN-LAST:event_JMenuCuentahabienteActionPerformed
 
@@ -369,13 +369,9 @@ public class MDIFinanzas extends javax.swing.JFrame {
 
     private void JMenuItemTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuItemTBActionPerformed
 
-        try {
+       
             // TODO add your handling code here:
-            FrmTransacion = new Transaccion_Bancaria();
-        } catch (SQLException ex) {
-            Logger.getLogger(MDIFinanzas.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        FrmTransacion = new Transaccion_Bancaria();
         JDesktopFinanzas.add(FrmTransacion);
     }//GEN-LAST:event_JMenuItemTBActionPerformed
 

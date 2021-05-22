@@ -44,29 +44,19 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class ProcesoCompra extends javax.swing.JInternalFrame {
 
-
     ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
-
-ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
-
     int estadovalidacion;
     ProductoDAO productos = new ProductoDAO();
     int variable1;
     DefaultTableModel model = new DefaultTableModel();
-
     ButtonGroup RadiosGrupo;
     int codigoAplicacion = 3007;
 
-    public void llenadoDeTablas() {
-
-     ButtonGroup RadiosGrupo;
-     int codigoAplicacion = 3007;
     /**
      * Creates new form Compra
      */
-     
-     public void llenadoDeTablas() {
 
+    public void llenadoDeTablas() {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("NO.FACTURA");
         model.addColumn("NO.PROVEEDOR");
@@ -79,13 +69,7 @@ ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
         model.addColumn("CANTIDAD");
         model.addColumn("SUBTOTAL");
         model.addColumn("FECHA");
-
         model.addColumn("PAGO");
-
-
-         model.addColumn("PAGO");
-          
-        
 
         CompraDAO proveedorDAO = new CompraDAO();
 
@@ -105,67 +89,15 @@ ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
             dato[9] = proveedor.get(i).getFecha_producto();
             dato[10] = proveedor.get(i).getPago_producto();
 
-
-            //System.out.println("vendedor:" + vendedores);
-            model.addRow(dato);
-
-        }
-
-    }
-
-    void habilitarAcciones() {
-
-        int codigoAplicacion = 3001;
-        var usuario = Login.usuarioComercial;
-
-        GenerarCompra.setEnabled(false);
-        validar.setEnabled(false);
-        valiar.setEnabled(false);
-        Eliminar.setEnabled(false);
-
-        GenerarPermisos permisos = new GenerarPermisos();
-
-        String[] permisosApp = new String[4];
-
-        for (int i = 0; i < 4; i++) {
-            permisosApp[i] = permisos.getAccionesAplicacion(codigoAplicacion, usuario)[i];
-        }
-
-        if (permisosApp[0].equals("1")) {
-            GenerarCompra.setEnabled(true);
-        }
-        if (permisosApp[1].equals("1")) {
-            validar.setEnabled(true);
-        }
-        if (permisosApp[2].equals("1")) {
-            valiar.setEnabled(true);
-        }
-        if (permisosApp[3].equals("1")) {
-            Eliminar.setEnabled(true);
-        }
-
-    }
-
-    /**
-     * Creates new form ProcesoCompra
-     */
-    public void buscar() {
-        Compra proveedorAConsultar = new Compra();
-
-             
-            
             //System.out.println("vendedor:" + vendedores);
             model.addRow(dato);
             llenadoDeTablas();
         }
-        
-            
-        }
-           
-     
-     public void buscar() {
-       Compra proveedorAConsultar = new Compra();
 
+    }
+
+    public void buscar() {
+        Compra proveedorAConsultar = new Compra();
         CompraDAO proveedorDAO = new CompraDAO();
         proveedorAConsultar.setId_factura(Integer.parseInt(txt_idfacutra.getText()));
         proveedorAConsultar = proveedorDAO.query(proveedorAConsultar);
@@ -181,21 +113,9 @@ ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
         txt_total.setText(proveedorAConsultar.getSubtotal_producto());
 
         txt_fecha.setText(proveedorAConsultar.getFecha_producto());
-
-        pago.setSelectedItem(proveedorAConsultar.getId_proveedor());
+        txt_pago.setSelectedItem(proveedorAConsultar.getPago_producto());
 
     }
-
-
-        txt_pago.setSelectedItem(proveedorAConsultar.getPago_producto());
-        
-        
-        
-      
-        
-        
-     }
-     
 
     public ProcesoCompra() {
         initComponents();
@@ -216,15 +136,6 @@ ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
         model.addColumn("FECHA");
         model.addColumn("PAGO");
 
-
-        this.tbtTabla.setModel(model);
-
-        Date sistFecha = new Date();
-        SimpleDateFormat formato = new SimpleDateFormat("dd-MMM-YYYY");
-        txt_fecha.setText(formato.format(sistFecha));
-        RadiosGrupo = new ButtonGroup();
-      
-       
 //
         this.tbtTabla.setModel(model);
 //        
@@ -232,7 +143,6 @@ ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
 //        SimpleDateFormat formato =new SimpleDateFormat("dd-MMM-YYYY");
 //        txt_fecha.setText(formato.format(sistFecha));
 //        RadiosGrupo = new ButtonGroup();
-
 //        RadiosGrupo.add(RBEP1);
 //        RadiosGrupo.add(RBEP0);
 //        RadiosGrupo.add(RBEPvacio);
@@ -650,42 +560,6 @@ ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
 
     private void BOTONPROVEEDORActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BOTONPROVEEDORActionPerformed
         // TODO add your handling code here:
-
-        Map p = new HashMap();
-        JasperReport report;
-        JasperPrint print;
-
-        try {
-            connection = Conexion.getConnection();
-            report = JasperCompileManager.compileReport(new File("").getAbsolutePath()
-                    + "/src/main/java/Comercial/reportes/Compra.jrxml");
-            print = JasperFillManager.fillReport(report, p, connection);
-            JasperViewer view = new JasperViewer(print, false);
-            view.setTitle("Reporte de Proceso compras");
-            view.setVisible(true);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        txt_idfacutra.setText("");
-        txt_nombre.setText("");
-        txt_combox.setSelectedIndex(0);
-
-        txt_nit.setText("");
-
-        model.getDataVector().removeAllElements();
-        tbtTabla.updateUI();
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-        // TODO add your handling code here:
-
-        eliminara();
-
-
-    }//GEN-LAST:event_EliminarActionPerformed
-
         String valor = txt_combox.getSelectedItem().toString();
         int valorint = Integer.parseInt(valor);
         ProveedorDAO1 perfilDAO = new ProveedorDAO1();
@@ -722,60 +596,7 @@ ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
             variable1 = 0;
         }
 
-    }//GEN-LAST:event_valiarActionPerformed
-
-    private void validarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validarActionPerformed
-        // TODO add your handling code here:
-
-        String valor = txt_combox.getSelectedItem().toString();
-        int valorint = Integer.parseInt(valor);
-        ProveedorDAO1 perfilDAO = new ProveedorDAO1();
-        Proveedor perfilconsultar = new Proveedor();
-        perfilconsultar.setPK_id_proveedor(valorint);
-        perfilconsultar = perfilDAO.query(perfilconsultar);
-        if (perfilconsultar.getPK_id_proveedor() != 0) {
-            estadovalidacion = 1;
-
-            txt_nombre.setText(perfilconsultar.getNombre_proveedor());
-
-            txt_nit.setText(perfilconsultar.getNit_proveedor());
-        } else {
-
-            estadovalidacion = 0;
-        }
-
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-
-        Bitacora Insertar = new Bitacora();
-        Insertar.setId_Usuario(Login.usuarioComercial);
-        Insertar.setAccion("Buscar");
-
-        Insertar.setCodigoAplicacion("3007");
-        Insertar.setModulo("3000");
-        try {
-            BitacoraDAO.insert(Insertar);
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-    }//GEN-LAST:event_validarActionPerformed
-
-    private void RBEP0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBEP0ActionPerformed
-        // TODO add your handling code here:
-        Proceso_Producto uno = new Proceso_Producto();
-        MDIComercial.jdpescritorio.add(uno);
-        uno.toFront();
-        uno.setVisible(true);
-        Proceso_Producto.txtProductoNuevo.setText(txt_nombreproducto.getText());
-        Proceso_Producto.txtNuevaExistencia.setText(txt_cantidad.getText());
-
-
-    }//GEN-LAST:event_RBEP0ActionPerformed
-
-
     }//GEN-LAST:event_BOTONPRODUCTOActionPerformed
-
 
     private void GenerarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerarCompraActionPerformed
         // TODO add your handling code here:
@@ -821,12 +642,7 @@ ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
         txt_1.setText(String.valueOf(imp));
         txt_total.setText(String.valueOf(tot));
         datos[9] = txt_fecha.getText();
-
-        datos[10] = pago.getSelectedItem().toString();
-
         datos[10] = txt_pago.getSelectedItem().toString();
-        
-
 
         model.addRow(datos);
         calTot();
@@ -857,25 +673,6 @@ ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
         txt_precio.setText("");
         txt_cantidad.setText("");
         txt_1.setText("");
-
-        pago.setSelectedIndex(0);
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-
-        Bitacora Insertar = new Bitacora();
-        Insertar.setId_Usuario(Login.usuarioComercial);
-        Insertar.setAccion("Guardar");
-
-        Insertar.setCodigoAplicacion("3007");
-        Insertar.setModulo("3000");
-        try {
-            BitacoraDAO.insert(Insertar);
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-        llenadoDeTablas();
-    }//GEN-LAST:event_GenerarCompraActionPerformed
-
         txt_pago.setSelectedIndex(0);
 
     }//GEN-LAST:event_GenerarCompraActionPerformed
@@ -884,16 +681,15 @@ ProveedorDAO1 cargarCombobox = new ProveedorDAO1();
         // TODO add your handling code here:
 
         eliminar();
-        
-        
+
         CompraDAO proveedorDAO = new CompraDAO();
         Compra proveedorAEliminar = new Compra();
         proveedorAEliminar.setId_factura(Integer.parseInt(txt_idfacutra.getText()));
         proveedorDAO.delete(proveedorAEliminar);
 //        JOptionPane.showMessageDialog(null, "Registro Eliminado.");
-        
+
     }//GEN-LAST:event_EliminarActionPerformed
-private java.sql.Connection connection = null;
+    private java.sql.Connection connection = null;
     private void ReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteActionPerformed
         // TODO add your handling code here:
         Map p = new HashMap();
@@ -903,7 +699,7 @@ private java.sql.Connection connection = null;
         try {
             connection = Conexion.getConnection();
             report = JasperCompileManager.compileReport(new File("").getAbsolutePath()
-                + "/src/main/java/Comercial/reportes/Compra.jrxml");
+                    + "/src/main/java/Comercial/reportes/Compra.jrxml");
             print = JasperFillManager.fillReport(report, p, connection);
             JasperViewer view = new JasperViewer(print, false);
             view.setTitle("Reporte de Proceso compras");
@@ -917,7 +713,7 @@ private java.sql.Connection connection = null;
 
     private void RBEP0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBEP0ActionPerformed
         // TODO add your handling code here:
-        Proceso_Producto uno= new Proceso_Producto();
+        Proceso_Producto uno = new Proceso_Producto();
         MDIComercial.jdpescritorio.add(uno);
         uno.toFront();
         uno.setVisible(true);
@@ -929,10 +725,9 @@ private java.sql.Connection connection = null;
     private void Ayuda1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Ayuda1ActionPerformed
         // TODO add your handling code here:
         buscar();
-       
+
         llenadoDeTablas();
     }//GEN-LAST:event_Ayuda1ActionPerformed
-
 
     private void AyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AyudaActionPerformed
         // TODO add your handling code here:
@@ -950,73 +745,22 @@ private java.sql.Connection connection = null;
             ex.printStackTrace();
         }
 
-        llenadoDeTablas();
-
-
     }//GEN-LAST:event_AyudaActionPerformed
 
     private void Reporte1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Reporte1ActionPerformed
         // TODO add your handling code here:
-
-        buscar();
-    }//GEN-LAST:event_Ayuda1ActionPerformed
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        CompraDAO proveedorDAO = new CompraDAO();
-        Compra proveedorAActualizar = new Compra();
-
-        proveedorAActualizar.setId_factura(Integer.parseInt(txt_idfacutra.getText()));
-        proveedorAActualizar.setId_proveedor(txt_combox.getSelectedItem().toString());
-        proveedorAActualizar.setNombre_proveedor(txt_nombre.getText());
-        proveedorAActualizar.setNit_proveedor(txt_nit.getText());
-        proveedorAActualizar.setId_proveedor(uno.getSelectedItem().toString());
-        proveedorAActualizar.setNombre_producto(txt_nombreproducto.getText());
-        proveedorAActualizar.setPrecio_producto(txt_precio.getText());
-        proveedorAActualizar.setCantidad_producto(txt_cantidad.getText());
-        proveedorAActualizar.setSubtotal_producto(txt_1.getText());
-        proveedorAActualizar.setTotal_producto(txt_total.getText());
-        proveedorAActualizar.setFecha_producto(txt_fecha.getText());
-        proveedorAActualizar.setPago_producto(pago.getSelectedItem().toString());
-
-        proveedorDAO.update(proveedorAActualizar);
-        JOptionPane.showMessageDialog(null, "Modificación Exitosa.");
-
-        BitacoraDao BitacoraDAO = new BitacoraDao();
-
-        Bitacora Insertar = new Bitacora();
-        Insertar.setId_Usuario(Login.usuarioComercial);
-        Insertar.setAccion("Modifcar");
-
-        Insertar.setCodigoAplicacion("3007");
-        Insertar.setModulo("3000");
-        try {
-            BitacoraDAO.insert(Insertar);
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        llenadoDeTablas();
-
-//        llenadoDeTablas();
-//        limpiar();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnModificarActionPerformed
-    private double redondear(double num) {
-
-        int fila=tbtTabla.getRowCount();
-        for ( int i = fila-1; i>=0;i--){
+        int fila = tbtTabla.getRowCount();
+        for (int i = fila - 1; i >= 0; i--) {
             model.removeRow(i);
         }
         txt_idfacutra.setText("");
         txt_combox.setSelectedIndex(0);
         txt_nombre.setText("");
-        
+
         txt_nit.setText("");
-      txt_total.setText("");
-     
-        
-        
-        
-        
+        txt_total.setText("");
+
+
     }//GEN-LAST:event_Reporte1ActionPerformed
 
 
@@ -1063,8 +807,7 @@ private java.sql.Connection connection = null;
     private javax.swing.JComboBox<String> uno;
     // End of variables declaration//GEN-END:variables
 
-private double redondear(double num) {
-
+    private double redondear(double num) {
         return Math.rint(num * 100) / 100;
     }
 
@@ -1102,69 +845,5 @@ private double redondear(double num) {
 
         txt_total.setText(String.valueOf(tot));
     }
-
-    private Connection connection = null;
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No hay Filas en la Tabla");
-        }
-    }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Ayuda;
-    private javax.swing.JButton Ayuda1;
-    private javax.swing.JButton Eliminar;
-    private javax.swing.JButton GenerarCompra;
-    private javax.swing.JDialog PRODUCTO;
-    private javax.swing.JRadioButton RBEP0;
-    private javax.swing.JButton btnModificar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox<String> pago;
-    private javax.swing.JTable tbtTabla;
-    private javax.swing.JTextField txt_1;
-    private javax.swing.JTextField txt_cantidad;
-    private javax.swing.JComboBox<String> txt_combox;
-    private javax.swing.JTextField txt_fecha;
-    private javax.swing.JTextField txt_idfacutra;
-    private javax.swing.JTextField txt_nit;
-    private javax.swing.JTextField txt_nombre;
-    private javax.swing.JTextField txt_nombreproducto;
-    private javax.swing.JTextField txt_precio;
-    private javax.swing.JTextField txt_total;
-    private javax.swing.JComboBox<String> uno;
-    private javax.swing.JButton valiar;
-    private javax.swing.JButton validar;
-    // End of variables declaration//GEN-END:variables
 
 }

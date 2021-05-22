@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -37,7 +38,7 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author Santiago Martinez Diaz
  */
 public class Transaccion_Bancaria extends javax.swing.JInternalFrame {
-    
+    DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
      public void llenadoDeCombos()  {
        CuentaBancariaDAO tipodao = new CuentaBancariaDAO();
       List<CuentaBancaria> tipo = tipodao.listar();
@@ -47,9 +48,9 @@ public class Transaccion_Bancaria extends javax.swing.JInternalFrame {
        }
  }
      
-      public void llenadoDeCombos2() throws SQLException  {
+      public void llenadoDeCombos2() {
        TipoTransaccionDAO tipodao = new TipoTransaccionDAO();
-      List<TipoTransaccion> tipo = tipodao.select();
+      List<TipoTransaccion> tipo = tipodao.listar();
       Cbox_Tipo.addItem("Seleccione una opción");
       for (int i = 0; i < tipo.size(); i++) {
            Cbox_Tipo.addItem(tipo.get(i).getCodigo_TipoTransaccion());
@@ -84,11 +85,12 @@ public class Transaccion_Bancaria extends javax.swing.JInternalFrame {
     /**
      * Creates new form TransaccionBancaria
      */
-    public Transaccion_Bancaria() throws SQLException {
+    public Transaccion_Bancaria()  {
         initComponents();
         llenadodetablas();
         llenadoDeCombos();
         llenadoDeCombos2();
+     
     }
 
     /**
@@ -119,6 +121,7 @@ public class Transaccion_Bancaria extends javax.swing.JInternalFrame {
         TxtMonto = new javax.swing.JTextField();
         TxtConcepto = new javax.swing.JTextField();
         Fecha = new com.toedter.calendar.JDateChooser();
+        BtnDeposito = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTableTransaccion = new javax.swing.JTable();
@@ -181,6 +184,15 @@ public class Transaccion_Bancaria extends javax.swing.JInternalFrame {
         label13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         label13.setText("Concepto:");
 
+        BtnDeposito.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        BtnDeposito.setText("Deposito:");
+        BtnDeposito.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        BtnDeposito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDepositoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -194,7 +206,9 @@ public class Transaccion_Bancaria extends javax.swing.JInternalFrame {
                 .addComponent(btnEliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(270, 270, 270))
+                .addGap(18, 18, 18)
+                .addComponent(BtnDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(157, 157, 157))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -253,7 +267,7 @@ public class Transaccion_Bancaria extends javax.swing.JInternalFrame {
                         .addComponent(label11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                         .addComponent(Cbox_Bancaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(Cbox_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -270,8 +284,9 @@ public class Transaccion_Bancaria extends javax.swing.JInternalFrame {
                     .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalles"));
@@ -391,8 +406,27 @@ private Connection connection = null;
 
     }//GEN-LAST:event_btnEliminar1ActionPerformed
 
+    private void BtnDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDepositoActionPerformed
+        // TODO add your handling code here:
+        
+        //METODO MODIFICAR
+        TransaccionBancariaDAO tipodao = new TransaccionBancariaDAO();
+        TransaccionBancaria tipomodificar = new TransaccionBancaria();
+  
+        
+        tipomodificar.setMonto_Transaccion(TxtMonto.getText());
+
+   
+        
+   
+        tipodao.update(tipomodificar);
+        JOptionPane.showMessageDialog(null, " Modificado Exitosamente");
+        llenadodetablas();
+    }//GEN-LAST:event_BtnDepositoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnDeposito;
     private javax.swing.JComboBox<String> Cbox_Bancaria;
     private javax.swing.JComboBox<String> Cbox_Tipo;
     private com.toedter.calendar.JDateChooser Fecha;
@@ -416,4 +450,6 @@ private Connection connection = null;
     private javax.swing.JLabel label8;
     private javax.swing.JLabel label9;
     // End of variables declaration//GEN-END:variables
+
+    
 }
