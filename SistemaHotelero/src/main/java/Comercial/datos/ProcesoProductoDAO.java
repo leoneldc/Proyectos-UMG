@@ -29,40 +29,9 @@ public class ProcesoProductoDAO {
     private static final String SQL_DELETE = "DELETE FROM tbl_proceso_producto WHERE PK_id_procesoproducto=?";
 
      
-   private static final String SQL_UPDATE2 = "UPDATE tbl_proceso_producto SET   existencias_producto= ? WHERE existencias_producto= ?";
-    /**
-     *
-     * seleccion de listas de la bitacora
-     */
-    public int update2(ProcesoProducto MOD) {
-        
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        int rows = 0;
-        try {
-             
-            
-            conn = Conexion.getConnection();
-           stmt = conn.prepareStatement(SQL_UPDATE2);
-          
-              stmt.setString(1,  MOD.getNombre_producto());
-       
-           
 
-            System.out.println("ejecutando query: " + SQL_UPDATE2);
-           
-            rows = stmt.executeUpdate();
-            System.out.println("Registros afectados:" + rows);
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.out);
-        } finally {
-            Conexion.close(stmt);
-            Conexion.close(conn);
-        }
-
-        return rows;
-    }
-    
+  
+  
     public List<ProcesoProducto> select() {
         Connection conn = null;
         PreparedStatement stmt = null;

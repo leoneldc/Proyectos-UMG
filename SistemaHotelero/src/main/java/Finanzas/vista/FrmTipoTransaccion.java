@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -31,19 +32,25 @@ import seguridad.dominio.Bitacora;
 import seguridad.vista.Login;
 import seguridad.vista.Mantenimiento_Perfil;
 /**
+ * 
+ * 
  *
  * @author Santiago Martinez Diaz
  */
+
+
 public class FrmTipoTransaccion extends javax.swing.JInternalFrame {
+  
     int codigoAplicacion = 1002;
     private Connection connection;
     
     BitacoraDao BitacoraDAO = new BitacoraDao();
     Bitacora AInsertar = new Bitacora();
     
+  
     // metodo de llenado de tablas automaticamente aparecen los datos guardados en bd y se despliega en automatico ademas crea las tablas en el jtable
   public void llenadoDeTablas() {
-      try {
+
           DefaultTableModel modelo = new DefaultTableModel();
           modelo.addColumn("Codigo");
           modelo.addColumn("Tipo Transaccion");
@@ -52,7 +59,7 @@ public class FrmTipoTransaccion extends javax.swing.JInternalFrame {
 
           
           TipoTransaccionDAO TipoTDAO = new TipoTransaccionDAO();
-          List<TipoTransaccion> tipot = TipoTDAO.select();
+          List<TipoTransaccion> tipot = TipoTDAO.listar();
           JTableTransaccion.setModel(modelo);
           String[] dato = new String[3];
           for (int i = 0; i < tipot.size(); i++) {
@@ -61,10 +68,9 @@ public class FrmTipoTransaccion extends javax.swing.JInternalFrame {
               dato[2] = Integer.toString(tipot.get(i).getEfecto_TipoTransaccion());
               modelo.addRow(dato);
           }
-      } catch (SQLException ex) {
-          Logger.getLogger(FrmTipoTransaccion.class.getName()).log(Level.SEVERE, null, ex);
-      }
+   
     }
+  
   
  
  //metodo para buscar Tipo De transaccion guardada en la db y que  despligue la informacion en los textfield
@@ -87,6 +93,9 @@ public void buscarperfil(){
     public FrmTipoTransaccion() {
         initComponents();
         llenadoDeTablas();
+      
+       
+        
     }
 
     /**
@@ -120,6 +129,7 @@ public void buscarperfil(){
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setResizable(true);
         setTitle("Mantenimiento TipoTransaccion\n");
         setVisible(true);
 
@@ -223,7 +233,7 @@ public void buscarperfil(){
                             .addComponent(TxtTipo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TxtCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TxtEfecto, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
@@ -305,14 +315,14 @@ public void buscarperfil(){
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -322,8 +332,10 @@ public void buscarperfil(){
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,7 +343,8 @@ public void buscarperfil(){
                 .addGap(22, 22, 22)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84))
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("");
@@ -546,4 +559,6 @@ public void buscarperfil(){
     private javax.swing.JLabel label9;
     private javax.swing.JTextField txtbuscado;
     // End of variables declaration//GEN-END:variables
+
+    
 }
