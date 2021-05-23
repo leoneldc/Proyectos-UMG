@@ -23,7 +23,7 @@ public class TipoTransaccionDAO {
     private static final String sql_delete = "DELETE FROM TipoTransaccion WHERE Codigo_TipoTransaccion=?";
     private static final String sql_query = "SELECT Codigo_TipoTransaccion, Transaccion_Tipo, Efecto_TipoTransaccion FROM TipoTransaccion WHERE Codigo_TipoTransaccion=?";
 
-    public List<TipoTransaccion> select() throws SQLException {
+    public List<TipoTransaccion> listar() {
         Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
