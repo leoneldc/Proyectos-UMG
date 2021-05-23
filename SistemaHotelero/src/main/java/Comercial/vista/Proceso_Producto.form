@@ -115,7 +115,7 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="txtnombrebodega" min="-2" pref="107" max="-2" attributes="0"/>
                                       <Group type="102" attributes="0">
-                                          <Component id="txt_combox" max="32767" attributes="0"/>
+                                          <Component id="cbox_empleado1" max="32767" attributes="0"/>
                                           <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                                           <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -139,7 +139,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_combox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cbox_empleado1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -234,7 +234,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtProdcuto">
         </Component>
-        <Component class="javax.swing.JComboBox" name="txt_combox">
+        <Component class="javax.swing.JComboBox" name="cbox_empleado1">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>

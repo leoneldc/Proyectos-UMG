@@ -50,6 +50,35 @@ public class ProcesoStockActualizado extends javax.swing.JInternalFrame {
     /**
      * Creates new form ProcesoStockActualizado
      */
+    
+    void habilitarAcciones() {
+
+        int codigoAplicacion = 30016;
+        var usuario = Login.usuarioComercial;
+
+        btnActualizar.setEnabled(false);
+        jButton1.setEnabled(false);
+       
+
+        GenerarPermisos permisos = new GenerarPermisos();
+
+        String[] permisosApp = new String[4];
+
+        for (int i = 0; i < 2; i++) {
+            permisosApp[i] = permisos.getAccionesAplicacion(codigoAplicacion, usuario)[i];
+        }
+
+        if (permisosApp[0].equals("1")) {
+            btnActualizar.setEnabled(true);
+        }
+        if (permisosApp[1].equals("1")) {
+            jButton1.setEnabled(true);
+        }
+      
+     }
+     
+    
+    
     public void llenadoDeTablas() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID Proveedor");

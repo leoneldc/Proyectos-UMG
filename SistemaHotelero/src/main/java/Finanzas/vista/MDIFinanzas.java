@@ -22,7 +22,7 @@ import seguridad.vista.MDI_Components;
  */
 public class MDIFinanzas extends javax.swing.JFrame {
 
-    private Transaccion_Bancaria FrmTransacion;
+    private TransaccionBancaria TransaccionesBancarias;
     private FrmTipoTransaccion fmTipo;
     private Mantenimiento_Banco formMantenimiento_Banco;//llamado a la ventana Mantenimiento Banco
     private Mantenimiento_TipoPersona formMantenimiento_TipoPersona;//llamado a la ventana Mantenimiento Tipo Persona
@@ -208,7 +208,7 @@ public class MDIFinanzas extends javax.swing.JFrame {
         });
         JMenuProcesos.add(JMenuItemAsientoContable);
 
-        JMenuItemTB.setText("Transaccion Bancaria");
+        JMenuItemTB.setText("Transacciones");
         JMenuItemTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMenuItemTBActionPerformed(evt);
@@ -327,6 +327,7 @@ public class MDIFinanzas extends javax.swing.JFrame {
             FrmBancaria = new FrmCuentaBancaria();
    
         JDesktopFinanzas.add(FrmBancaria);
+       
     }//GEN-LAST:event_JMenuCuentaBancariaActionPerformed
 
     private void JMenuCuentahabienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuCuentahabienteActionPerformed
@@ -371,8 +372,11 @@ public class MDIFinanzas extends javax.swing.JFrame {
 
        
             // TODO add your handling code here:
-        FrmTransacion = new Transaccion_Bancaria();
-        JDesktopFinanzas.add(FrmTransacion);
+        TransaccionesBancarias = new TransaccionBancaria();
+        JDesktopFinanzas.add(TransaccionesBancarias);
+        Dimension desktopSize = JDesktopFinanzas.getSize();
+        Dimension FrameSize = TransaccionesBancarias.getSize();
+        TransaccionesBancarias.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
     }//GEN-LAST:event_JMenuItemTBActionPerformed
 
     private void JMenunEmisionChequeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenunEmisionChequeActionPerformed

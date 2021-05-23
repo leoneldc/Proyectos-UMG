@@ -50,6 +50,19 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
     /**
      * Creates new form Proceso_Producto
      */
+       public void llenadoDeCombos2() {
+
+        List<ProcesoProducto> Bus =procesoproducto.select();
+        
+        for (int i = 0; i < Bus.size(); i++) {
+            cbox_empleado1.addItem(Bus.get(i).getNombre_producto());
+            String valor = cbox_empleado1.getSelectedItem().toString();
+//              producto.setNombre_producto(producto.getText());
+            
+
+        }
+    }
+
     public void llenadoDeTablas() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID Proveedor");
@@ -106,14 +119,14 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         // txtfechaActualizacion.setCalendar(formato(sistFecha));
     }
 
-    public void llenadoDeCombos2() {
-        // List<Cliente> Bus = Cliente.select();
-//        txt_combox.addItem("Productos Disponibles");
-//        for (int i = 0; i < Bus.size(); i++) {
-//            txt_combox.addItem(Bus.get(i).getCliente());
-//            String valor = txt_combox.getSelectedItem().toString();
+//    public void llenadoDeCombos2() {
+//        // List<Cliente> Bus = Cliente.select();
+////        txt_combox.addItem("Productos Disponibles");
+////        for (int i = 0; i < Bus.size(); i++) {
+////            txt_combox.addItem(Bus.get(i).getCliente());
+////            String valor = txt_combox.getSelectedItem().toString();
+////    }
 //    }
-    }
 //              Buscar1.setCliente(cliente.getText());
 //Buscar1=Clientes.query2(Buscar1);
 //
@@ -142,7 +155,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         txtfechaActualizacion = new com.toedter.calendar.JDateChooser();
         txtProdcuto = new javax.swing.JTextField();
-        txt_combox = new javax.swing.JComboBox<>();
+        cbox_empleado1 = new javax.swing.JComboBox<>();
         btnAyuda = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -230,7 +243,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtnombrebodega, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txt_combox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cbox_empleado1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGap(38, 38, 38)
                                         .addComponent(btnBuscar)))
                                 .addGap(23, 23, 23))
@@ -245,7 +258,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(btnBuscar)
-                    .addComponent(txt_combox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbox_empleado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -519,7 +532,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        String valor = txt_combox.getSelectedItem().toString();
+        String valor = cbox_empleado1.getSelectedItem().toString();
         int valorint = Integer.parseInt(valor);
         ProductoDAO perfilDAO = new ProductoDAO();
         Producto perfilconsultar = new Producto();
@@ -554,7 +567,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         ProcesoProductoDAO productoDAO = new ProcesoProductoDAO();
         ProcesoProducto productoAEliminar = new ProcesoProducto();
-        productoAEliminar.setPK_id_procesoproducto(Integer.parseInt(txt_combox.getItemAt(WIDTH)));
+        productoAEliminar.setPK_id_procesoproducto(Integer.parseInt(cbox_empleado1.getItemAt(WIDTH)));
         productoDAO.delete(productoAEliminar);
         JOptionPane.showMessageDialog(null, "Registro Eliminado.");
 
@@ -577,14 +590,14 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         GenerarPermisos permisos = new GenerarPermisos();
         MDI_Components mdi_Components = new MDI_Components();
-        String cbx_AccesoSeguridad = txt_combox.getSelectedItem().toString();
+        String cbx_AccesoSeguridad = cbox_empleado1.getSelectedItem().toString();
         String id = "0";
         MantenimientoProductos manteminetoProductosDAO = new MantenimientoProductos();
         ProcesoProductoDAO productoDAO = new ProcesoProductoDAO();
         ProcesoProducto productoAInsertar = new ProcesoProducto();
 
-        productoAInsertar.setPK_id_procesoproducto((int) Integer.parseInt(txt_combox.getActionCommand()));
-        productoAInsertar.setNombre_producto(txt_combox.getSelectedItem().toString());
+        productoAInsertar.setPK_id_procesoproducto((int) Integer.parseInt(cbox_empleado1.getActionCommand()));
+        productoAInsertar.setNombre_producto(cbox_empleado1.getSelectedItem().toString());
         productoAInsertar.setNombre_bodega(txtnombrebodega.getText());
         productoAInsertar.setExistencias_producto(txtExistenciasProducto.getText());
         productoAInsertar.setFechaActualizacion(txtfechaActualizacion.getDateFormatString());
@@ -629,6 +642,7 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnReporte;
+    private javax.swing.JComboBox<String> cbox_empleado1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -649,7 +663,6 @@ public class Proceso_Producto extends javax.swing.JInternalFrame {
     public static javax.swing.JTextField txtNuevaExistencia;
     private javax.swing.JTextField txtProdcuto;
     public static javax.swing.JTextField txtProductoNuevo;
-    private javax.swing.JComboBox<String> txt_combox;
     private com.toedter.calendar.JDateChooser txtfechaActualizacion;
     public static javax.swing.JTextField txtnombrebodega;
     // End of variables declaration//GEN-END:variables

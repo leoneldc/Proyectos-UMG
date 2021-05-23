@@ -271,22 +271,21 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(btnAgregar)
-                        .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
                                 .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(114, 114, 114)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(71, 71, 71))
-                            .addGroup(layout.createSequentialGroup()
+                                .addGap(64, 64, 64))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
                                 .addComponent(btnModificar)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnEliminar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnBuscar)
-                                .addGap(113, 113, 113)
+                                .addGap(34, 34, 34)
                                 .addComponent(jButton2)
-                                .addGap(38, 38, 38))))
+                                .addContainerGap())))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -306,7 +305,9 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
                                     .addComponent(ID)
                                     .addComponent(cliente)
                                     .addComponent(telefono)
-                                    .addComponent(nit)))
+                                    .addComponent(nit))
+                                .addGap(30, 30, 30)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -314,16 +315,14 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(14, 14, 14))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -340,13 +339,12 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnModificar)
                         .addComponent(btnEliminar)
-                        .addComponent(btnBuscar)
                         .addComponent(jButton2)))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -388,6 +386,7 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
         } catch (UnknownHostException ex) {
             Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
         }
+           JOptionPane.showMessageDialog(null, " La ejecunsion a  sido un exito");
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -423,7 +422,7 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
         } catch (UnknownHostException ex) {
             Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+   JOptionPane.showMessageDialog(null, " La ejecunsion a  sido un exito");
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -443,7 +442,7 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
         } catch (UnknownHostException ex) {
             Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+   JOptionPane.showMessageDialog(null, " La ejecunsion a  sido un exito");
         buscarVendedor();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -482,7 +481,7 @@ public class Mantenimiento_Cliente extends javax.swing.JInternalFrame {
         } catch (UnknownHostException ex) {
             Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+   JOptionPane.showMessageDialog(null, " La ejecunsion a  sido un exito");
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarActionPerformed
 

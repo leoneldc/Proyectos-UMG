@@ -22,11 +22,19 @@
 		<band height="79" splitType="Stretch">
 			<staticText>
 				<reportElement x="107" y="25" width="359" height="53" uuid="9a2505fb-8b6c-40a5-b8d3-1628ddbfb2aa"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="Californian FB" size="36" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Moneda:]]></text>
 			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="98" height="79" uuid="38c73745-541c-41ec-a4bb-b27d724091e0"/>
+				<imageExpression><![CDATA["C:\\Users\\Nay Ale\\Desktop\\rama\\SistemaHotelero\\src\\main\\java\\Finanzas\\reportes\\calk.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="455" y="5" width="100" height="20" uuid="c29a133c-e132-43ee-9643-d953d13deacf"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -37,7 +45,7 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="185" height="20" uuid="ed7a67e0-80aa-4058-b643-931869cd4556"/>
 				<text><![CDATA[Codigo]]></text>
@@ -56,7 +64,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="34" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="185" height="20" uuid="1e9aed98-db1d-4058-8581-3547211a862d"/>
 				<textFieldExpression><![CDATA[$F{Codigo_Moneda}]]></textFieldExpression>
@@ -72,12 +80,17 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="33" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="37" splitType="Stretch">
+			<textField>
+				<reportElement x="224" y="9" width="100" height="20" uuid="41f936ff-26ea-4140-9347-aadf95cdaf31"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="29" splitType="Stretch"/>
 	</summary>
 </jasperReport>
