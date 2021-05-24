@@ -258,7 +258,10 @@ CREATE TABLE `encabezadoasientocontable` (
 
 INSERT INTO `encabezadoasientocontable` (`Codigo_EncabezadoAsiento`, `Fecha_AsientoContable`, `Moneda_Asiento`, `Descripcion_Asiento`) VALUES
 ('0000001', '09/05/2021', 'GTQ', 'Libro diario del mes de mayo.'),
-('0000002', '01/06/2021', 'GTQ', 'Libro Diario de Junio 2021');
+('0000002', '01/06/2021', 'GTQ', 'Libro Diario de Junio 2021'),
+('0000003', '12/01/2021', 'GTQ', 'Libro Diario de Enero 2021'),
+('0000004', '01/06/2021', 'GTQ', 'Libro Diario de Febrero 2021'),
+('0000005', '22/05/2021', 'GTQ', 'Libro Diario de Abril 2021');
 
 -- --------------------------------------------------------
 
@@ -314,7 +317,8 @@ INSERT INTO `partidacontable` (`Codigo_PartidaContable`, `Fecha_PartidaContable`
 
 CREATE TABLE `periodofiscal` (
   `Codigo_PeriodoFiscal` varchar(100) NOT NULL,
-  `Periodo_FiscalAño` varchar(100) NOT NULL,
+  `Fecha_inicioPF` varchar(100) NOT NULL,
+  `Fecha_finPF` varchar(100) NOT NULL,
   `Estado_PeriodoFiscal` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -323,7 +327,11 @@ CREATE TABLE `periodofiscal` (
 --
 
 INSERT INTO `periodofiscal` (`Codigo_PeriodoFiscal`, `Periodo_FiscalAño`, `Estado_PeriodoFiscal`) VALUES
-('PF2021', '2021', 'A');
+('PF2017', '01/01/2017','31/12/2018', '0'),
+('PF2018', '01/01/2018','31/12/2019', '0'),
+('PF2019', '01/01/2019','31/12/2020', '0'),
+('PF2020', '01/01/2020','31/12/2021', '0'),
+('PF2021', '01/01/2021','31/12/2022', '1');
 
 -- --------------------------------------------------------
 
