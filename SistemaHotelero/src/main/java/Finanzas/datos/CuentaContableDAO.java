@@ -124,6 +124,7 @@ public class CuentaContableDAO {
         String nombreCuenta = "";
         String clasificacionCuenta = "";
         String estadoCuenta = "";
+        String montoCuenta = "";
 
         CuentaContable objCuentaAux = null;
         Connection con = null;
@@ -140,6 +141,7 @@ public class CuentaContableDAO {
                 nombreCuenta = rs.getString("Nombre_CuentaContable");
                 clasificacionCuenta = rs.getString("Clasificacion_CuentaContable");
                 estadoCuenta = rs.getString("Estado_CuentaContable");
+                montoCuenta = rs.getString("Monto_CuentaContable");
             }
 
             objCuentaAux = new CuentaContable();
@@ -148,6 +150,7 @@ public class CuentaContableDAO {
             objCuentaAux.setNombreCuentaContable(nombreCuenta);
             objCuentaAux.setClasificacionCuentaContable(clasificacionCuenta);
             objCuentaAux.setEstadoCuentaContable(estadoCuenta);
+            objCuentaAux.setMontoCuentaContable(montoCuenta);
 
         } catch (Exception ex) {
             System.out.println(ex);
@@ -193,7 +196,7 @@ public class CuentaContableDAO {
         String[][] matrixClasificacion;
         int i = 0;
         i = getCantidadRegistros();
-        matrixClasificacion = new String[i][4];
+        matrixClasificacion = new String[i][5];
 
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -210,6 +213,7 @@ public class CuentaContableDAO {
                 matrixClasificacion[rowCount][1] = rs.getString("Nombre_CuentaContable");
                 matrixClasificacion[rowCount][2] = rs.getString("Clasificacion_CuentaContable");
                 matrixClasificacion[rowCount][3] = rs.getString("Estado_CuentaContable");
+                matrixClasificacion[rowCount][4] = rs.getString("Monto_CuentaContable");
                 rowCount++;
             }
         } catch (Exception ex) {
@@ -221,5 +225,61 @@ public class CuentaContableDAO {
         }
 
         return matrixClasificacion;
+    }
+
+    public String getMontoAnterior(String codigoCuenta) {
+        String monto = "";
+
+        CuentaContable objCuentaAux = null;
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            con = Conexion.getConnection();
+            stmt = con.prepareStatement("SELECT cuentacontable.Monto_CuentaContable FROM cuentacontable WHERE cuentacontable.Codigo_CuentaContable = ?");
+            stmt.setString(1, codigoCuenta);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                monto = rs.getString("Monto_CuentaContable");
+            }
+
+            objCuentaAux = new CuentaContable();
+            objCuentaAux.setMontoCuentaContable(monto);
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, "¡ERROR INTERNO, CONSULTE CON EL ADMINISTRADOR!", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            Conexion.close(con);
+            Conexion.close(stmt);
+        }
+
+        return monto;
+    }
+
+    public int setMontoNuevo(String codigoCuenta, String monto) {
+
+        Connection con = null;
+        PreparedStatement stmt = null;
+        int rt = 0;
+
+        try {
+            con = Conexion.getConnection();
+            stmt = con.prepareStatement("UPDATE cuentacontable SET cuentacontbale.Monto_CuentaContable = ? FROM cuentacontable WHERE cuentacontable.Codigo_CuentaContable = ?");
+            stmt.setString(1, codigoCuenta);
+            stmt.setString(2, monto);
+
+            rt = stmt.executeUpdate();
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, "¡ERROR INTERNO, CONSULTE CON EL ADMINISTRADOR!", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            Conexion.close(con);
+            Conexion.close(stmt);
+        }
+
+        return rt;
     }
 }
