@@ -12,7 +12,6 @@ import Comercial.datos.ProductoDAO;
 import Comercial.dominio.Bodega;
 import Comercial.dominio.ProcesoProducto;
 import Comercial.dominio.Producto;
-import static Comercial.vista.Proceso_Producto.txtnombrebodega;
 import static java.awt.image.ImageObserver.WIDTH;
 import java.net.UnknownHostException;
 import java.util.List;
