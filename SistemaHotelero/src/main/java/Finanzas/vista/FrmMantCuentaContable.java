@@ -104,20 +104,20 @@ public class FrmMantCuentaContable extends javax.swing.JInternalFrame {
         int contI = 0;
         contI = objCuenta.getTablaRegistros().length;
 
-        String[][] matrixData = new String[contI][4];
+        String[][] matrixData = new String[contI][5];
 
         for (int i = 0; i < contI; i++) {
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < 5; j++) {
                 matrixData[i][j] = objCuenta.getTablaRegistros()[i][j];
             }
         }
 
         DefaultTableModel modeloTabla = (DefaultTableModel) JTableRegistros.getModel();
         modeloTabla.setRowCount(contI);
-        modeloTabla.setColumnCount(4);
+        modeloTabla.setColumnCount(5);
 
         for (int i = 0; i < contI; i++) {
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < 5; j++) {
                 JTableRegistros.setValueAt(matrixData[i][j], i, j);
             }
         }
@@ -306,7 +306,7 @@ public class FrmMantCuentaContable extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código de Cuenta", "Nombre de Cuenta Contable", "Clasificación de Cuenta Contable", "Estado de Cuenta Contable"
+                "Código de Cuenta", "Nombre de Cuenta Contable", "Clasificación de Cuenta Contable", "Estado de Cuenta Contable", "Monto"
             }
         ));
         jScrollPane1.setViewportView(JTableRegistros);
