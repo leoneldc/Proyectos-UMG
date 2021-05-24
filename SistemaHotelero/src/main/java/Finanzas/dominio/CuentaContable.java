@@ -166,10 +166,10 @@ public class CuentaContable {
 
         cuentaDAO.TablaDespliegue();
 
-        matrixRegistros = new String[cuentaDAO.TablaDespliegue().length][4];
+        matrixRegistros = new String[cuentaDAO.TablaDespliegue().length][5];
 
         for (int i = 0; i < cuentaDAO.TablaDespliegue().length; i++) {
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < 5; j++) {
                 matrixRegistros[i][j] = cuentaDAO.TablaDespliegue()[i][j];
             }
         }
