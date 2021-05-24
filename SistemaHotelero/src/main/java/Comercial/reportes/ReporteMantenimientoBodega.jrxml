@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a96ff221-74d3-4bce-9fe0-a05db9e0cb1f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM areacomercial.tbl_bodega;]]>
+	</queryString>
+	<field name="PK_id_bodega" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_bodega" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigo_almacen" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="44" y="0" width="114" height="79" uuid="183f03e3-4589-4067-8fde-a44648f18086"/>
+				<imageExpression><![CDATA["C:\\Users\\Diana\\Desktop\\logocomercial.jpeg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="290" y="22" width="200" height="26" uuid="acc9c8a6-9022-42f3-90b3-7f2e72fcadb9"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MANTENIMIENTO BODEGA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="5" width="100" height="20" uuid="9cfa0087-9182-4d94-a8ef-aa10c74780f2"/>
+				<text><![CDATA[PK_id_bodega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="5" width="100" height="20" uuid="048e73d2-b656-4416-9457-80a4f1a3b26e"/>
+				<text><![CDATA[nombre_bodega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="5" width="100" height="20" uuid="1f01b84a-f36a-45f1-97a7-66345d1fa3c9"/>
+				<text><![CDATA[direccion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="523" y="5" width="100" height="20" uuid="ac0b08e3-82c2-4732-a780-7fcb40947548"/>
+				<text><![CDATA[codigo_almacen]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="11" width="100" height="20" uuid="bb7e257a-a0b9-4d0f-82c2-801df7889950"/>
+				<textFieldExpression><![CDATA[$F{PK_id_bodega}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="242" y="20" width="100" height="20" uuid="0ea63147-2461-4d60-a7cf-99db8615ac75"/>
+				<textFieldExpression><![CDATA[$F{nombre_bodega}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="20" width="100" height="20" uuid="d957d235-4fc0-4692-9289-157e2634c7d4"/>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="523" y="20" width="100" height="20" uuid="9b1d1925-f4bf-464b-af5b-e9d53b122931"/>
+				<textFieldExpression><![CDATA[$F{codigo_almacen}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

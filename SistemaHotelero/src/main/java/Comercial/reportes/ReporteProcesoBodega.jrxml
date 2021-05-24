@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a785e543-8d94-4050-adbc-1ec45f7806e1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM areacomercial.tbl_proceso_bodega;]]>
+	</queryString>
+	<field name="PK_id_procesobodega" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_producto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcion_producto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaIngreso" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaSalida" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="311" y="15" width="166" height="45" uuid="b3f01fe6-ca23-4c26-8d09-ae8d2f339343"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE PROCESO BODEGA]]></text>
+			</staticText>
+			<image>
+				<reportElement x="8" y="2" width="130" height="77" uuid="88bb9ac9-34a6-421a-8026-ca365f4df103"/>
+				<imageExpression><![CDATA["C:\\Users\\Diana\\Desktop\\logocomercial.jpeg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="8" y="2" width="100" height="20" uuid="364221f5-3a79-4d5f-a379-192263e3e9fe"/>
+				<text><![CDATA[PK_id_procesobodega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="2" width="100" height="20" uuid="875546d8-4d8d-46cd-bce6-26372538f942"/>
+				<text><![CDATA[nombre_producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="2" width="100" height="20" uuid="1c550100-f59b-4858-9e03-e32679946dc0"/>
+				<text><![CDATA[descripcion_producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="568" y="2" width="100" height="20" uuid="3e845fad-f91f-4afc-a444-371483e96781"/>
+				<text><![CDATA[fechaIngreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="695" y="2" width="100" height="20" uuid="aba2f851-9d0e-451a-bf6e-1528ca7e274e"/>
+				<text><![CDATA[fechaSalida]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="8" y="14" width="130" height="20" uuid="ba0ef6b6-b172-429a-acd0-048161a58d4a"/>
+				<textFieldExpression><![CDATA[$F{PK_id_procesobodega}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="188" y="14" width="111" height="20" uuid="55fe8054-7406-4c73-b665-5c8353cb9b4f"/>
+				<textFieldExpression><![CDATA[$F{nombre_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="392" y="14" width="122" height="20" uuid="9e2cae32-5dd5-4100-b8ce-8479dc8f3f88"/>
+				<textFieldExpression><![CDATA[$F{descripcion_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="568" y="14" width="100" height="20" uuid="0ad306dd-acc8-46d8-8c0c-abe8e7222c76"/>
+				<textFieldExpression><![CDATA[$F{fechaIngreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="695" y="14" width="100" height="20" uuid="ab3ee09a-4c07-4f00-807b-62f9647e978a"/>
+				<textFieldExpression><![CDATA[$F{fechaSalida}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -80,8 +80,7 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
         txt_Descripcion.setText(proveedorAConsultar.getDescripcion_producto());
         txt_Estado.setText(proveedorAConsultar.getEstatus_producto());
         txtExistencias.setText(proveedorAConsultar.getExistencia());
-       // cbx_bodega.setSelectedIndex(0);
-        cbx_bodega.setSelectedItem(String.valueOf(0));
+
     }
     
     public void limpiar() {
@@ -508,7 +507,7 @@ public class MantenimientoProductos extends javax.swing.JInternalFrame {
         try {
             connection = Conexion.getConnection();
             report = JasperCompileManager.compileReport(new File("").getAbsolutePath()
-                    + "/src/main/java/Comercial/reportes/MantenimientoProducto.jrxml");
+                    + "/src/main/java/Comercial/reportes/ReporteMantenimientoProducto.jrxml");
             print = JasperFillManager.fillReport(report, p, connection);
             JasperViewer view = new JasperViewer(print, false);
             view.setTitle("Reporte de Proceso Productos");
