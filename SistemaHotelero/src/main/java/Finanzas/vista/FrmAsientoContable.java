@@ -6,6 +6,7 @@
 package Finanzas.vista;
 
 import Finanzas.datos.Conexion;
+import Finanzas.datos.CuentaContableDAO;
 import Finanzas.dominio.AsientoContable;
 import Finanzas.dominio.CuentaContable;
 import Finanzas.dominio.PartidaContable;
@@ -603,6 +604,9 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BtnRegistrarAsientoActionPerformed
 
     private void BtnRegistrarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegistrarDetalleActionPerformed
+        
+        CuentaContableDAO CTDAO = new CuentaContableDAO();
+        
         AsientoContable asientoContable = new AsientoContable();
 
         asientoContable.setCodigo_DetalleAsiento(TxtCodigoAsiento.getText());
@@ -611,17 +615,22 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
         asientoContable.setTipo_Asiento(CmbTipoAsiento.getSelectedItem().toString());
         asientoContable.setEncabezado_Asiento(CmbEncabezado.getSelectedItem().toString());
 
+        double montoAnterior = Double.parseDouble(CTDAO.getMontoAnterior(CmbCuenta.getSelectedItem().toString()));
+        
         if (RbtDebe.isSelected()) {
             asientoContable.setMonto_Debe(TxtMonto.getText());
             asientoContable.setMonto_Haber("0");
+            montoAnterior = montoAnterior + Double.parseDouble(TxtMonto.getText());
         }
         if (RbtHaber.isSelected()) {
             asientoContable.setMonto_Debe("0");
             asientoContable.setMonto_Haber(TxtMonto.getText());
+            montoAnterior = montoAnterior - Double.parseDouble(TxtMonto.getText());
         }
 
         asientoContable.RegistrarDetalle(asientoContable);
-
+        CTDAO.setMontoNuevo(CmbCuenta.getSelectedItem().toString(), String.valueOf(montoAnterior));
+        
         setCodigoAsiento();
 
         TxtMonto.setText("");
@@ -633,7 +642,6 @@ public class FrmAsientoContable extends javax.swing.JInternalFrame {
         AInsertar.setModulo("1000");
         try {
             BitacoraDAO.insert(AInsertar);
-
         } catch (UnknownHostException ex) {
             Logger.getLogger(FrmTipoTransaccion.class.getName()).log(Level.SEVERE, null, ex);
         }

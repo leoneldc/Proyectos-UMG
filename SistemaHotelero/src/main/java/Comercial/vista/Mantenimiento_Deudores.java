@@ -56,14 +56,14 @@ public class Mantenimiento_Deudores extends javax.swing.JInternalFrame {
         if (permisosApp[0].equals("1")) {
             btnAgregar.setEnabled(true);
         }
-        if (permisosApp[1].equals("0")) {
+        if (permisosApp[1].equals("1")) {
             btnBuscar.setEnabled(true);
         }
-        if (permisosApp[2].equals("0")) {
+        if (permisosApp[2].equals("1")) {
             btnModificar.setEnabled(true);
         }
-        if (permisosApp[3].equals("0")) {
-            btnEliminar.setEnabled(false);
+        if (permisosApp[3].equals("1")) {
+            btnEliminar.setEnabled(true);
         }
     }
 
@@ -111,7 +111,7 @@ public void llenadoDeTablas() {
          Deudores Buscar = new  Deudores();
 
 
-Buscar.setId_Acreedores(i.getText());
+Buscar.setId_Acreedores(ID.getText());
 Buscar=Clientes.query(Buscar);         
 cliente.setText(Buscar.getAcreedores());
 
@@ -153,7 +153,6 @@ producto.setText(Buscar.getProducto());
         buttonGroup1 = new javax.swing.ButtonGroup();
         jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        i = new javax.swing.JTextField();
         cliente = new javax.swing.JTextField();
         monto = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -313,23 +312,21 @@ producto.setText(Buscar.getProducto());
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(47, 47, 47)
-                                .addComponent(jButton1))
+                                .addGap(65, 65, 65)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton1)
+                                    .addComponent(btnBuscar)))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 72, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnAgregar)
-                        .addGap(65, 65, 65)
+                        .addGap(23, 23, 23)
                         .addComponent(btnModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                         .addComponent(btnEliminar)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(i, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(40, 40, 40)
                         .addComponent(jButton2)
-                        .addGap(83, 83, 83))))
+                        .addGap(208, 208, 208))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,10 +335,11 @@ producto.setText(Buscar.getProducto());
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jLabel1))
-                .addGap(22, 22, 22)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -362,15 +360,13 @@ producto.setText(Buscar.getProducto());
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(monto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(i, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnModificar)
-                    .addComponent(btnBuscar)
                     .addComponent(btnAgregar)
                     .addComponent(btnEliminar)
                     .addComponent(jButton2))
@@ -439,7 +435,7 @@ producto.setText(Buscar.getProducto());
         } catch (UnknownHostException ex) {
             Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+   JOptionPane.showMessageDialog(null, " La ejecunsion a  sido un exito");
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -462,7 +458,7 @@ producto.setText(Buscar.getProducto());
         } catch (UnknownHostException ex) {
             Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+   JOptionPane.showMessageDialog(null, " La ejecunsion a  sido un exito");
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -497,7 +493,7 @@ producto.setText(Buscar.getProducto());
         } catch (UnknownHostException ex) {
             Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+   JOptionPane.showMessageDialog(null, " La ejecunsion a  sido un exito");
         // TODO add your handling code here:
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -532,7 +528,7 @@ producto.setText(Buscar.getProducto());
         } catch (UnknownHostException ex) {
             Logger.getLogger(Aplicacion_Perfil.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+   JOptionPane.showMessageDialog(null, " La ejecunsion a  sido un exito");
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarActionPerformed
 private Connection connection = null;
@@ -568,7 +564,6 @@ private Connection connection = null;
     private static javax.swing.ButtonGroup buttonGroup1;
     private static javax.swing.JTextField cliente;
     private static javax.swing.JTextField estatus;
-    private static javax.swing.JTextField i;
     private static javax.swing.JButton jButton1;
     private static javax.swing.JButton jButton2;
     private static javax.swing.JLabel jLabel1;
