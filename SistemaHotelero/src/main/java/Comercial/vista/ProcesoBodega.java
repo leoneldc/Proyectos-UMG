@@ -6,20 +6,29 @@
 package Comercial.vista;
 
 import Comercial.datos.BodegaDAO;
+import Comercial.datos.Conexion;
 import Comercial.datos.ProcesoBodegaDAO;
 import Comercial.datos.ProcesoProductoDAO;
 import Comercial.datos.ProductoDAO;
 import Comercial.dominio.Bodega;
 import Comercial.dominio.ProcesoProducto;
 import Comercial.dominio.Producto;
-import static Comercial.vista.Proceso_Producto.txtnombrebodega;
 import static java.awt.image.ImageObserver.WIDTH;
+import java.io.File;
 import java.net.UnknownHostException;
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 import seguridad.datos.BitacoraDao;
 import seguridad.dominio.Bitacora;
 import seguridad.vista.Aplicacion_Perfil;
@@ -187,6 +196,11 @@ public class ProcesoBodega extends javax.swing.JInternalFrame {
         });
 
         btnReporte.setText("Reporte");
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -260,6 +274,11 @@ public class ProcesoBodega extends javax.swing.JInternalFrame {
         );
 
         btnAyuda.setText("Ayuda");
+        btnAyuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAyudaActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setText("PROCESO BODEGA");
@@ -310,7 +329,7 @@ public class ProcesoBodega extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+ private Connection connection = null;
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         GenerarPermisos permisos = new GenerarPermisos();
@@ -417,6 +436,43 @@ public class ProcesoBodega extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        // TODO add your handling code here:
+         Map p = new HashMap();
+        JasperReport report;
+        JasperPrint print;
+
+        try {
+            connection = Conexion.getConnection();
+            report = JasperCompileManager.compileReport(new File("").getAbsolutePath()
+                + "/src/main/java/Comercial/reportes/ReporteProcesoBodega.jrxml");
+            print = JasperFillManager.fillReport(report, p, connection);
+            JasperViewer view = new JasperViewer(print, false);
+            view.setTitle("Reporte de Proceso compras");
+            view.setVisible(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnReporteActionPerformed
+
+    private void btnAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyudaActionPerformed
+        // TODO add your handling code here:
+        try {
+            if ((new File("src\\main\\java\\Comercial\\reportes\\AyudaProcesoBodega.chm")).exists()) {
+                Process p = Runtime
+                .getRuntime()
+                .exec("rundll32 url.dll,FileProtocolHandler src\\main\\java\\Comercial\\reportes\\AyudaProcesoBodega.chm");
+                p.waitFor();
+            } else {
+                JOptionPane.showMessageDialog(null, "La ayuda no Fue encontrada");
+            }
+            //System.out.println("Correcto");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnAyudaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

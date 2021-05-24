@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProcesoProducto" language="groovy" pageWidth="540" pageHeight="842" columnWidth="500" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="10" uuid="3c4f3251-c768-4c82-b594-6f83336ceac2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM areacomercial.tbl_proceso_producto;]]>
+	</queryString>
+	<field name="PK_id_procesoproducto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_producto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_bodega" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="existencias_producto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="8" y="0" width="113" height="79" uuid="8db3afd5-6941-4709-b8b2-fb86ffee9aef"/>
+				<imageExpression><![CDATA["C:\\Users\\Diana\\Desktop\\logocomercial.jpeg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="147" y="22" width="235" height="40" uuid="361ee80d-3eb5-4856-afde-f3e1dab00c47"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROCESO STOCK MINIMO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="8" y="22" width="123" height="20" uuid="786b1b86-ec37-414b-a523-ef6a17d55024"/>
+				<text><![CDATA[PK_id_procesoproducto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="147" y="22" width="100" height="20" uuid="eb71ac57-b8d8-4c89-afc9-5b2035e42c58"/>
+				<text><![CDATA[nombre_producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="22" width="100" height="20" uuid="355a3e95-6ccf-4863-9185-b86d5931acf7"/>
+				<text><![CDATA[nombre_bodega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="22" width="100" height="20" uuid="9fe018a8-ef6a-4ac6-94f2-db0386f50519"/>
+				<text><![CDATA[existencias_producto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="8" y="10" width="134" height="20" uuid="d24be89e-5da4-4ce2-aadf-176558a70885"/>
+				<textFieldExpression><![CDATA[$F{PK_id_procesoproducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="147" y="10" width="113" height="20" uuid="929dae01-2cb0-4e82-a04f-7c3a578cc2e7"/>
+				<textFieldExpression><![CDATA[$F{nombre_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="10" width="100" height="20" uuid="981774e5-2b28-4623-8a07-798900bb5b28"/>
+				<textFieldExpression><![CDATA[$F{nombre_bodega}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="382" y="10" width="120" height="20" uuid="9ad82dcf-35e6-471c-8f61-84cf898e1e26"/>
+				<textFieldExpression><![CDATA[$F{existencias_producto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

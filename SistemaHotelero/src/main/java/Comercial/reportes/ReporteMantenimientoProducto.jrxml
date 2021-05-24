@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="89d2d2f2-4cca-4021-95a7-9590ffe08ac7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM areacomercial.tbl_producto;]]>
+	</queryString>
+	<field name="PK_id_producto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_producto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio_producto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcion_producto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estatus_producto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="existencias" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bodega" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaIngreso" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="265" y="19" width="261" height="60" uuid="435c68ff-3109-47f8-af0b-e5b186fb6b05"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE MANTENIMIENTO PRODUCTO]]></text>
+			</staticText>
+			<image>
+				<reportElement x="45" y="0" width="183" height="79" uuid="e6174d29-072e-4062-a22f-75beab40e10d"/>
+				<imageExpression><![CDATA["C:\\Users\\Diana\\Desktop\\logocomercial.jpeg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="31" width="100" height="20" uuid="8fa4ca08-b28f-40e6-9a56-1dffb347ff40"/>
+				<text><![CDATA[PK_id_producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="31" width="100" height="20" uuid="b771c67e-1bed-4a1b-81e0-36b47c577102"/>
+				<text><![CDATA[nombre_producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="31" width="100" height="20" uuid="9c7a5b1a-e04c-4d9d-b206-301741da2726"/>
+				<text><![CDATA[precio_producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="317" y="31" width="107" height="20" uuid="093364f0-902c-4ce1-9fb9-8049bef09a19"/>
+				<text><![CDATA[descripcion_producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="31" width="100" height="20" uuid="e8adadd8-800a-4dfb-80b8-bc351fa81314"/>
+				<text><![CDATA[estatus_producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="544" y="31" width="61" height="20" uuid="f91f1620-5d11-44f7-89ac-eb6d8ef05c96"/>
+				<text><![CDATA[existencias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="625" y="31" width="42" height="20" uuid="3fcb1276-4d15-4c61-b419-2c68af890aca"/>
+				<text><![CDATA[bodega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="690" y="31" width="100" height="20" uuid="0acc22e1-afe8-494f-8686-d8ed5621df7f"/>
+				<text><![CDATA[fechaIngreso]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="5" y="4" width="100" height="20" uuid="4f26bfec-36f2-4fc8-b59a-1d572594ebd7"/>
+				<textFieldExpression><![CDATA[$F{PK_id_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="4" width="102" height="20" uuid="bb6bc8d6-39b7-420e-846b-54eedd71c15c"/>
+				<textFieldExpression><![CDATA[$F{nombre_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="4" width="100" height="20" uuid="911e56c1-f45e-4ec4-b448-0acdb079ff00"/>
+				<textFieldExpression><![CDATA[$F{precio_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="317" y="4" width="123" height="20" uuid="4d357ade-56da-4b2a-b9a2-43a8b2805f37"/>
+				<textFieldExpression><![CDATA[$F{descripcion_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="444" y="4" width="100" height="20" uuid="2c0c35fd-67ca-48e0-bc09-a62797a50a88"/>
+				<textFieldExpression><![CDATA[$F{estatus_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="544" y="4" width="73" height="20" uuid="dad37c2f-be5d-4775-a7d6-d58971f03923"/>
+				<textFieldExpression><![CDATA[$F{existencias}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="625" y="4" width="61" height="20" uuid="012e12c0-7772-432c-b4ef-806da5f8754f"/>
+				<textFieldExpression><![CDATA[$F{bodega}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="690" y="4" width="100" height="20" uuid="8a803114-f1ab-4418-aa7b-0b29a44ba45f"/>
+				<textFieldExpression><![CDATA[$F{fechaIngreso}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
