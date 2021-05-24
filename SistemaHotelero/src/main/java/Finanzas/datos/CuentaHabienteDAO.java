@@ -15,11 +15,11 @@ import Finanzas.dominio.CuentaHabiente;
  * @author Santiago Martinez Diaz
  */
 public class CuentaHabienteDAO {
-      private static final String sql_select = "SELECT Codigo_CuentaHabiente, Nombre_CuentaHabiente, ApellidoP_CuentaHabiente,ApellidoM_CuentaHabiente,TipoPersona_CuentaHabiente FROM CuentaHabiente";
-    private static final String sql_insert = "INSERT INTO CuentaHabiente(Codigo_CuentaHabiente, Nombre_CuentaHabiente, ApellidoP_CuentaHabiente,ApellidoM_CuentaHabiente,TipoPersona_CuentaHabiente) VALUES(?,?,?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE CuentaHabiente SET Codigo_CuentaHabiente=?, Nombre_CuentaHabiente=?, ApellidoP_CuentaHabiente=?,ApellidoM_CuentaHabiente=? WHERE Codigo_CuentaHabiente = ?";
+      private static final String sql_select = "SELECT Codigo_CuentaHabiente, Nombre_CuentaHabiente, ApellidoP_CuentaHabiente,ApellidoM_CuentaHabiente,TipoPersona_CuentaHabiente,Saldo_Habilitado FROM CuentaHabiente";
+    private static final String sql_insert = "INSERT INTO CuentaHabiente(Codigo_CuentaHabiente, Nombre_CuentaHabiente, ApellidoP_CuentaHabiente,ApellidoM_CuentaHabiente,TipoPersona_CuentaHabiente,Saldo_Habilitado) VALUES(?,?,?,?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE CuentaHabiente SET Codigo_CuentaHabiente=?, Nombre_CuentaHabiente=?, ApellidoP_CuentaHabiente=?,ApellidoM_CuentaHabiente=?,Saldo_Habilitado=? WHERE Codigo_CuentaHabiente = ?";
     private static final String sql_delete = "DELETE FROM CuentaHabiente WHERE Codigo_CuentaHabiente=?";
-    private static final String sql_query = "SELECT Codigo_CuentaHabiente, Nombre_CuentaHabiente, ApellidoP_CuentaHabiente,ApellidoM_CuentaHabiente,TipoPersona_CuentaHabiente FROM CuentaHabiente WHERE Codigo_CuentaHabiente=?";
+    private static final String sql_query = "SELECT Codigo_CuentaHabiente, Nombre_CuentaHabiente, ApellidoP_CuentaHabiente,ApellidoM_CuentaHabiente,TipoPersona_CuentaHabiente,Saldo_Habilitado FROM CuentaHabiente WHERE Codigo_CuentaHabiente=?";
 
     public List<CuentaHabiente> listar() {
         Connection con = null;
@@ -39,13 +39,14 @@ public class CuentaHabienteDAO {
                 String ApellidoP_CuentaHabiente = rs.getString("ApellidoP_CuentaHabiente");
                 String ApellidoM_CuentaHabiente = rs.getString("ApellidoM_CuentaHabiente");
                 String TipoPersona_CuentaHabiente = rs.getString("TipoPersona_CuentaHabiente");
-                        
+                  String Saldo_Habilitado = rs.getString("Saldo_Habilitado");      
                 cuenta = new CuentaHabiente();
                cuenta.setCodigo_CuentaHabiente(Codigo_CuentaHabiente);
                 cuenta.setNombre_CuentaHabiente(Nombre_CuentaHabiente);
                 cuenta.setApellidoP_CuentaHabiente(ApellidoP_CuentaHabiente);
                 cuenta.setApellidoM_CuentaHabiente(ApellidoM_CuentaHabiente);
                 cuenta.setTipoPersona_CuentaHabiente(TipoPersona_CuentaHabiente);
+                cuenta.setSaldo_Habilitado(Saldo_Habilitado);
              
                 tipo1.add(cuenta);
             }
@@ -71,6 +72,7 @@ public class CuentaHabienteDAO {
             stmt.setString(3, cuenta.getApellidoP_CuentaHabiente());
             stmt.setString(4, cuenta.getApellidoM_CuentaHabiente());
             stmt.setString(5, cuenta.getTipoPersona_CuentaHabiente());
+            stmt.setString(6, cuenta.getSaldo_Habilitado());
             rows = stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Registro exitoso");
@@ -96,7 +98,8 @@ public class CuentaHabienteDAO {
           stmt.setString(2, cuenta.getNombre_CuentaHabiente());
           stmt.setString(3, cuenta.getApellidoP_CuentaHabiente());
           stmt.setString(4, cuenta.getApellidoM_CuentaHabiente());
-          stmt.setString(5, cuenta.getCodigo_CuentaHabiente());
+          stmt.setString(6, cuenta.getSaldo_Habilitado());
+          stmt.setString(7, cuenta.getCodigo_CuentaHabiente());
  
             rows = stmt.executeUpdate();
         
@@ -149,7 +152,7 @@ public class CuentaHabienteDAO {
                 String ApellidoP_CuentaHabiente = rs.getString("ApellidoP_CuentaHabiente");
                 String ApellidoM_CuentaHabiente = rs.getString("ApellidoM_CuentaHabiente");
                 String TipoPersona_CuentaHabiente = rs.getString("TipoPersona_CuentaHabiente");
-
+                String Saldo_Habilitado = rs.getString("Saldo_Habilitado");     
 
                 cuenta = new CuentaHabiente();
                 cuenta.setCodigo_CuentaHabiente(Codigo_CuentaHabiente);
@@ -157,6 +160,7 @@ public class CuentaHabienteDAO {
                 cuenta.setApellidoP_CuentaHabiente(ApellidoP_CuentaHabiente);
                 cuenta.setApellidoM_CuentaHabiente(ApellidoM_CuentaHabiente);
                 cuenta.setTipoPersona_CuentaHabiente(TipoPersona_CuentaHabiente);
+                cuenta.setSaldo_Habilitado(Saldo_Habilitado);
                 rows++;
             }
 

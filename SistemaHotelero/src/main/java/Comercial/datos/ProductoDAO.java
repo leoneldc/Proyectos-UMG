@@ -28,6 +28,7 @@ public class ProductoDAO {
     private static final String SQL_QUERY = "SELECT PK_id_producto, nombre_producto, precio_producto, descripcion_producto, estatus_producto, bodega, fechaIngreso FROM tbl_producto WHERE PK_id_producto=?";
     private static final String SQL_DELETE = "DELETE FROM tbl_producto WHERE PK_id_producto=?";
     public static final String SQL_QUERY2 = "SELECT  PK_id_producto  FROM tbl_producto";
+    public static final String SQL_QUERY3 = "SELECT  PK_id_producto  FROM tbl_producto";
 
     public List<Producto> select() {
         Connection conn = null;
@@ -113,9 +114,8 @@ public class ProductoDAO {
             stmt.setString(2, aplicacion.getPrecio_producto());
             stmt.setString(3, aplicacion.getDescripcion_producto());
             stmt.setString(4, aplicacion.getEstatus_producto());
-            stmt.setString(5, aplicacion.getCantidad());
-            stmt.setString(6, aplicacion.getBodega());
-            stmt.setString(7, aplicacion.getFechaIngreso());
+            stmt.setString(5, aplicacion.getBodega());
+            stmt.setString(6, aplicacion.getFechaIngreso());
             rows = stmt.executeUpdate();
             //System.out.println("Registros actualizado:" + rows);
 
@@ -248,5 +248,35 @@ public class ProductoDAO {
         } catch (Exception e) {
         }
         return perfil;
+    }
+    public void query3(JComboBox uno) {
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = Conexion.getConnection();
+            //System.out.println("Ejecutando query:" + SQL_QUERY);
+            stmt = conn.prepareStatement(SQL_QUERY2);
+            //stmt.setInt(1, aplicacion.getId_ModuloCbx());
+            rs = stmt.executeQuery();
+
+            uno.addItem("Seleccionar...");
+
+            while (rs.next()) {
+                uno.addItem(rs.getInt("PK_id_producto"));
+
+            }
+            //System.out.println("Registros buscado:" + aplicacion);
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+
     }
 }

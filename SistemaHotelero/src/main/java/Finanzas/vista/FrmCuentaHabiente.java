@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -33,10 +34,16 @@ import seguridad.vista.Mantenimiento_Perfil;
  * @author Santiago Martinez Diaz
  */
 public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
-      int codigoAplicacion = 1009;
+
+    
+    DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
+    int codigoAplicacion = 1009;
+
+
       
     BitacoraDao BitacoraDAO = new BitacoraDao();
     Bitacora AInsertar = new Bitacora();
+
 //Metodo Llenado de Combos consulta los dominios y datos TipoPersonaDAO y TipoPersona para obetner el codigo en el combobox
    public void llenadoDeCombos()  {
        TipoPersonaDAO tipodao = new TipoPersonaDAO();
@@ -55,16 +62,18 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
        modelo.addColumn("Apellido Paterno");
        modelo.addColumn("Apellido Materno");
        modelo.addColumn("Tipo ");
+       modelo.addColumn("Saldo ");
        CuentaHabienteDAO cuentaDao = new CuentaHabienteDAO();
        List<CuentaHabiente> cuenta = cuentaDao.listar();
        JTableTransaccion.setModel(modelo);
-       String[] dato = new String[5];
+       String[] dato = new String[6];
        for (int i = 0; i < cuenta.size(); i++) {
            dato[0] = cuenta.get(i).getCodigo_CuentaHabiente();
            dato[1] = cuenta.get(i).getNombre_CuentaHabiente();
            dato[2] = cuenta.get(i).getApellidoP_CuentaHabiente();
            dato[3] = cuenta.get(i).getApellidoM_CuentaHabiente();
            dato[4] = cuenta.get(i).getTipoPersona_CuentaHabiente();
+           dato[5] = cuenta.get(i).getSaldo_Habilitado();
            modelo.addRow(dato);
        }
     }
@@ -72,10 +81,11 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
     
     
     
-    public FrmCuentaHabiente() throws SQLException {
+    public FrmCuentaHabiente() {
         initComponents();
         llenadoDeCombos();
         llenadoDeTablas();
+     
     }
 
 
@@ -102,6 +112,9 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
         TxtApellidoP = new javax.swing.JTextField();
         TxtApellidoM = new javax.swing.JTextField();
         btnImprimir = new javax.swing.JButton();
+        label12 = new javax.swing.JLabel();
+        label13 = new javax.swing.JLabel();
+        TxtSaldo = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTableTransaccion = new javax.swing.JTable();
@@ -122,7 +135,7 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
         label11.setText("Tipo Cuenta:");
 
         label8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        label8.setText("Apellido Paterno:");
+        label8.setText("Saldo Dipsonible:");
 
         label9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         label9.setText("Nombre:");
@@ -177,6 +190,12 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
             }
         });
 
+        label12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        label12.setText("Apellido Paterno:");
+
+        label13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        label13.setText("Consultar Codigo:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -184,35 +203,26 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(BtnIng, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(ss, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(177, 177, 177)
-                        .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(201, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label11)
                             .addComponent(label10)
-                            .addComponent(label8)
-                            .addComponent(label9)))
+                            .addComponent(label9)
+                            .addComponent(label8)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(label7)))
+                        .addComponent(label7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(label12)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(TxtNombre)
                     .addComponent(Cbox_Tipo, 0, 253, Short.MAX_VALUE)
                     .addComponent(TxtCodigo)
                     .addComponent(TxtApellidoP)
-                    .addComponent(TxtApellidoM))
+                    .addComponent(TxtApellidoM)
+                    .addComponent(TxtSaldo))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(13, 13, 13)
@@ -224,6 +234,21 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLimpiar3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addComponent(BtnIng, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(ss, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addComponent(label13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,8 +264,8 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
                     .addComponent(TxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TxtApellidoP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TxtApellidoP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -257,8 +282,13 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
                                 .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(Cbox_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(3, 3, 3)))
-                .addGap(48, 48, 48)
-                .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnIng, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -315,7 +345,7 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 62, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,9 +370,17 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
           insertarcuenta.setApellidoP_CuentaHabiente(TxtApellidoP.getText());
         insertarcuenta.setApellidoM_CuentaHabiente(TxtApellidoM.getText());
          insertarcuenta.setTipoPersona_CuentaHabiente(Cbox_Tipo.getSelectedItem().toString());
+
+       insertarcuenta.setSaldo_Habilitado(TxtSaldo.getText());
+        BitacoraDao BitacoraDAO = new BitacoraDao();
+        Bitacora AInsertar = new Bitacora();
+        AInsertar.setId_Usuario("FrmCuentaHabiente");
+        AInsertar.setAccion("Registrar");
+
        
          AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Insertar");
+
         AInsertar.setCodigoAplicacion("1009");
         AInsertar.setModulo("1000");
 
@@ -466,6 +504,7 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField TxtCodigo;
     private javax.swing.JTextField TxtCuenta;
     private javax.swing.JTextField TxtNombre;
+    private javax.swing.JTextField TxtSaldo;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnLimpiar3;
     private javax.swing.JButton jButton3;
@@ -474,9 +513,12 @@ public class FrmCuentaHabiente extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label10;
     private javax.swing.JLabel label11;
+    private javax.swing.JLabel label12;
+    private javax.swing.JLabel label13;
     private javax.swing.JLabel label7;
     private javax.swing.JLabel label8;
     private javax.swing.JLabel label9;
     private javax.swing.JButton ss;
     // End of variables declaration//GEN-END:variables
+
 }

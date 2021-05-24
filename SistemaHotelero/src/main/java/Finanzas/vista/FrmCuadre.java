@@ -256,7 +256,12 @@ public class FrmCuadre extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnVerificarActionPerformed
 
     private void BtnCuadrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCuadrarActionPerformed
-        partidaContableCuadre.ejecutarCuadre(TxtPartida.getText(), String.valueOf(partidaContableCuadre.getSumaHaber()));
+        if (partidaContableCuadre.getSumaDebe() == partidaContableCuadre.getSumaHaber()) {
+            partidaContableCuadre.ejecutarCuadre(TxtPartida.getText(), String.valueOf(partidaContableCuadre.getSumaHaber()));
+        } else {
+            JOptionPane.showMessageDialog(null, "PARTIDA NO CUADRADA, NO SE PUEDE REGISTRAR");
+        }
+
     }//GEN-LAST:event_BtnCuadrarActionPerformed
 
     /**

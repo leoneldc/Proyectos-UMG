@@ -28,6 +28,14 @@
 				</textElement>
 				<text><![CDATA[ Tipo De Transaccion:]]></text>
 			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="444" y="0" width="109" height="25" uuid="7f59edee-2870-4cf2-b2e0-96e41881dccf"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="4" y="11" width="146" height="62" uuid="829f7077-689c-44d9-ba34-4d621594d35a"/>
+				<imageExpression><![CDATA["C:\\Users\\TagoKG\\Desktop\\Proyecto Seguridad\\SistemaHotelero\\src\\main\\java\\Finanzas\\reportes\\calk.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -65,7 +73,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="35" splitType="Stretch">
 			<textField>
 				<reportElement x="2" y="0" width="100" height="20" uuid="bf29d43d-a68e-4375-b6bb-56c5363d0ccc"/>
 				<textElement>

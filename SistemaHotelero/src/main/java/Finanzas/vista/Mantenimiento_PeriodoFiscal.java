@@ -345,7 +345,7 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
         
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Ingresar");
         AInsertar.setCodigoAplicacion("1001");
         AInsertar.setModulo("1000");
@@ -360,7 +360,7 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
             {
                 String Inicio = new SimpleDateFormat("dd/MM/yyyy").format(InicioDC.getDate());
                 String Fin = new SimpleDateFormat("dd/MM/yyyy").format(FinDC.getDate());
-                PFInsertar.setIDPerFis(Integer.parseInt(txtID.getText()));
+                PFInsertar.setIDPerFis((txtID.getText()));
                 PFInsertar.setInicioAñoPerFis(Inicio);
                 PFInsertar.setFinAñoPerFis(Fin);
                 if (RBPF1.isSelected()) {
@@ -387,7 +387,7 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
         
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Modificar");
         AInsertar.setCodigoAplicacion("1001");
         AInsertar.setModulo("1000");
@@ -411,7 +411,7 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
         if (RBPF0.isSelected()) {
             PFMod.setEstadoPerFis(0);
         }
-        PFMod.setIDPerFis(Integer.parseInt(txtID.getText()));
+        PFMod.setIDPerFis((txtID.getText()));
         
         PFDAO.update(PFMod);
         JOptionPane.showMessageDialog(null, "Modificación Exitosa");
@@ -422,7 +422,7 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
         
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Eliminar");
         AInsertar.setCodigoAplicacion("1001");
         AInsertar.setModulo("1000");
@@ -435,7 +435,7 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
         PeriodoFiscal PFDel = new PeriodoFiscal();
         PeriodoFiscalDAO PFDAO = new PeriodoFiscalDAO();
 
-        PFDel.setIDPerFis(Integer.parseInt(txtID.getText()));
+        PFDel.setIDPerFis((txtID.getText()));
         int salida = JOptionPane.showConfirmDialog(null, "Seguro que quieres eliminar?", "Advertencia de eliminacion",
                 JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
         System.out.println(salida);
@@ -454,7 +454,7 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
         
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Buscar");
         AInsertar.setCodigoAplicacion("1001");
         AInsertar.setModulo("1000");
@@ -466,7 +466,7 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
         
         PeriodoFiscal PFBuscar = new PeriodoFiscal();
         PeriodoFiscalDAO PFDAO = new PeriodoFiscalDAO();
-        PFBuscar.setIDPerFis(Integer.parseInt(txtID.getText()));
+        PFBuscar.setIDPerFis((txtID.getText()));
         
         PFBuscar = PFDAO.query(PFBuscar);
         
@@ -504,7 +504,7 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
         
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Ayuda");
         AInsertar.setCodigoAplicacion("1001");
         AInsertar.setModulo("1000");
@@ -548,8 +548,8 @@ public class Mantenimiento_PeriodoFiscal extends javax.swing.JInternalFrame {
         }
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario(Login.usuarioSesion);
-        AInsertar.setAccion("Reporte");
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
+        AInsertar.setAccion("Imprimir");
         AInsertar.setCodigoAplicacion("1001");
         AInsertar.setModulo("1000");
         try{

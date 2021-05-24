@@ -14,6 +14,9 @@ import javax.swing.UIManager;
 import Finanzas.datos.MonedaDAO;
 import Finanzas.dominio.EncabezadoAsiento;
 import Finanzas.dominio.Moneda;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
+import java.awt.Color;
 import java.io.File;
 import java.net.UnknownHostException;
 import java.sql.Connection;
@@ -113,6 +116,7 @@ public class Transaccion_EncabezadoAsiento extends javax.swing.JFrame {
         BtnElim = new javax.swing.JButton();
         BtnBus = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
 
@@ -128,7 +132,8 @@ public class Transaccion_EncabezadoAsiento extends javax.swing.JFrame {
 
         jLabel3.setText("Fecha Asiento Contable:");
 
-        JdA.setForeground(new java.awt.Color(255, 255, 255));
+        JdA.setBackground(new java.awt.Color(255, 255, 255));
+        JdA.setForeground(new java.awt.Color(153, 153, 153));
 
         jLabel4.setText("Moneda Asiento Contable:");
 
@@ -173,6 +178,8 @@ public class Transaccion_EncabezadoAsiento extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("?");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -204,7 +211,9 @@ public class Transaccion_EncabezadoAsiento extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnBus, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -235,7 +244,8 @@ public class Transaccion_EncabezadoAsiento extends javax.swing.JFrame {
                     .addComponent(BtnMod)
                     .addComponent(BtnElim)
                     .addComponent(BtnBus)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
 
@@ -260,8 +270,7 @@ public class Transaccion_EncabezadoAsiento extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2))
-                .addContainerGap())
+                    .addComponent(jScrollPane2)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,7 +291,7 @@ public class Transaccion_EncabezadoAsiento extends javax.swing.JFrame {
     private void BtnIngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngActionPerformed
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Ingresar");
         AInsertar.setCodigoAplicacion("1102");
         AInsertar.setModulo("1000");
@@ -331,7 +340,7 @@ public class Transaccion_EncabezadoAsiento extends javax.swing.JFrame {
     private void BtnElimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnElimActionPerformed
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Eliminar");
         AInsertar.setCodigoAplicacion("1102");
         AInsertar.setModulo("1000");
@@ -366,7 +375,7 @@ public class Transaccion_EncabezadoAsiento extends javax.swing.JFrame {
     private void BtnModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnModActionPerformed
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Modificar");
         AInsertar.setCodigoAplicacion("1102");
         AInsertar.setModulo("1000");
@@ -398,7 +407,7 @@ public class Transaccion_EncabezadoAsiento extends javax.swing.JFrame {
     private void BtnBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBusActionPerformed
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Buscar");
         AInsertar.setCodigoAplicacion("1102");
         AInsertar.setModulo("1000");
@@ -440,7 +449,7 @@ private Connection connection = null;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Imprimir");
         AInsertar.setCodigoAplicacion("1102");
         AInsertar.setModulo("1000");
@@ -500,6 +509,7 @@ private Connection connection = null;
     private com.toedter.calendar.JDateChooser JdA;
     private javax.swing.JTable Tabla;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

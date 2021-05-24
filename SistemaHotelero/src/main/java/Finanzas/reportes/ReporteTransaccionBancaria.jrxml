@@ -39,6 +39,14 @@
 				</textElement>
 				<text><![CDATA[Transaccion Bancaria:]]></text>
 			</staticText>
+			<image>
+				<reportElement x="5" y="10" width="92" height="85" uuid="a73ad1ff-7b38-463f-b6b4-9e15aded396c"/>
+				<imageExpression><![CDATA["C:\\Users\\TagoKG\\Desktop\\Proyecto Seguridad\\SistemaHotelero\\src\\main\\java\\Finanzas\\reportes\\calk.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="456" y="10" width="100" height="20" uuid="0542e791-ea75-432e-b623-573e1cab67f6"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -105,7 +113,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="79" height="20" uuid="fe3af848-df99-48e3-adf6-d4651a58a428"/>
 				<textElement>

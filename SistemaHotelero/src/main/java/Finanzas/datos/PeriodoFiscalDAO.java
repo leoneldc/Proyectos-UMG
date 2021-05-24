@@ -43,7 +43,7 @@ public class PeriodoFiscalDAO extends Conexion {
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int id_PF = rs.getInt("Codigo_PeriodoFiscal");
+                String id_PF = rs.getString("Codigo_PeriodoFiscal");
                 String inicioPF = rs.getString("Fecha_inicioPF");
                 String finPF = rs.getString("Fecha_finPF");
                 int EstadoPF = rs.getInt("Estado_PeriodoFiscal");
@@ -79,10 +79,10 @@ public class PeriodoFiscalDAO extends Conexion {
             conn = Finanzas.datos.Conexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_QUERY);
             stmt = conn.prepareStatement(SQL_QUERY);
-            stmt.setInt(1, PeriodoFiscal.getIDPerFis());
+            stmt.setString(1, PeriodoFiscal.getIDPerFis());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int idPF = rs.getInt("Codigo_PeriodoFiscal");
+                String idPF = rs.getString("Codigo_PeriodoFiscal");
                 String IniPF = rs.getString("Fecha_inicioPF");
                 String FinPF = rs.getString("Fecha_finPF");
                 int EstadoPF = rs.getInt("Estado_PeriodoFiscal");
@@ -116,7 +116,7 @@ public class PeriodoFiscalDAO extends Conexion {
         try {
             conn = Finanzas.datos.Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_DELETE);
-            stmt.setInt(1, PeriodoFiscal.getIDPerFis());
+            stmt.setString(1, PeriodoFiscal.getIDPerFis());
             rows = stmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
@@ -136,11 +136,11 @@ public class PeriodoFiscalDAO extends Conexion {
         try {
             conn = Finanzas.datos.Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setInt(1, PeriodoFiscal.getIDPerFis());
+            stmt.setString(1, PeriodoFiscal.getIDPerFis());
             stmt.setString(2, PeriodoFiscal.getInicioAñoPerFis());
             stmt.setString(3, PeriodoFiscal.getFinAñoPerFis());
             stmt.setInt(4, PeriodoFiscal.getEstadoPerFis());
-            stmt.setInt(5, PeriodoFiscal.getIDPerFis());
+            stmt.setString(5, PeriodoFiscal.getIDPerFis());
             rows = stmt.executeUpdate();
 
         } catch (SQLException ex) {
@@ -159,7 +159,7 @@ public class PeriodoFiscalDAO extends Conexion {
         try {
             conn = Finanzas.datos.Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setInt(1, PeriodoFiscal.getIDPerFis());
+            stmt.setString(1, PeriodoFiscal.getIDPerFis());
             stmt.setString(2,PeriodoFiscal.getInicioAñoPerFis());
             stmt.setString(3, PeriodoFiscal.getFinAñoPerFis());
             stmt.setInt(4, PeriodoFiscal.getEstadoPerFis());
