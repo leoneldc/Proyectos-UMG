@@ -18,9 +18,9 @@ import Finanzas.dominio.CuentaBancaria;
  * 
  */
 public class CuentaBancariaDAO {
-    private static final String sql_select = "SELECT Numero_CuentaBancaria, Moneda_Cuenta, CuentaHabiente_Cuenta,Banco_Cuenta FROM CuentaBancaria";
-    private static final String sql_insert = "INSERT INTO CuentaBancaria(Numero_CuentaBancaria, Moneda_Cuenta, CuentaHabiente_Cuenta,Banco_Cuenta) VALUES(?,?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE CuentaBancaria SET Numero_CuentaBancaria=?, Moneda_Cuenta=?, CuentaHabiente_Cuenta=?,Banco_Cuenta=? WHERE Numero_CuentaBancaria = ?";
+    private static final String sql_select = "SELECT Numero_CuentaBancaria, Moneda_Cuenta, CuentaHabiente_Cuenta,Banco_Cuenta,Saldo_Cuenta FROM CuentaBancaria";
+    private static final String sql_insert = "INSERT INTO CuentaBancaria(Numero_CuentaBancaria, Moneda_Cuenta, CuentaHabiente_Cuenta,Banco_Cuenta,Saldo_Cuenta) VALUES(?,?,?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE CuentaBancaria SET Numero_CuentaBancaria=?, Moneda_Cuenta=?, CuentaHabiente_Cuenta=?,Banco_Cuenta=?,Saldo_Cuenta=?, WHERE Numero_CuentaBancaria = ?";
     private static final String sql_delete = "DELETE FROM CuentaBancaria WHERE Numero_CuentaBancaria=?";
     private static final String sql_query = "SELECT Numero_CuentaBancaria, Moneda_Cuenta, CuentaHabiente_Cuenta,Banco_Cuenta FROM TipoTransaccion WHERE CuentaBancaria=?";
 
@@ -41,12 +41,14 @@ public class CuentaBancariaDAO {
                 String Moneda_Cuenta = rs.getString("Moneda_Cuenta");
                 String CuentaHabiente_Cuenta = rs.getString("CuentaHabiente_Cuenta");
                 String Banco_Cuenta = rs.getString("Banco_Cuenta");
+                String Saldo_Cuenta = rs.getString("Saldo_Cuenta");
  
                 cuenta = new CuentaBancaria();
                cuenta.setNumero_CuentaBancaria(Numero_CuentaBancaria);
                 cuenta.setMoneda_Cuenta(Moneda_Cuenta);
                 cuenta.setCuentaHabiente_Cuenta(CuentaHabiente_Cuenta);
                 cuenta.setBanco_Cuenta(Banco_Cuenta);
+                cuenta.setSaldo_Cuenta(Saldo_Cuenta);
              
 
                 tipo1.add(cuenta);
@@ -72,6 +74,7 @@ public class CuentaBancariaDAO {
             stmt.setString(2, cuenta.getMoneda_Cuenta());
             stmt.setString(3, cuenta.getCuentaHabiente_Cuenta());
             stmt.setString(4, cuenta.getBanco_Cuenta());
+            stmt.setString(5, cuenta.getSaldo_Cuenta());
             rows = stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Registro exitoso");
@@ -97,7 +100,8 @@ public class CuentaBancariaDAO {
           stmt.setString(2, cuenta.getMoneda_Cuenta());
           stmt.setString(3, cuenta.getCuentaHabiente_Cuenta());
           stmt.setString(4, cuenta.getBanco_Cuenta());
-          stmt.setString(5, cuenta.getNumero_CuentaBancaria());
+          stmt.setString(5, cuenta.getSaldo_Cuenta());
+          stmt.setString(6, cuenta.getNumero_CuentaBancaria());
  
             rows = stmt.executeUpdate();
             //System.out.println("Registros actualizado:" + rows);
@@ -149,13 +153,14 @@ public class CuentaBancariaDAO {
                 String Moneda_Cuenta = rs.getString("Moneda_Cuenta");
                 String CuentaHabiente_Cuenta = rs.getString("CuentaHabiente_Cuenta");
                 String Banco_Cuenta = rs.getString("Banco_Cuenta");
-
+                String Saldo_Cuenta = rs.getString("Saldo_Cuenta");
 
                 cuenta = new CuentaBancaria();
                 cuenta.setNumero_CuentaBancaria(Numero_CuentaBancaria);
                 cuenta.setMoneda_Cuenta(Moneda_Cuenta);
                 cuenta.setCuentaHabiente_Cuenta(CuentaHabiente_Cuenta);
                 cuenta.setBanco_Cuenta(Banco_Cuenta);
+                cuenta.setSaldo_Cuenta(Saldo_Cuenta);
                 rows++;
             }
 

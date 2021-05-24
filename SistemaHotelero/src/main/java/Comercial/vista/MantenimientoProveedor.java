@@ -408,7 +408,7 @@ int codigoAplicacion = 3003;
 
     private void btnAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyudaActionPerformed
         try {
-            if ((new File("src\\main\\java\\Comercial\\reportes\\AyudaMantenimientoProveedores.chm")).exists()) {
+            if ((new File("src\\main\\java\\Comercial\\reportes\\AyudaMantenimientoProveedor.chm")).exists()) {
                 Process p = Runtime
                 .getRuntime()
                 .exec("rundll32 url.dll,FileProtocolHandler src\\main\\java\\Comercial\\reportes\\AyudaMantenimientoProveedores.chm");
@@ -543,7 +543,7 @@ private Connection connection = null;
         try {
             connection = Conexion.getConnection();
             report = JasperCompileManager.compileReport(new File("").getAbsolutePath()
-                + "/src/main/java/Comercial/reportes/MantenimientoProveedores.jrxml");
+                + "/src/main/java/Comercial/reportes/Proveedor.jrxml");
             print = JasperFillManager.fillReport(report, p, connection);
             JasperViewer view = new JasperViewer(print, false);
             view.setTitle("Reporte Mantenimiento Proveedor");

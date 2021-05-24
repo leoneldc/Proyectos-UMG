@@ -743,10 +743,10 @@ private java.sql.Connection connection = null;
     private void AyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AyudaActionPerformed
         // TODO add your handling code here:
         try {
-            if ((new File("src\\main\\java\\Comercial\\reportes\\AyudaProcesoCompra.chm")).exists()) {
+            if ((new File("src\\main\\java\\Comercial\\reportes\\AyudaProcesoCompras.chm")).exists()) {
                 Process p = Runtime
                 .getRuntime()
-                .exec("rundll32 url.dll,FileProtocolHandler src\\main\\java\\Comercial\\reportes\\AyudaProcesoCompra.chm");
+                .exec("rundll32 url.dll,FileProtocolHandler src\\main\\java\\Comercial\\reportes\\AyudaProcesoCompras.chm");
                 p.waitFor();
             } else {
                 JOptionPane.showMessageDialog(null, "La ayuda no Fue encontrada");
