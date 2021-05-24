@@ -229,7 +229,7 @@ public class Mantenimiento_TipoAsiento extends javax.swing.JInternalFrame {
     private void BtnIngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngActionPerformed
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Agregar");
         AInsertar.setCodigoAplicacion("1004");
         AInsertar.setModulo("1000");
@@ -262,7 +262,7 @@ public class Mantenimiento_TipoAsiento extends javax.swing.JInternalFrame {
     private void BtnModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnModActionPerformed
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Modificar");
         AInsertar.setCodigoAplicacion("1004");
         AInsertar.setModulo("1000");
@@ -289,7 +289,7 @@ public class Mantenimiento_TipoAsiento extends javax.swing.JInternalFrame {
     private void BtnElimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnElimActionPerformed
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Eliminar");
         AInsertar.setCodigoAplicacion("1004");
         AInsertar.setModulo("1000");
@@ -323,7 +323,7 @@ public class Mantenimiento_TipoAsiento extends javax.swing.JInternalFrame {
     private void BtnBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBusActionPerformed
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Buscar");
         AInsertar.setCodigoAplicacion("1004");
         AInsertar.setModulo("1000");
@@ -355,7 +355,7 @@ public class Mantenimiento_TipoAsiento extends javax.swing.JInternalFrame {
     private void BtnAyuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAyuActionPerformed
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario(Login.usuarioSesion);
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
         AInsertar.setAccion("Ayuda");
         AInsertar.setCodigoAplicacion("1004");
         AInsertar.setModulo("1000");
@@ -383,8 +383,8 @@ public class Mantenimiento_TipoAsiento extends javax.swing.JInternalFrame {
     private void BtnRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRepActionPerformed
         BitacoraDao BitacoraDAO = new BitacoraDao();
         Bitacora AInsertar = new Bitacora();
-        AInsertar.setId_Usuario(Login.usuarioSesion);
-        AInsertar.setAccion("Reporte");
+        AInsertar.setId_Usuario(Login.usuarioFianzas);
+        AInsertar.setAccion("Imprimir");
         AInsertar.setCodigoAplicacion("1004");
         AInsertar.setModulo("1000");
         try{

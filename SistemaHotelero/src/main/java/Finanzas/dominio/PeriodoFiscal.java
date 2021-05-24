@@ -12,7 +12,7 @@ import java.util.Date;
  * @author OtakuGT
  */
 public class PeriodoFiscal {
- private int IDPerFis;   
+ private String IDPerFis;   
  private String InicioAñoPerFis;
  private String FinAñoPerFis;
  private int EstadoPerFis;
@@ -21,7 +21,7 @@ public class PeriodoFiscal {
 
  }
  
-     public PeriodoFiscal(int IDPerFis, String InicioAñoPerFis, String FinAñoPerFis, int EstadoPerFis) {
+     public PeriodoFiscal(String IDPerFis, String InicioAñoPerFis, String FinAñoPerFis, int EstadoPerFis) {
         this.IDPerFis = IDPerFis;
         this.InicioAñoPerFis = InicioAñoPerFis;
         this.FinAñoPerFis = FinAñoPerFis;
@@ -43,11 +43,11 @@ public class PeriodoFiscal {
         this.EstadoPerFis = EstadoPerFis;
     }
 
-    public int getIDPerFis() {
+    public String getIDPerFis() {
         return IDPerFis;
     }
 
-    public void setIDPerFis(int IDPerFis) {
+    public void setIDPerFis(String IDPerFis) {
         this.IDPerFis = IDPerFis;
     }
 
